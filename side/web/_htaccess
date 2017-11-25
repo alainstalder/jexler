@@ -13,8 +13,8 @@ Header add X-Content-Type-Options "nosniff"
 Header add X-Frame-Options "SAMEORIGIN"
 
 # Limit site from being framed also via CSP
-# Cannot limit css source much because generated asciidoc guide has inline css
-Header add Content-Security-Policy "default-src 'self'; style-src 'self' 'unsafe-inline'; frame-ancestors 'self'"
+# Not doing because of generated asciidoc manual
+#Header add Content-Security-Policy <.......>
 
 # Block pages from loading when they detect reflected XSS attacks
 Header add X-XSS-Protection "1; mode=block"
