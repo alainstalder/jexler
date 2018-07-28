@@ -31,7 +31,6 @@ import ch.grengine.load.LoadMode
 import ch.grengine.load.TopCodeCacheFactory
 import ch.grengine.source.DefaultSourceFactory
 import ch.grengine.sources.Sources
-import ch.grengine.sources.SourcesUtil
 import groovy.transform.CompileStatic
 import org.codehaus.groovy.control.CompilerConfiguration
 import org.codehaus.groovy.control.customizers.ImportCustomizer
@@ -319,7 +318,7 @@ class JexlerContainer extends ServiceGroup implements Service, IssueTracker, Clo
         final Grengine gren = new Grengine.Builder()
                 .setEngine(engine)
                 .setLatencyMs(800)
-                .setSourcesLayers(SourcesUtil.sourcesArrayToList(sources))
+                .setSourcesLayers(Arrays.<Sources>asList(sources))
                 .build()
 
         final GrengineException lastUpdateException = gren.getLastUpdateException()
