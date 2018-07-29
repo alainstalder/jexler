@@ -23,12 +23,10 @@ import ch.grengine.Grengine
 import ch.grengine.code.CompilerFactory
 import ch.grengine.code.groovy.DefaultGroovyCompiler
 import ch.grengine.code.groovy.DefaultGroovyCompilerFactory
-import ch.grengine.engine.Engine
 import ch.grengine.engine.LayeredEngine
 import ch.grengine.except.GrengineException
 import ch.grengine.load.DefaultTopCodeCacheFactory
 import ch.grengine.load.LoadMode
-import ch.grengine.load.TopCodeCacheFactory
 import ch.grengine.source.DefaultSourceFactory
 import ch.grengine.sources.Sources
 import groovy.transform.CompileStatic
@@ -286,42 +284,41 @@ class JexlerContainer extends ServiceGroup implements Service, IssueTracker, Clo
         //System.setProperty('groovy.grape.report.downloads', 'true')
         //System.setProperty('ivy.message.logger.level', '4')
 
-        final CompilerConfiguration config = new CompilerConfiguration()
-        config.optimizationOptions.put(CompilerConfiguration.INVOKEDYNAMIC, true)
-        config.targetBytecode = CompilerConfiguration.JDK8
-        final ImportCustomizer importCustomizer = new ImportCustomizer()
-        importCustomizer.addStarImports('net.jexler', 'net.jexler.service', 'net.jexler.tool')
-        config.addCompilationCustomizers(importCustomizer)
+        final CompilerConfiguration config = new CompilerConfiguration().with {
+            optimizationOptions.put(INVOKEDYNAMIC, true)
+            targetBytecode = JDK8
+            addCompilationCustomizers(new ImportCustomizer().with {
+                addStarImports('net.jexler', 'net.jexler.service', 'net.jexler.tool')
+            })
+        }
         DefaultGroovyCompiler.withGrape(config, runtimeLoader)
 
-        final CompilerFactory compilerFactory = new DefaultGroovyCompilerFactory(config);
+        final CompilerFactory theCompilerFactory = new DefaultGroovyCompilerFactory(config)
 
-        final Sources sources = new JexlerContainerSources.Builder(this)
-                .setCompilerFactory(compilerFactory)
-                .setSourceFactory(new DefaultSourceFactory())
-                .setLatencyMs(800)
-                .build()
+        final Grengine gren = new Grengine.Builder().with {
+            sourcesLayers = [(Sources)new JexlerContainerSources.Builder(this).with {
+                        compilerFactory = theCompilerFactory
+                        sourceFactory = new DefaultSourceFactory()
+                        latencyMs = 800
+                        build()
+                    }]
+            latencyMs = 800
+            engine = new LayeredEngine.Builder().with {
+                parent = runtimeLoader
+                allowSameClassNamesInMultipleCodeLayers = false
+                allowSameClassNamesInParentAndCodeLayers = true
+                withTopCodeCache = true
+                topLoadMode = LoadMode.PARENT_FIRST
+                topCodeCacheFactory = new DefaultTopCodeCacheFactory.Builder().with {
+                    compilerFactory = theCompilerFactory
+                    build()
+                }
+                build()
+            }
+            build()
+        }
 
-        final TopCodeCacheFactory topCodeCacheFactory = new DefaultTopCodeCacheFactory.Builder()
-                .setCompilerFactory(compilerFactory)
-                .build()
-
-        final Engine engine = new LayeredEngine.Builder()
-                .setParent(runtimeLoader)
-                .setAllowSameClassNamesInMultipleCodeLayers(false)
-                .setAllowSameClassNamesInParentAndCodeLayers(true)
-                .setWithTopCodeCache(true)
-                .setTopLoadMode(LoadMode.PARENT_FIRST)
-                .setTopCodeCacheFactory(topCodeCacheFactory)
-                .build()
-
-        final Grengine gren = new Grengine.Builder()
-                .setEngine(engine)
-                .setLatencyMs(800)
-                .setSourcesLayers(Arrays.<Sources>asList(sources))
-                .build()
-
-        final GrengineException lastUpdateException = gren.getLastUpdateException()
+        final GrengineException lastUpdateException = gren.lastUpdateException
         if (lastUpdateException != null) {
             trackIssue(this, 'Compiling container sources failed at startup' +
                     ' - utility classes are not available to jexlers.', lastUpdateException)
