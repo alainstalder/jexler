@@ -34,7 +34,7 @@ subprojects {
     }
     compile 'org.slf4j:slf4j-api:1.7.22'
     compile 'ch.qos.logback:logback-classic:1.2.1'
-    testCompile('org.spockframework:spock-core:1.0-groovy-2.4') {
+    testCompile('org.spockframework:spock-core:1.1-groovy-2.4') {
       exclude group: 'org.codehaus.groovy', module: 'groovy-all'
     }
     testCompile 'junit:junit:4.12'
