@@ -41,7 +41,7 @@ import java.text.SimpleDateFormat
 @CompileStatic
 class JexlerContainerView {
 
-    private static final Logger log = LoggerFactory.getLogger(Jexler.class)
+    private static final Logger LOG = LoggerFactory.getLogger(Jexler.class)
 
     // Markers for when processing jexler stop/start/restart
     // Map value is the tooltip to show
@@ -73,7 +73,7 @@ class JexlerContainerView {
     }
 
     // Handle commands (based on request parameters)
-    String handleCommands(PageContext pageContext) {
+    String handleCommands(final PageContext pageContext) {
 
         this.pageContext = pageContext
         request = (HttpServletRequest)pageContext.request
@@ -95,7 +95,7 @@ class JexlerContainerView {
             targetJexler = container.getJexler(targetJexlerId)
         }
 
-        String cmd = request.getParameter('cmd')
+        final String cmd = request.getParameter('cmd')
         if (cmd != null) {
             switch (cmd) {
             case 'start':
@@ -143,11 +143,11 @@ class JexlerContainerView {
     // Get all jexlers from container
     Map<String,JexlerContainerView> getJexlers() {
         final Map<String,JexlerContainerView> jexlersViews = new LinkedHashMap<>()
-        for (Jexler jexler : container.jexlers) {
+        for (final Jexler jexler : container.jexlers) {
             JexlerContainerView view = new JexlerContainerView()
             view.jexler = jexler
             view.jexlerId = jexler.id
-            jexlersViews.put(jexler.id, view)
+            jexlersViews[jexler.id] = view
         }
         return jexlersViews
     }
@@ -158,7 +158,7 @@ class JexlerContainerView {
     }
 
     // Set jexler ID, needed to set in views for jexlers
-    void setJexlerId(String jexlerId) {
+    void setJexlerId(final String jexlerId) {
         this.jexlerId = jexlerId
     }
 
@@ -175,40 +175,40 @@ class JexlerContainerView {
     // Get start/stop link with icon for table of jexlers
     String getStartStop() {
         if (jexlerId != '' && !jexler.runnable) {
-            return getSpace()
+            return space
         }
-        boolean on
+        final boolean on
         if (jexlerId == '') {
             on = container.state.on
         } else {
             on = jexler.state.on
         }
-        return on ? getStop() : getStart()
+        return on ? stop : start
     }
 
     // Get restart/zap link with icon for table of jexlers
     String getRestartZap() {
         if (jexlerId != '' && !jexler.runnable) {
-            return getSpace()
+            return space
         }
         if (jexlerId != '' && jexler.state.on) {
-            for (Issue issue : jexler.issues) {
-                if (issue.getMessage() == JexlerUtil.SHUTDOWN_TIMEOUT_MSG) {
-                    return getZap()
+            for (final Issue issue : jexler.issues) {
+                if (issue.message == JexlerUtil.SHUTDOWN_TIMEOUT_MSG) {
+                    return zap
                 }
             }
         }
-        return getRestart()
+        return restart
     }
 
     // Get form action
-    private static String getAction(String jexlerId) {
+    private static String getAction(final String jexlerId) {
         return "?jexler=$jexlerId"
     }
 
     // Get link for posting form for start/stop/restart/zap buttons
-    private String getLink(String cmdParam, String imgName, String title) {
-        String type = cmdParam == null ? 'button' : 'submit'
+    private String getLink(final String cmdParam, final String imgName, final String title) {
+        final String type = cmdParam == null ? 'button' : 'submit'
         // title in image to keep tooltip when dimmed by Javascript (server not reachable),
         // title also in button, otherwise not visible in Firefox...
         return """\
@@ -224,21 +224,21 @@ class JexlerContainerView {
     // Get start link with icon for table of jexlers
     String getStart() {
         final String title = jexlerId == '' ? 'Start all jexlers with autostart set' : 'Start jexler'
-        String cmd = isProcessing(jexlerId) ? null : 'start'
+        final String cmd = isProcessing(jexlerId) ? null : 'start'
         return getLink(cmd, 'start', title)
     }
 
     // Get stop link with icon for table of jexlers
     String getStop() {
         final String title = jexlerId == '' ? 'Stop all jexlers' : 'Stop jexler'
-        String cmd = isProcessing(jexlerId) ? null : 'stop'
+        final String cmd = isProcessing(jexlerId) ? null : 'stop'
         return getLink(cmd, 'stop', title)
      }
 
     // Get restart link with icon for table of jexlers
     String getRestart() {
         final String title = jexlerId == '' ? 'Stop all jexlers, then start all with autostart set' : 'Restart jexler'
-        String cmd = isProcessing(jexlerId) ? null : 'restart'
+        final String cmd = isProcessing(jexlerId) ? null : 'restart'
         return getLink(cmd, 'restart', title)
     }
 
@@ -246,7 +246,7 @@ class JexlerContainerView {
     String getZap() {
         final String title = jexlerId == '' ? 'Zap all jexlers (unsafe, some threads/resources may remain)'
                 : 'Zap jexler (unsafe, some threads/resources may remain)'
-        String cmd = isProcessing(jexlerId) ? null : 'zap'
+        final String cmd = isProcessing(jexlerId) ? null : 'zap'
         return getLink(cmd, 'zap', title)
     }
 
@@ -257,7 +257,7 @@ class JexlerContainerView {
         if (jexler.state.busy) {
             id = "<em>$id</em>"
         }
-        String title
+        final String title
         if (jexler.runnable) {
             title = jexler.state.info
         } else {
@@ -269,14 +269,14 @@ class JexlerContainerView {
     // Get web link and icon for table of jexlers
     String getWeb() {
         if (jexlerId == '') {
-            String img = "<img src='info.gif' title='Go to User Guide in new tab'>"
+            final String img = "<img src='info.gif' title='Go to User Guide in new tab'>"
             return "<a href='https://www.jexler.net/guide/' target='_blank'>$img</a>"
         }
-        Script script = jexler.script
+        final Script script = jexler.script
         if (script != null && jexler.state.operational) {
-            MetaClass mc = script.metaClass
-            Object[] args = [PageContext.class]
-            MetaMethod mm = mc.getMetaMethod('handleHttp', args)
+            final MetaClass mc = script.metaClass
+            final Object[] args = [PageContext.class]
+            final MetaMethod mm = mc.getMetaMethod('handleHttp', args)
             if (mm != null) {
                 return "<a href='?cmd=http&jexler=$jexlerId'><img src='web.gif' title='Go to web served by jexler script'></a>"
             }
@@ -297,8 +297,8 @@ class JexlerContainerView {
                 return "<a href='?cmd=log&jexler=$jexlerId'><img src='error.gif' title='Show jexler log'></a>"
             }
         } else {
-            String img
-            final String processingTitle = processing.get(jexlerId)
+            final String img
+            final String processingTitle = processing[jexlerId]
             if (processingTitle != null) {
                 img = "<img src='wheel.gif' title='$processingTitle'>"
             } else if (jexler.issues.empty) {
@@ -328,7 +328,7 @@ class JexlerContainerView {
 
         final StringBuilder builder = new StringBuilder()
         builder.append("<pre class='issues'>")
-        for (Issue issue : issues) {
+        for (final Issue issue : issues) {
             builder.append('\n')
             SimpleDateFormat format = new SimpleDateFormat('EEE dd MMM yyyy HH:mm:ss.SSS')
             builder.append("<strong>Date:      </strong>${format.format(issue.date)}\n")
@@ -343,13 +343,13 @@ class JexlerContainerView {
             builder.append("<strong>Service:   </strong>$s\n")
             final Throwable cause = issue.cause
             s = (cause==null) ? "-" : cause.toString()
-            replacements.each { original, replacement ->
+            replacements.each { final original, final replacement ->
                 s = s.replace(original, replacement)
             }
             builder.append("<strong>Cause: </strong>$s\n")
             s = issue.stackTrace
             if (s != null) {
-                replacements.each { original, replacement ->
+                replacements.each { final original, final replacement ->
                     s = s.replace(original, replacement)
                 }
                 builder.append(s.empty ?: "<span class='trace'>$s</span>\n")
@@ -371,7 +371,7 @@ class JexlerContainerView {
             String logData = readTextFileReversedLines(logfile)
             logData = logData.replace('<', '&lt')
             builder.append(logData)
-        } catch (IOException e) {
+        } catch (final IOException e) {
             final String msg = "Could not read logfile '$logfile.absolutePath'."
             container.trackIssue(null, msg, e)
             builder.append(msg)
@@ -392,8 +392,8 @@ class JexlerContainerView {
         }
         try {
             return file.text.replace('&', '&amp;')
-        } catch (IOException e) {
-            String msg = "Could not read jexler script file '$file.absolutePath'."
+        } catch (final IOException e) {
+            final String msg = "Could not read jexler script file '$file.absolutePath'."
             jexler.trackIssue(null, msg, e)
             return msg
         }
@@ -438,7 +438,7 @@ class JexlerContainerView {
     // Start jexler or container
     private void handleStart() {
         if (targetJexlerId == '') {
-            for (Jexler jexler : container.jexlers) {
+            for (final Jexler jexler : container.jexlers) {
                 if (jexler.metaConfig?.autostart) {
                     handleStart(jexler)
                 }
@@ -453,7 +453,7 @@ class JexlerContainerView {
         if (targetJexlerId == '') {
             // do this first to get a new grengine instance
             container.stop()
-            for (Jexler jexler : container.jexlers) {
+            for (final Jexler jexler : container.jexlers) {
                 if (jexler.state.on) {
                     handleStop(jexler)
                 }
@@ -468,7 +468,7 @@ class JexlerContainerView {
         if (targetJexlerId == '') {
             // do this first to get a new grengine instance
             container.stop()
-            for (Jexler jexler : container.jexlers) {
+            for (final Jexler jexler : container.jexlers) {
                 if (jexler.metaConfig?.autostart) {
                     handleRestart(jexler)
                 } else if (jexler.state.on) {
@@ -483,7 +483,7 @@ class JexlerContainerView {
     // Zap jexler or container
     private void handleZap() {
         if (targetJexlerId == '') {
-            for (Jexler jexler : container.jexlers) {
+            for (final Jexler jexler : container.jexlers) {
                 if (jexler.state.on) {
                     handleZap(jexler)
                 }
@@ -495,7 +495,7 @@ class JexlerContainerView {
 
     private void setTargetJexlerIdFromJexlerNameParameter() {
 
-        String newJexlerId = request.getParameter('jexlername')
+        final String newJexlerId = request.getParameter('jexlername')
 
         // strangely the input field with the jexler name is not always posted
         // (apparently only at save and only for some already existing files)
@@ -517,11 +517,11 @@ class JexlerContainerView {
         setTargetJexlerIdFromJexlerNameParameter()
         if (source != null && targetJexlerId != '') {
             source = source.replace('\r\n', '\n')
-            File file = container.getJexlerFile(targetJexlerId)
+            final File file = container.getJexlerFile(targetJexlerId)
             try {
                 file.text = source
-            } catch (IOException e) {
-                String msg = "Could not save script file '${file.absolutePath}'"
+            } catch (final IOException e) {
+                final String msg = "Could not save script file '${file.absolutePath}'"
                 if (targetJexler != null) {
                     targetJexler.trackIssue(null, msg, e)
                 } else {
@@ -535,14 +535,14 @@ class JexlerContainerView {
                     targetJexler.forgetIssues()
                     try {
                         container.grengine.load(targetJexler.file)
-                    } catch (Exception e) {
+                    } catch (final Exception e) {
                         targetJexler.trackIssue(targetJexler,
                                 'Compiling/loading of updated jexler failed.', e)
                     }
                 } else {
                     // check if can update container Grengine
                     container.forgetIssues()
-                    GrengineException lastUpdateException = container.grengine.getLastUpdateException()
+                    final GrengineException lastUpdateException = container.grengine.lastUpdateException
                     if (lastUpdateException != null) {
                         container.trackIssue(container, 'Compiling of updated container sources failed' +
                                 ' - previous state of utility classes remains active.', lastUpdateException)
@@ -561,7 +561,7 @@ class JexlerContainerView {
         if (targetJexlerId != '') {
             final File file = container.getJexlerFile(targetJexlerId)
             if (!file.delete()) {
-                String msg = "Could not delete script file '${file.absolutePath}'"
+                final String msg = "Could not delete script file '${file.absolutePath}'"
                 if (targetJexler != null) {
                     targetJexler.trackIssue(null, msg, null)
                 } else {
@@ -575,7 +575,7 @@ class JexlerContainerView {
                 } else {
                     // check if can update container Grengine
                     container.forgetIssues()
-                    GrengineException lastUpdateException = container.grengine.getLastUpdateException()
+                    final GrengineException lastUpdateException = container.grengine.lastUpdateException
                     if (lastUpdateException != null) {
                         container.trackIssue(container, 'Compiling of updated container sources failed' +
                                 ' - previous state of utility classes remains active.', lastUpdateException)
@@ -597,7 +597,7 @@ class JexlerContainerView {
     // Forget issues of container and of all jexlers
     private void handleForgetAll() {
         container.forgetIssues()
-        for (Jexler jexler : container.jexlers) {
+        for (final Jexler jexler : container.jexlers) {
             jexler.forgetIssues()
         }
     }
@@ -613,7 +613,7 @@ class JexlerContainerView {
             return
         }
 
-        final Script script = targetJexler.getScript()
+        final Script script = targetJexler.script
         if (script == null || !targetJexler.state.operational) {
             sendError(response, 404, "Jexler '$targetJexlerId' is not operational.", null)
             return
@@ -630,19 +630,19 @@ class JexlerContainerView {
 
         try {
             mm.invoke(script, [ pageContext ] as Object[])
-        } catch (Throwable t) {
+        } catch (final Throwable t) {
             targetJexler.trackIssue(jexler, "Handler 'handleHttp' failed.", t)
             sendError(response, 500, "Jexler '$targetJexlerId': Handler 'handleHttp' failed.", t)
         }
     }
 
     // Send error page
-    private void sendError(HttpServletResponse response, int status, String msg, Throwable t) {
+    private void sendError(final HttpServletResponse response, final int status, final String msg, final Throwable t) {
         response.status = status
         String stacktrace = ''
         if (t != null) {
             stacktrace = JexlerUtil.getStackTrace(t)
-            replacements.each { original, replacement ->
+            replacements.each { final original, final replacement ->
                 stacktrace = stacktrace.replace(original, replacement)
             }
             stacktrace = "<hr><pre class='log'>$stacktrace</pre><hr>"
@@ -678,9 +678,9 @@ class JexlerContainerView {
      * @return file contents (platform default charset and line separator)
      * @throws IOException if reading failed
      */
-    private static String readTextFileReversedLines(File file) throws IOException {
+    private static String readTextFileReversedLines(final File file) throws IOException {
         final StringBuilder builder = new StringBuilder()
-        file.eachLine { line ->
+        file.eachLine { final line ->
             builder.insert(0, line + System.lineSeparator())
         }
         return builder.toString()
@@ -689,24 +689,24 @@ class JexlerContainerView {
     // Get map of passages to highlight in stack trace
     private Map<String,String> getReplacements() {
         final Map<String,String> replacements = new LinkedHashMap<String,String>()
-        replacements.put('<', '&lt')
+        replacements['<'] =  '&lt'
         // start jexler script
-        replacements.put('Jexler.start', '<strong>Jexler.start</strong>')
+        replacements['Jexler.start'] = '<strong>Jexler.start</strong>'
         // jexler script thread
-        replacements.put('Jexler$1.run', '<strong>Jexler$1.run</strong>')
+        replacements['Jexler$1.run'] = '<strong>Jexler$1.run</strong>'
         // thread that zaps jexler script thread
-        replacements.put('Jexler$2.run', '<strong>Jexler$2.run</strong>')
+        replacements['Jexler$2.run'] = '<strong>Jexler$2.run</strong>'
         // individual jexlers
-        for (Jexler jexler : container.jexlers) {
-            String original = "${jexler.id}.groovy"
-            String replacement = "<strong>$original</strong>"
-            replacements.put(original, replacement)
+        for (final Jexler jexler : container.jexlers) {
+            final String original = "${jexler.id}.groovy"
+            final String replacement = "<strong>$original</strong>"
+            replacements[original] = replacement
         }
         return replacements
     }
 
     // Run given closure in a new thread
-    private void runInNewThread(Closure closure) {
+    private void runInNewThread(final Closure closure) {
         new Thread() {
             void run() {
                 closure.call()
@@ -715,21 +715,21 @@ class JexlerContainerView {
     }
 
     // Whether is processing given jexler / container
-    private static boolean isProcessing(String jexlerId) {
+    private static boolean isProcessing(final String jexlerId) {
         if (jexlerId == '') {
             // always allow to stop/start all, must be robust
             return false
         } else {
-            return processing.get(jexlerId) != null
+            return processing[jexlerId] != null
         }
     }
 
     // Start given jexler
-    private void handleStart(Jexler jexler) {
+    private void handleStart(final Jexler jexler) {
         if (isProcessing(jexler.id)) {
             return
         }
-        processing.put(jexler.id, "Starting...")
+        processing[jexler.id] = "Starting..."
         jexler.start()
         runInNewThread {
             JexlerUtil.waitForStartup(jexler, JexlerContextListener.startTimeoutSecs * 1000L)
@@ -738,11 +738,11 @@ class JexlerContainerView {
     }
 
     // Stop given jexler
-    private void handleStop(Jexler jexler) {
+    private void handleStop(final Jexler jexler) {
         if (isProcessing(jexler.id)) {
             return
         }
-        processing.put(jexler.id, "Stopping...")
+        processing[jexler.id] = "Stopping..."
         jexler.stop()
         runInNewThread {
             JexlerUtil.waitForShutdown(jexler, JexlerContextListener.stopTimeoutSecs * 1000L)
@@ -751,11 +751,11 @@ class JexlerContainerView {
     }
 
     // Restart given jexler
-    private void handleRestart(Jexler jexler) {
+    private void handleRestart(final Jexler jexler) {
         if (isProcessing(jexler.id)) {
             return
         }
-        processing.put(jexler.id, "Stopping...")
+        processing[jexler.id] = "Stopping..."
         jexler.stop()
         runInNewThread {
             if (JexlerUtil.waitForShutdown(jexler, JexlerContextListener.stopTimeoutSecs * 1000L)) {
@@ -768,9 +768,9 @@ class JexlerContainerView {
     }
 
     // Zap given jexler
-    private void handleZap(Jexler jexler) {
+    private void handleZap(final Jexler jexler) {
         // ignore other things in progress
-        processing.put(jexler.id, "Zapping...")
+        processing[jexler.id] = "Zapping..."
         jexler.zap()
         processing.remove(jexler.id)
     }

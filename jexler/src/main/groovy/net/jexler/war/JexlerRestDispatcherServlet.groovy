@@ -47,7 +47,7 @@ import javax.servlet.http.HttpServletResponse
 @CompileStatic
 class JexlerRestDispatcherServlet extends HttpServlet    {
 
-    private static final Logger log = LoggerFactory.getLogger(JexlerRestDispatcherServlet.class)
+    private static final Logger LOG = LoggerFactory.getLogger(JexlerRestDispatcherServlet.class)
 
     // Script class for getting jexler ID from HTTP request.
     private Class<Script> idGetterClass
@@ -58,9 +58,9 @@ class JexlerRestDispatcherServlet extends HttpServlet    {
     @Override
     void init() throws ServletException {
         super.init()
-        String getterSource = JexlerContextListener.settings.'rest.idGetter'
+        final String getterSource = JexlerContextListener.settings.'rest.idGetter'
         idGetterClass = new GroovyClassLoader().parseClass(getterSource)
-        String errorSenderSource = JexlerContextListener.settings.'rest.errorSender'
+        final String errorSenderSource = JexlerContextListener.settings.'rest.errorSender'
         errorSenderClass = new GroovyClassLoader().parseClass(errorSenderSource)
     }
 
@@ -82,7 +82,7 @@ class JexlerRestDispatcherServlet extends HttpServlet    {
         // Any jexler for this ID?
         final Jexler jexler = JexlerContextListener.container.getJexler(jexlerId)
         if (jexler == null) {
-            log.error("No jexler '$jexlerId'.")
+            LOG.error("No jexler '$jexlerId'.")
             sendError(httpReq, httpResp, 404)
             return
         }
@@ -90,7 +90,7 @@ class JexlerRestDispatcherServlet extends HttpServlet    {
         // Jexler operational?
         final Script script = jexler.script
         if (script == null || !jexler.state.operational) {
-            log.error("Jexler '$jexlerId' not operational.")
+            LOG.error("Jexler '$jexlerId' not operational.")
             sendError(httpReq, httpResp, 404)
             return
         }
@@ -108,23 +108,23 @@ class JexlerRestDispatcherServlet extends HttpServlet    {
         // Invoke service() method
         try {
             mm.invoke(script, [ httpReq, httpResp ] as Object[])
-        } catch (Throwable t) {
+        } catch (final Throwable t) {
             jexler.trackIssue(jexler, "Service method failed to handle HTTP request.", t)
             sendError(httpReq, httpResp, 500)
         }
     }
 
-    private String getJexlerId(HttpServletRequest httpReq) {
-        Script idGetterScript = idGetterClass.newInstance()
-        idGetterScript.setBinding(new Binding([ 'httpReq' : httpReq, 'log' : log ]))
+    private String getJexlerId(final HttpServletRequest httpReq) {
+        final Script idGetterScript = idGetterClass.newInstance()
+        idGetterScript.binding = new Binding([ 'httpReq' : httpReq, 'log' : LOG ])
         return (String)idGetterScript.run()
 
     }
 
-    private void sendError(HttpServletRequest httpReq, HttpServletResponse httpResp, int status) {
+    private void sendError(final HttpServletRequest httpReq, final HttpServletResponse httpResp, final int status) {
         httpResp.status = status
-        Script errorSenderScript = errorSenderClass.newInstance()
-        errorSenderScript.setBinding(new Binding([ 'httpReq' : httpReq, 'httpResp' : httpResp ]))
+        final Script errorSenderScript = errorSenderClass.newInstance()
+        errorSenderScript.binding = new Binding([ 'httpReq' : httpReq, 'httpResp' : httpResp ])
         errorSenderScript.run()
     }
 

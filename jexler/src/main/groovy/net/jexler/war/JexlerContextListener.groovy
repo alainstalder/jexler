@@ -39,7 +39,7 @@ import javax.servlet.ServletContextListener
 @CompileStatic
 class JexlerContextListener implements ServletContextListener    {
 
-    private static final Logger log = LoggerFactory.getLogger(JexlerContextListener.class)
+    private static final Logger LOG = LoggerFactory.getLogger(JexlerContextListener.class)
 
     public static final String GUI_VERSION = '3.0.3-SNAPSHOT' // IMPORTANT: keep in sync with version in main build.gradle
 
@@ -75,8 +75,8 @@ class JexlerContextListener implements ServletContextListener    {
         grengineVersion = (grengineVersion == null) ? '0.0.0' : grengineVersion
         String groovyVersion = GroovyClassLoader.class.package.implementationVersion
         groovyVersion = (groovyVersion == null) ? '0.0.0' : groovyVersion
-        log.info("Welcome to jexler.")
-        log.info("Jexler $GUI_VERSION | jexler-core: $coreVersion | Grengine: $grengineVersion | Groovy: $groovyVersion")
+        LOG.info("Welcome to jexler.")
+        LOG.info("Jexler $GUI_VERSION | jexler-core: $coreVersion | Grengine: $grengineVersion | Groovy: $groovyVersion")
 
         // Assemble jexler tooltip
         jexlerTooltip = """\
@@ -91,29 +91,29 @@ class JexlerContextListener implements ServletContextListener    {
 
         // Get settings from files
 
-        File settingsFile = new File(webappPath, 'WEB-INF/settings.groovy')
+        final File settingsFile = new File(webappPath, 'WEB-INF/settings.groovy')
         settings = new ConfigSlurper('').parse(settingsFile.toURI().toURL()).flatten()
-        File settingsCustomFile = new File(webappPath, 'WEB-INF/settings-custom.groovy')
+        final File settingsCustomFile = new File(webappPath, 'WEB-INF/settings-custom.groovy')
         settings.putAll(new ConfigSlurper('').parse(settingsCustomFile.toURI().toURL()).flatten())
-        log.trace("settings: ${JexlerUtil.toSingleLine(settings.toString())}")
+        LOG.trace("settings: ${JexlerUtil.toSingleLine(settings.toString())}")
 
         startTimeoutSecs = (Long)settings.'operation.jexler.startTimeoutSecs'
-        log.trace("jexler start timeout: $startTimeoutSecs secs")
+        LOG.trace("jexler start timeout: $startTimeoutSecs secs")
         stopTimeoutSecs = (Long)settings.'operation.jexler.stopTimeoutSecs'
-        log.trace("jexler stop timeout: $stopTimeoutSecs secs")
+        LOG.trace("jexler stop timeout: $stopTimeoutSecs secs")
 
         scriptAllowEdit = (Boolean)settings.'security.script.allowEdit'
-        log.trace("allow to edit jexler scripts: $scriptAllowEdit")
+        LOG.trace("allow to edit jexler scripts: $scriptAllowEdit")
 
         scriptConfirmSave = (Boolean)settings.'safety.script.confirmSave'
-        log.trace("confirm jexler script save: $scriptConfirmSave")
+        LOG.trace("confirm jexler script save: $scriptConfirmSave")
         scriptConfirmDelete = (Boolean)settings.'safety.script.confirmDelete'
-        log.trace("confirm jexler script delete: $scriptConfirmDelete")
+        LOG.trace("confirm jexler script delete: $scriptConfirmDelete")
 
         // Determine and set log file
         logfile = null
         final LoggerContext context = (LoggerContext)LoggerFactory.ILoggerFactory
-        for (Logger logger : context.loggerList) {
+        for (final Logger logger : context.loggerList) {
             if (logger instanceof ch.qos.logback.classic.Logger) {
                 ch.qos.logback.classic.Logger classicLogger = (ch.qos.logback.classic.Logger)logger
                 classicLogger.iteratorForAppenders().each() { appender ->
@@ -123,7 +123,7 @@ class JexlerContextListener implements ServletContextListener    {
                 }
             }
         }
-        log.trace("logfile: '$logfile.absolutePath'")
+        LOG.trace("logfile: '$logfile.absolutePath'")
 
         // Set and start container
         container = new JexlerContainer(new File(webappPath, 'WEB-INF/jexlers'))
@@ -131,11 +131,11 @@ class JexlerContextListener implements ServletContextListener    {
     }
 
     @Override
-    void contextDestroyed(ServletContextEvent event) {
+    void contextDestroyed(final ServletContextEvent event) {
         // Stop and close container
         container.stop()
         container.close()
-        log.info('Jexler done.')
+        LOG.info('Jexler done.')
     }
 
 }
