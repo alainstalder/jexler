@@ -42,7 +42,7 @@ import org.slf4j.LoggerFactory
 @CompileStatic
 class CronService extends ServiceBase {
 
-    private static final Logger log = LoggerFactory.getLogger(CronService.class)
+    private static final Logger LOG = LoggerFactory.getLogger(CronService.class)
 
     /**
      * Pseudo cron string for a single cron event immediately.
@@ -65,7 +65,7 @@ class CronService extends ServiceBase {
      * @param jexler the jexler to send events to
      * @param id the id of the service
      */
-    CronService(Jexler jexler, String id) {
+    CronService(final Jexler jexler, final String id) {
         super(id)
         this.jexler = jexler
     }
@@ -77,7 +77,7 @@ class CronService extends ServiceBase {
      * by a StopEvent, which can both be useful for testing.
      * @return this (for chaining calls)
      */
-    CronService setCron(String cron) {
+    CronService setCron(final String cron) {
         this.cron = ServiceUtil.toQuartzCron(cron)
         return this
     }
@@ -94,7 +94,7 @@ class CronService extends ServiceBase {
      * Default is a scheduler shared by all jexlers in the same jexler container.
      * @return this (for chaining calls)
      */
-    CronService setScheduler(Scheduler scheduler) {
+    CronService setScheduler(final Scheduler scheduler) {
         this.scheduler = scheduler
         return this
     }
@@ -119,7 +119,7 @@ class CronService extends ServiceBase {
             return
         }
         if (cron.startsWith(CRON_NOW)) {
-            log.trace("new cron event: $cron")
+            LOG.trace("new cron event: $cron")
             jexler.handle(new CronEvent(this, cron))
             state = ServiceState.IDLE
             if (cron.equals(CRON_NOW_AND_STOP)) {
@@ -170,8 +170,8 @@ class CronService extends ServiceBase {
                 void run() {
                     try {
                         scheduler.unscheduleJob(triggerKey)
-                    } catch (Throwable t) {
-                        log.trace('failed to unschedule cron job', t)
+                    } catch (final Throwable tUnschedule) {
+                        LOG.trace('failed to unschedule cron job', tUnschedule)
                     }
                 }
             }.start()
@@ -182,11 +182,11 @@ class CronService extends ServiceBase {
      * Internal class, only public because otherwise not called by quartz scheduler.
      */
     static class CronJob implements Job {
-        void execute(JobExecutionContext ctx) throws JobExecutionException {
+        void execute(final JobExecutionContext ctx) throws JobExecutionException {
             final CronService service = (CronService)ctx.jobDetail.jobDataMap.service
             final String savedName = Thread.currentThread().name
             Thread.currentThread().name = "$service.jexler.id|$service.id"
-            log.trace("new cron event: $service.cron")
+            LOG.trace("new cron event: $service.cron")
             service.jexler.handle(new CronEvent(service, service.cron))
             Thread.currentThread().name = savedName
         }

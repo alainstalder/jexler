@@ -34,7 +34,7 @@ import groovy.transform.CompileStatic
 @CompileStatic
 class JexlerDispatcher {
 
-    static void dispatch(Script script) {
+    static void dispatch(final Script script) {
 
         final Jexler jexler = (Jexler)script.binding.variables.jexler
         final Events events = (Events)script.binding.variables.events

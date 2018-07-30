@@ -32,13 +32,13 @@ class BasicServiceGroupSpec extends Specification {
 
     def 'TEST basics including group service state'() {
         given:
-        def jexler = new TestJexler()
-        def service1 = new MockService(jexler, 'service1')
-        def service2 = new MockService(jexler, 'service2')
-        def service3 = new MockService(jexler, 'service3')
+        final def jexler = new TestJexler()
+        final def service1 = new MockService(jexler, 'service1')
+        final def service2 = new MockService(jexler, 'service2')
+        final def service3 = new MockService(jexler, 'service3')
 
         when:
-        def group = new ServiceGroup('group')
+        final def group = new ServiceGroup('group')
 
         then:
         group.id == 'group'
@@ -83,13 +83,13 @@ class BasicServiceGroupSpec extends Specification {
 
     def 'TEST start and stop'() {
         given:
-        def jexler = new TestJexler()
-        def service1 = new MockService(jexler, 'service1')
-        def service2 = new MockService(jexler, 'service2')
-        def service3 = new MockService(jexler, 'service3')
+        final def jexler = new TestJexler()
+        final def service1 = new MockService(jexler, 'service1')
+        final def service2 = new MockService(jexler, 'service2')
+        final def service3 = new MockService(jexler, 'service3')
 
         when:
-        def group = new ServiceGroup('group')
+        final def group = new ServiceGroup('group')
         group.add(service1)
         group.add(service2)
         group.add(service3)
@@ -149,11 +149,11 @@ class BasicServiceGroupSpec extends Specification {
 
     def 'TEST runtime exceptions when stopping services'() {
         given:
-        def jexler = new TestJexler()
-        def service1 = new MockService(jexler, 'service1')
-        def service2 = new MockService(jexler, 'service2')
-        def service3 = new MockService(jexler, 'service3')
-        def group = new ServiceGroup('group')
+        final def jexler = new TestJexler()
+        final def service1 = new MockService(jexler, 'service1')
+        final def service2 = new MockService(jexler, 'service2')
+        final def service3 = new MockService(jexler, 'service3')
+        final def group = new ServiceGroup('group')
         group.add(service1)
         group.add(service2)
         group.add(service3)
@@ -168,14 +168,14 @@ class BasicServiceGroupSpec extends Specification {
         group.state == ServiceState.IDLE
 
         when:
-        RuntimeException ex1 = new RuntimeException()
-        RuntimeException ex2 = new RuntimeException()
+        final RuntimeException ex1 = new RuntimeException()
+        final RuntimeException ex2 = new RuntimeException()
         service1.stopRuntimeException = ex1
         service2.stopRuntimeException = ex2
         group.stop()
 
         then:
-        RuntimeException e = thrown()
+        final RuntimeException e = thrown()
         e.is(ex1)
         service1.state == ServiceState.IDLE
         service2.state == ServiceState.IDLE
@@ -185,7 +185,7 @@ class BasicServiceGroupSpec extends Specification {
 
     def 'TEST empty service group'() {
         when:
-        def group = new ServiceGroup('group')
+        final def group = new ServiceGroup('group')
 
         then:
         group.state == ServiceState.OFF

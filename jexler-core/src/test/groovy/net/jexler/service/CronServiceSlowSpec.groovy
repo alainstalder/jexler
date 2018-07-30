@@ -37,10 +37,10 @@ class CronServiceSlowSpec extends Specification {
 
     def 'TEST SLOW (10 sec) cron every sec'() {
         given:
-        def jexler = new TestJexler()
+        final def jexler = new TestJexler()
 
         when:
-        def service = new CronService(jexler, 'cronid')
+        final def service = new CronService(jexler, 'cronid')
         service.cron = CRON_EVERY_SEC
 
         then:
@@ -129,10 +129,10 @@ class CronServiceSlowSpec extends Specification {
 
     def 'TEST SLOW (6 sec) cron now'() {
         given:
-        def jexler = new TestJexler()
+        final def jexler = new TestJexler()
 
         when:
-        def service = new CronService(jexler, 'cronid').setCron(CronService.CRON_NOW)
+        final def service = new CronService(jexler, 'cronid').setCron(CronService.CRON_NOW)
         def event = jexler.takeEvent(MS_2_SEC)
 
         then:
@@ -187,10 +187,10 @@ class CronServiceSlowSpec extends Specification {
 
     def 'TEST SLOW (4 sec) cron now+stop'() {
         given:
-        def jexler = new TestJexler()
+        final def jexler = new TestJexler()
 
         when:
-        def service = new CronService(jexler, 'cronid').setCron(CronService.CRON_NOW_AND_STOP)
+        final def service = new CronService(jexler, 'cronid').setCron(CronService.CRON_NOW_AND_STOP)
         def event = jexler.takeEvent(MS_2_SEC)
 
         then:

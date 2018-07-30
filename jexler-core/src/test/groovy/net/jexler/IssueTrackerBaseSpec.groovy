@@ -31,7 +31,7 @@ class IssueTrackerBaseSpec extends Specification {
 
     def 'TEST track and forget'() {
         when:
-        def tracker = new IssueTrackerBase()
+        final def tracker = new IssueTrackerBase()
 
         then:
         tracker.issues.empty

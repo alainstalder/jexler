@@ -29,7 +29,7 @@ import org.slf4j.LoggerFactory
 @CompileStatic
 class ServiceGroup implements Service {
 
-    private static final Logger log = LoggerFactory.getLogger(ServiceGroup.class)
+    private static final Logger LOG = LoggerFactory.getLogger(ServiceGroup.class)
 
     private final String id
 
@@ -40,7 +40,7 @@ class ServiceGroup implements Service {
      * Constructor.
      * @param id the service group id
      */
-    ServiceGroup(String id) {
+    ServiceGroup(final String id) {
         this.id = id
         this.services = new LinkedList<>()
     }
@@ -54,7 +54,7 @@ class ServiceGroup implements Service {
     @Override
     void start() {
         synchronized(services) {
-            for (Service service : services) {
+            for (final Service service : services) {
                 service.start()
             }
         }
@@ -69,14 +69,14 @@ class ServiceGroup implements Service {
     void stop() {
         RuntimeException ex = null
         synchronized(services) {
-            for (Service service : services) {
+            for (final Service service : services) {
                 try {
                     service.stop()
                 } catch (RuntimeException e) {
                     if (ex == null) {
                         ex = e
                     }
-                    log.trace("Could not stop service '$id'", e)
+                    LOG.trace("Could not stop service '$id'", e)
                 }
             }
         }
@@ -96,7 +96,7 @@ class ServiceGroup implements Service {
     ServiceState getState() {
         final Set<ServiceState> set = new HashSet<>()
         synchronized(services) {
-            for (Service service : services) {
+            for (final Service service : services) {
                 set.add(service.state)
             }
         }
@@ -116,7 +116,7 @@ class ServiceGroup implements Service {
     @Override
     void zap() {
         synchronized(services) {
-            for (Service service : services) {
+            for (final Service service : services) {
                 service.zap()
             }
         }
@@ -130,7 +130,7 @@ class ServiceGroup implements Service {
     /**
      * Add given service to the group of services.
      */
-    void add(Service service) {
+    void add(final Service service) {
         synchronized(services) {
             services.add(service)
         }

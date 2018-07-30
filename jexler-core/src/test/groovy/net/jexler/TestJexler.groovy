@@ -29,11 +29,11 @@ import groovy.transform.CompileStatic
 @CompileStatic
 class TestJexler extends Jexler {
 
-    TestJexler(File file, JexlerContainer container) {
+    TestJexler(final File file, final JexlerContainer container) {
         super(file, container)
     }
 
-    TestJexler(File file) throws Exception {
+    TestJexler(final File file) throws Exception {
         this(file, new JexlerContainer(file.parentFile))
     }
 
@@ -45,8 +45,8 @@ class TestJexler extends Jexler {
      * Wait at most timeout ms for event, return
      * event if got one in time, null otherwise.
      */
-    Event takeEvent(long timeout) {
-        long t0 = System.currentTimeMillis()
+    Event takeEvent(final long timeout) {
+        final long t0 = System.currentTimeMillis()
         while (true) {
             Event event = events.poll()
             if (event != null) {

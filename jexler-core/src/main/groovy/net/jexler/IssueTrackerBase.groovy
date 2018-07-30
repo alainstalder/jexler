@@ -30,7 +30,7 @@ import org.slf4j.LoggerFactory
 @CompileStatic
 class IssueTrackerBase implements IssueTracker {
 
-    private static final Logger log = LoggerFactory.getLogger(IssueTrackerBase.class)
+    private static final Logger LOG = LoggerFactory.getLogger(IssueTrackerBase.class)
 
     /** List of issues. */
     private final List<Issue> issues
@@ -43,15 +43,15 @@ class IssueTrackerBase implements IssueTracker {
     }
 
     @Override
-    void trackIssue(Issue issue) {
-        log.error(issue.toString())
+    void trackIssue(final Issue issue) {
+        LOG.error(issue.toString())
         synchronized (issues) {
             issues.add(issue)
         }
     }
 
     @Override
-    void trackIssue(Service service, String message, Throwable cause) {
+    void trackIssue(final Service service, final String message, final Throwable cause) {
         trackIssue(new Issue(service, message, cause))
     }
 

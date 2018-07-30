@@ -32,7 +32,7 @@ import spock.lang.Specification
 class JexlerSlowSpec extends Specification {
 
     @Rule
-    public TemporaryFolder tempFolder = new TemporaryFolder();
+    public TemporaryFolder tempFolder = new TemporaryFolder()
 
     private final static long MS_1_SEC = 1000
     private final static long MS_3_SEC = 3000
@@ -40,8 +40,8 @@ class JexlerSlowSpec extends Specification {
     
     def 'TEST SLOW (12 sec) jexler start or shutdown too slow'() {
         given:
-        File dir = tempFolder.root
-        File file = new File(dir, 'Test.groovy')
+        final File dir = tempFolder.root
+        final File file = new File(dir, 'Test.groovy')
         file.text = """\
             // Jexler {}
             log.info('before startup wait ' + jexler.id)
@@ -56,7 +56,7 @@ class JexlerSlowSpec extends Specification {
             }
             """.stripIndent()
         when:
-        def jexler = new Jexler(file, new JexlerContainer(dir))
+        final def jexler = new Jexler(file, new JexlerContainer(dir))
         jexler.start()
         JexlerUtil.waitForStartup(jexler, MS_1_SEC)
 

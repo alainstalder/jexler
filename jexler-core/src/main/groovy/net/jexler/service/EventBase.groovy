@@ -32,7 +32,7 @@ abstract class EventBase implements Event {
      * Constructor.
      * @param service the service that created the event
      */
-    EventBase(Service service) {
+    EventBase(final Service service) {
         this.service = service
     }
 

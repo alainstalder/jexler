@@ -24,13 +24,13 @@ import groovy.transform.CompileStatic
  * @author $(whois jexler.net)
  */
 @CompileStatic
-public class StopEvent extends EventBase {
+class StopEvent extends EventBase {
 
     /**
      * Constructor.
      * @param service the service that is initiating the stop
      */
-    StopEvent(Service service) {
+    StopEvent(final Service service) {
         super(service)
     }
 

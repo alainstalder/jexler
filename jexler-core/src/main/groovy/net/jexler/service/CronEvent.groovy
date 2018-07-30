@@ -33,7 +33,7 @@ class CronEvent extends EventBase {
      * @param service the service that created the event
      * @param cron the cron pattern that caused the event
      */
-    CronEvent(Service service, String cron) {
+    CronEvent(final Service service, final String cron) {
         super(service)
         this.cron = cron
     }

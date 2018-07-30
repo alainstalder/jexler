@@ -68,7 +68,8 @@ class StringObfuscatorTool {
      * Set key, iv, algorithm and transformation.
      * @return this (for chaining calls)
      */
-    StringObfuscatorTool setParameters(String hexKey, String hexIv, String algorithm, String transformation)
+    StringObfuscatorTool setParameters(final String hexKey, final String hexIv,
+                                       final String algorithm, final String transformation)
             throws NoSuchAlgorithmException, NoSuchPaddingException {
         key = new SecretKeySpec(DatatypeConverter.parseHexBinary(hexKey), algorithm)
         iv = new IvParameterSpec(DatatypeConverter.parseHexBinary(hexIv))
@@ -80,7 +81,7 @@ class StringObfuscatorTool {
      * Set the length to which to pad the plain string as UTF-8 encoded byte buffer.
      * @return this (for chaining calls)
      */
-    StringObfuscatorTool setByteBufferPadLen(int len) {
+    StringObfuscatorTool setByteBufferPadLen(final int len) {
         byteBufferPadLen = len
         return this
     }
@@ -90,7 +91,7 @@ class StringObfuscatorTool {
      * @throws IllegalArgumentException if the string is too long (byteBufferPadLen)
      * @return obfuscated string
      */
-    String obfuscate(String plain)
+    String obfuscate(final String plain)
             throws InvalidKeyException, IllegalBlockSizeException,
             BadPaddingException, UnsupportedEncodingException,
             InvalidAlgorithmParameterException {
@@ -110,7 +111,7 @@ class StringObfuscatorTool {
         System.arraycopy(plainBytes, 0, plainPaddedBytes, lenSaltBytes, lenActual)
         plainPaddedBytes[byteBufferPadLen-1] = (byte)lenActual
         cipher.init(Cipher.ENCRYPT_MODE, key, iv)
-        byte[] enc = cipher.doFinal(plainPaddedBytes)
+        final byte[] enc = cipher.doFinal(plainPaddedBytes)
         return DatatypeConverter.printHexBinary(enc)
     }
     
@@ -118,7 +119,7 @@ class StringObfuscatorTool {
      * Hex decode, decipher, unpad and UTF-8 decode given string.
      * @return deobfuscated string
      */
-    String deobfuscate(String encHex)
+    String deobfuscate(final String encHex)
             throws InvalidKeyException, IllegalBlockSizeException,
             BadPaddingException, UnsupportedEncodingException,
             InvalidAlgorithmParameterException {

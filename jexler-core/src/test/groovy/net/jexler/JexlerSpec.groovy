@@ -46,12 +46,12 @@ class JexlerSpec extends Specification {
 
     def 'TEST script simple run (exit immediately)'() {
         given:
-        def dir = tempFolder.root
-        def file = new File(dir, 'Test.groovy')
+        final def dir = tempFolder.root
+        final def file = new File(dir, 'Test.groovy')
+        file.text = text
 
         expect:
-        file.setText(text)
-        def jexler = new Jexler(file, new JexlerContainer(dir))
+        final def jexler = new Jexler(file, new JexlerContainer(dir))
         jexler.start()
         JexlerUtil.waitForStartup(jexler, MS_10_SEC)
         jexler.dir.absolutePath == dir.absolutePath
@@ -67,9 +67,9 @@ class JexlerSpec extends Specification {
 
     def 'TEST script cannot read meta config'() {
         when:
-        def dir = tempFolder.root
-        def file = new File(dir, 'Test.groovy')
-        def jexler = new Jexler(file, new JexlerContainer(dir))
+        final def dir = tempFolder.root
+        final def file = new File(dir, 'Test.groovy')
+        final def jexler = new Jexler(file, new JexlerContainer(dir))
         // create directory with name of jexler script file
         file.mkdir()
         jexler.start()
@@ -84,9 +84,9 @@ class JexlerSpec extends Specification {
 
     def 'TEST script cannot parse meta config'() {
         when:
-        def dir = tempFolder.root
-        def file = new File(dir, 'Test.groovy')
-        def jexler = new Jexler(file, new JexlerContainer(dir))
+        final def dir = tempFolder.root
+        final def file = new File(dir, 'Test.groovy')
+        final def jexler = new Jexler(file, new JexlerContainer(dir))
         // : instead of =
         file.text = '// Jexler { autostart&% = true }'
         jexler.start()
@@ -101,12 +101,12 @@ class JexlerSpec extends Specification {
 
     def 'TEST script compile, create or run fails'() {
         given:
-        def dir = tempFolder.root
-        def file = new File(dir, 'Test.groovy')
+        final def dir = tempFolder.root
+        final def file = new File(dir, 'Test.groovy')
+        file.text = text
 
         expect:
-        file.setText(text)
-        def jexler = new Jexler(file, new JexlerContainer(dir))
+        final def jexler = new Jexler(file, new JexlerContainer(dir))
         jexler.start()
         JexlerUtil.waitForStartup(jexler, MS_10_SEC)
         jexler.state == ServiceState.OFF
@@ -132,9 +132,9 @@ class JexlerSpec extends Specification {
                 """.stripIndent(),
                 """\
                     // Jexler {}
-                    public class Test extends Script {
+                    class Test extends Script {
                       static { throw new RuntimeException() }
-                      public def run() {}
+                      def run() {}
                     }
                 """.stripIndent(),
                 """\
@@ -154,8 +154,8 @@ class JexlerSpec extends Specification {
 
     def 'TEST simple jexler script life cycle'() {
         given:
-        def dir = tempFolder.root
-        def file = new File(dir, 'Test.groovy')
+        final def dir = tempFolder.root
+        final def file = new File(dir, 'Test.groovy')
         file.text = """\
             // Jexler { autostart = false; foo = 'bar' }
             def mockService = new MockService(jexler, 'mock-service')
@@ -171,7 +171,7 @@ class JexlerSpec extends Specification {
             }
             """.stripIndent()
         when:
-        def jexler = new Jexler(file, new JexlerContainer(dir))
+        final def jexler = new Jexler(file, new JexlerContainer(dir))
 
         then:
         jexler.state == ServiceState.OFF
@@ -184,7 +184,7 @@ class JexlerSpec extends Specification {
         when:
         jexler.start()
         JexlerUtil.waitForStartup(jexler, MS_10_SEC)
-        def mockService = MockService.getInstance('mock-service')
+        final def mockService = MockService.getInstance('mock-service')
 
         then:
         jexler.state == ServiceState.IDLE
@@ -243,8 +243,8 @@ class JexlerSpec extends Specification {
 
     def 'TEST zap hanging jexler'() {
         given:
-        def dir = tempFolder.root
-        def file = new File(dir, 'Test.groovy')
+        final def dir = tempFolder.root
+        final def file = new File(dir, 'Test.groovy')
         file.text = """\
             // Jexler { autostart = false; foo = 'bar' }
             def mockService = new MockService(jexler, 'mock-service')
@@ -260,7 +260,7 @@ class JexlerSpec extends Specification {
             }
             """.stripIndent()
         when:
-        def jexler = new Jexler(file, new JexlerContainer(dir))
+        final def jexler = new Jexler(file, new JexlerContainer(dir))
 
         then:
         jexler.state == ServiceState.OFF
@@ -273,7 +273,7 @@ class JexlerSpec extends Specification {
         when:
         jexler.start()
         JexlerUtil.waitForStartup(jexler, MS_10_SEC)
-        def mockService = MockService.getInstance('mock-service')
+        final def mockService = MockService.getInstance('mock-service')
 
         then:
         jexler.state == ServiceState.IDLE
@@ -327,8 +327,8 @@ class JexlerSpec extends Specification {
 
     def 'TEST detect stop events in queue'() {
         given:
-        def events = new Jexler.Events()
-        def service = new ServiceBase('testid') {
+        final def events = new Jexler.Events()
+        final def service = new ServiceBase('testid') {
             void start() {}
             void stop() {}
             void zap() {}
@@ -372,13 +372,13 @@ class JexlerSpec extends Specification {
 
     def 'TEST track issue'() {
         given:
-        def dir = tempFolder.root
-        def file = new File(dir, 'Test.groovy')
-        def jexler = new Jexler(file, new JexlerContainer(dir))
+        final def dir = tempFolder.root
+        final def file = new File(dir, 'Test.groovy')
+        final def jexler = new Jexler(file, new JexlerContainer(dir))
 
         when:
-        def mockService = MockService.getInstance('mock-service')
-        def e = new RuntimeException()
+        final def mockService = MockService.getInstance('mock-service')
+        final def e = new RuntimeException()
         jexler.trackIssue(mockService, 'mock issue', e)
 
         then:
@@ -394,7 +394,7 @@ class JexlerSpec extends Specification {
         jexler.issues.empty
 
         when:
-        def t = new Throwable()
+        final def t = new Throwable()
         jexler.trackIssue(new Issue(jexler, 'jexler issue', t))
 
         then:
@@ -413,8 +413,8 @@ class JexlerSpec extends Specification {
     def 'TEST runtime exception at jexler shutdown'() {
 
         given:
-        def dir = tempFolder.root
-        def file = new File(dir, 'Test.groovy')
+        final def dir = tempFolder.root
+        final def file = new File(dir, 'Test.groovy')
         file.text = """\
             // Jexler { autostart = false; foo = 'bar' }
             def mockService = new MockService(jexler, 'mock-service')
@@ -432,10 +432,10 @@ class JexlerSpec extends Specification {
             """.stripIndent()
 
         when:
-        def jexler = new Jexler(file, new JexlerContainer(dir))
+        final def jexler = new Jexler(file, new JexlerContainer(dir))
         jexler.start()
         JexlerUtil.waitForStartup(jexler, MS_10_SEC)
-        def mockService = MockService.getInstance('mock-service')
+        final def mockService = MockService.getInstance('mock-service')
 
         then:
         jexler.state == ServiceState.IDLE
@@ -460,33 +460,33 @@ class JexlerSpec extends Specification {
 
     def 'TEST getAsConfig'() {
         given:
-        def dir = tempFolder.root
-        def file = new File(dir, 'Test.groovy')
+        final def dir = tempFolder.root
+        final def file = new File(dir, 'Test.groovy')
 
         when:
-        file.setText("a { x=1; y=true; z { aa='hello' } }")
-        def jexler = new Jexler(file, new JexlerContainer(dir))
+        file.text = "a { x=1; y=true; z { aa='hello' } }"
+        final def jexler = new Jexler(file, new JexlerContainer(dir))
 
         then:
-        jexler.getAsConfig().a.x == 1
-        jexler.getAsConfig().a.y == true
-        jexler.getAsConfig().a.z.aa == 'hello'
+        jexler.asConfig.a.x == 1
+        jexler.asConfig.a.y == true
+        jexler.asConfig.a.z.aa == 'hello'
     }
 
     def 'TEST meta config: no file'() {
         given:
-        def dir = tempFolder.root
-        def file = new File(dir, 'Test.groovy')
+        final def dir = tempFolder.root
+        final def file = new File(dir, 'Test.groovy')
 
         when:
         // jexler file does not exist
-        def jexler = new Jexler(file, new JexlerContainer(dir))
+        final def jexler = new Jexler(file, new JexlerContainer(dir))
 
         then:
         jexler.issues.empty
 
         when:
-        def metaConfig = jexler.metaConfig
+        final def metaConfig = jexler.metaConfig
 
         then:
         metaConfig == null
@@ -495,11 +495,11 @@ class JexlerSpec extends Specification {
 
     def 'TEST meta config: IOException while reading file'() {
         given:
-        def dir = tempFolder.root
+        final def dir = tempFolder.root
 
         when:
         // passing dir as jexler file
-        def jexler = new Jexler(dir, new JexlerContainer(dir))
+        final def jexler = new Jexler(dir, new JexlerContainer(dir))
 
         then:
         jexler.issues.empty
@@ -516,8 +516,8 @@ class JexlerSpec extends Specification {
 
     def 'TEST meta config: default to null'() {
         given:
-        def dir = tempFolder.root
-        def file = new File(dir, 'Test.groovy')
+        final def dir = tempFolder.root
+        final def file = new File(dir, 'Test.groovy')
         file.text = text
 
         expect:
@@ -530,8 +530,8 @@ class JexlerSpec extends Specification {
     
     def 'TEST interrupt event take in jexler event loop'() {
         given:
-        def dir = tempFolder.root
-        def file = new File(dir, 'Test.groovy')
+        final def dir = tempFolder.root
+        final def file = new File(dir, 'Test.groovy')
         file.text = """\
             // Jexler { autostart = false }
             while (true) {
@@ -542,7 +542,7 @@ class JexlerSpec extends Specification {
             }
             """.stripIndent()
         when:
-        def jexler = new Jexler(file, new JexlerContainer(dir))
+        final def jexler = new Jexler(file, new JexlerContainer(dir))
         jexler.start()
         JexlerUtil.waitForStartup(jexler, MS_10_SEC)
 
@@ -552,7 +552,7 @@ class JexlerSpec extends Specification {
         when:
         // find script thread
         Thread scriptThread = null
-        Thread.allStackTraces.each() { thread, stackTrace ->
+        Thread.allStackTraces.each() { final thread, final stackTrace ->
             if (thread.name == 'Test') {
                 scriptThread = thread
             }

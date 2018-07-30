@@ -18,6 +18,7 @@ package net.jexler.service
 
 import groovy.transform.CompileStatic
 
+import java.nio.file.Path
 import java.nio.file.WatchEvent
 
 /**
@@ -29,7 +30,7 @@ import java.nio.file.WatchEvent
 class DirWatchEvent extends EventBase {
 
     private final File file
-    private final WatchEvent.Kind kind
+    private final WatchEvent.Kind<Path> kind
     
     /**
      * Constructor.
@@ -37,7 +38,7 @@ class DirWatchEvent extends EventBase {
      * @param file the file that has been created, modified or deleted
      * @param kind what happened with the file
      */
-    DirWatchEvent(Service service, File file, WatchEvent.Kind kind) {
+    DirWatchEvent(final Service service, final File file, final WatchEvent.Kind<Path> kind) {
         super(service)
         this.file = file
         this.kind = kind

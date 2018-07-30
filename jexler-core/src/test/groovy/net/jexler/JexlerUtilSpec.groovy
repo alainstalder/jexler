@@ -31,7 +31,7 @@ class JexlerUtilSpec extends Specification {
 
     private static class NoStackTraceException extends Exception {
         @Override
-        public void printStackTrace(PrintWriter writer) {
+        void printStackTrace(PrintWriter writer) {
             throw new RuntimeException()
         }
     }
@@ -46,7 +46,7 @@ class JexlerUtilSpec extends Specification {
 
     def 'TEST getStackTrace: nonempty stack trace'() {
         when:
-        def stackTrace = JexlerUtil.getStackTrace(new Exception())
+        final def stackTrace = JexlerUtil.getStackTrace(new Exception())
 
         then:
         stackTrace.startsWith('java.lang.Exception')
@@ -68,9 +68,9 @@ class JexlerUtilSpec extends Specification {
 
     def 'TEST waitAtLeast: general'() {
         expect:
-        long t0 = System.currentTimeMillis()
+        final long t0 = System.currentTimeMillis()
         JexlerUtil.waitAtLeast(ms)
-        long t1 = System.currentTimeMillis()
+        final long t1 = System.currentTimeMillis()
         t1-t0 >= ms
         t1-t0 < 2000 // (might be false if a lot of load on test system)
 

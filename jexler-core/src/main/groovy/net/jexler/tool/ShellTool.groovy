@@ -41,10 +41,10 @@ class ShellTool {
      */
     @CompileStatic
     static class Result {
-        int rc
-        String stdout
-        String stderr
-        Result(int rc, String stdout, String stderr) {
+        final int rc
+        final String stdout
+        final String stderr
+        Result(final int rc, final String stdout, final String stderr) {
             this.rc = rc
             this.stdout = stdout
             this.stderr = stderr
@@ -70,7 +70,7 @@ class ShellTool {
         /** Collected output. */
         String output
 
-        OutputCollector(InputStream is, Closure lineHandler, String threadName) {
+        OutputCollector(final InputStream is, final Closure lineHandler, final String threadName) {
             this.is = is
             this.lineHandler = lineHandler
             this.threadName = threadName
@@ -110,7 +110,7 @@ class ShellTool {
      * If not set or set to null, inherit from parent process.
      * @return this (for chaining calls)
      */
-    ShellTool setWorkingDirectory(File workingDirectory) {
+    ShellTool setWorkingDirectory(final File workingDirectory) {
         this.workingDirectory = workingDirectory
         return this
     }
@@ -128,7 +128,7 @@ class ShellTool {
      * If not set or set to null, inherit from parent process.
      * @return this (for chaining calls)
      */
-    ShellTool setEnvironment(Map<String,String> env) {
+    ShellTool setEnvironment(final Map<String,String> env) {
         this.env = env
         return this
     }
@@ -145,7 +145,7 @@ class ShellTool {
      * If not set or set to null, do nothing.
      * @return this (for chaining calls)
      */
-    ShellTool setStdoutLineHandler(Closure handler) {
+    ShellTool setStdoutLineHandler(final Closure handler) {
         stdoutLineHandler = handler
         return this
     }
@@ -162,7 +162,7 @@ class ShellTool {
      * If not set or set to null, do nothing.
      * @return this (for chaining calls)
      */
-    ShellTool setStderrLineHandler(Closure handler) {
+    ShellTool setStderrLineHandler(final Closure handler) {
         stderrLineHandler = handler
         return this
     }
@@ -182,11 +182,11 @@ class ShellTool {
      * @param command command to run
      * @return result, never null
      */
-    Result run(String command) {
+    Result run(final String command) {
         try {
             final Process proc = Runtime.runtime.exec(command, toEnvArray(env), workingDirectory)
             return getResult(proc)
-        } catch (Exception e ) {
+        } catch (final Exception e) {
             return getExceptionResult(JexlerUtil.getStackTrace(e))
         }
     }
@@ -199,13 +199,13 @@ class ShellTool {
      * @param cmdList list containing the command and its arguments
      * @return result, never null
      */
-    Result run(List<String> cmdList) {
-        String[] cmdArray = new String[cmdList.size()]
+    Result run(final List<String> cmdList) {
+        final String[] cmdArray = new String[cmdList.size()]
         cmdList.toArray(cmdArray)
         try {
             final Process proc = Runtime.runtime.exec(cmdArray, toEnvArray(env), workingDirectory)
             return getResult(proc)
-        } catch (Exception e ) {
+        } catch (final Exception e) {
             return getExceptionResult(JexlerUtil.getStackTrace(e))
         }
     }
@@ -213,7 +213,7 @@ class ShellTool {
     /**
      * Get result of given process.
      */
-    private Result getResult(Process proc) throws Exception {
+    private Result getResult(final Process proc) throws Exception {
         final OutputCollector outCollector = new OutputCollector(proc.inputStream, stdoutLineHandler, 'stdout collector')
         final OutputCollector errCollector = new OutputCollector(proc.errorStream, stderrLineHandler, 'stderr collector')
         outCollector.start()
@@ -227,16 +227,16 @@ class ShellTool {
     /**
      * Get result in case where an exception occurred.
      */
-    private static Result getExceptionResult(String stackTrace) {
+    private static Result getExceptionResult(final String stackTrace) {
         return new Result(-1, '', stackTrace)
     }
 
     /**
      * Convert map of name and value to array of name=value.
      */
-    private static String[] toEnvArray(Map<String,String> env) {
+    private static String[] toEnvArray(final Map<String,String> env) {
         final List envList = []
-        env?.each { key, value ->
+        env?.each { final key, final value ->
             envList.add("$key=$value")
         }
         return envList as String[]

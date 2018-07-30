@@ -34,7 +34,7 @@ abstract class ServiceBase implements Service {
      * @param jexler the jexler to send events to
      * @param id the id of the service
      */
-    ServiceBase(String id) {
+    ServiceBase(final String id) {
         this.id = id
         state = ServiceState.OFF
     }
@@ -42,7 +42,7 @@ abstract class ServiceBase implements Service {
     /**
      * Set state to given value.
      */
-    void setState(ServiceState state) {
+    void setState(final ServiceState state) {
         this.state = state
     }
         

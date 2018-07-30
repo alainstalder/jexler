@@ -57,10 +57,10 @@ class JexlerContainerSources extends BaseSources {
      */
     @Override
     protected Set<Source> getSourceSetNew() {
-        Set<Source> sourceSet = new HashSet<Source>()
+        final Set<Source> sourceSet = new HashSet<Source>()
         container.refresh()
-        List<Jexler> jexlerList = container.getJexlers()
-        for (Jexler jexler : jexlerList) {
+        final List<Jexler> jexlerList = container.jexlers
+        for (final Jexler jexler : jexlerList) {
             if (!jexler.runnable) {
                 File file = jexler.file
                 if (file.exists()) {
@@ -105,7 +105,7 @@ class JexlerContainerSources extends BaseSources {
          * sets the compiler factory for compiling sources, default
          * is a new instance of {@link ch.grengine.code.groovy.DefaultGroovyCompilerFactory}.
          */
-        Builder setCompilerFactory(CompilerFactory compilerFactory) {
+        Builder setCompilerFactory(final CompilerFactory compilerFactory) {
             check()
             this.compilerFactory = compilerFactory
             return this

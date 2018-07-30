@@ -32,10 +32,10 @@ class CronServiceSpec extends Specification {
 
     def 'TEST basic construct and set'() {
         given:
-        def jexler = new TestJexler()
+        final def jexler = new TestJexler()
 
         when:
-        def service = new CronService(jexler, 'cronid')
+        final def service = new CronService(jexler, 'cronid')
         service.setCron('* * * * *').setScheduler(null)
 
         then:

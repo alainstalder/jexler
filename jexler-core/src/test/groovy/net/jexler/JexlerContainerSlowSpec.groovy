@@ -41,8 +41,8 @@ class JexlerContainerSlowSpec extends Specification {
     
     def 'TEST SLOW (8 sec) startup and shutdown too slower than time waited'() {
         given:
-        def dir = tempFolder.root
-        def jexlerBodyFast = """\
+        final def dir = tempFolder.root
+        final def jexlerBodyFast = """\
             while (true) {
               event = events.take()
               if (event instanceof StopEvent) {
@@ -50,7 +50,7 @@ class JexlerContainerSlowSpec extends Specification {
               }
             }
             """.stripIndent()
-        def jexlerBodySlow = """\
+        final def jexlerBodySlow = """\
             log.info('before startup wait ' + jexler.id)
             JexlerUtil.waitAtLeast($MS_3_SEC)
             log.info('after startup wait ' + jexler.id)
@@ -69,10 +69,10 @@ class JexlerContainerSlowSpec extends Specification {
         new File(dir, 'Jexler3.groovy').text = "// Jexler { autostart = true }\n$jexlerBodySlow"
 
         when:
-        def container = new JexlerContainer(dir)
-        def jexler1 = container.getJexler('Jexler1')
-        def jexler2 = container.getJexler('Jexler2')
-        def jexler3 = container.getJexler('Jexler3')
+        final def container = new JexlerContainer(dir)
+        final def jexler1 = container.getJexler('Jexler1')
+        final def jexler2 = container.getJexler('Jexler2')
+        final def jexler3 = container.getJexler('Jexler3')
 
         then:
         container.jexlers.size() == 3

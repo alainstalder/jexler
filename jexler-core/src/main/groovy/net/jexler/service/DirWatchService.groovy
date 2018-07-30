@@ -48,11 +48,11 @@ import java.nio.file.WatchService
 @CompileStatic
 class DirWatchService extends ServiceBase {
 
-    private static final Logger log = LoggerFactory.getLogger(DirWatchService.class)
+    private static final Logger LOG = LoggerFactory.getLogger(DirWatchService.class)
 
     private final Jexler jexler
     private File dir
-    private List<WatchEvent.Kind> kinds
+    private List<WatchEvent.Kind<Path>> kinds
     private List<WatchEvent.Modifier> modifiers
     private String cron
     private Scheduler scheduler
@@ -66,7 +66,7 @@ class DirWatchService extends ServiceBase {
      * @param jexler the jexler to send events to
      * @param id the id of the service
      */
-    DirWatchService(Jexler jexler, String id) {
+    DirWatchService(final Jexler jexler, final String id) {
         super(id)
         this.jexler = jexler
         dir = jexler.dir
@@ -83,7 +83,7 @@ class DirWatchService extends ServiceBase {
      * @param dir directory to watch
      * @return this (for chaining calls)
      */
-    DirWatchService setDir(File dir) {
+    DirWatchService setDir(final File dir) {
         this.dir = dir
         return this
     }
@@ -101,7 +101,7 @@ class DirWatchService extends ServiceBase {
      * @param kinds
      * @return
      */
-    DirWatchService setKinds(List<WatchEvent.Kind> kinds) {
+    DirWatchService setKinds(final List<WatchEvent.Kind<Path>> kinds) {
         this.kinds = kinds
         return this
     }
@@ -109,7 +109,7 @@ class DirWatchService extends ServiceBase {
     /**
      * Get kinds of events to watch for.
      */
-    List<WatchEvent.Kind> getKinds() {
+    List<WatchEvent.Kind<Path>> getKinds() {
         return kinds
     }
 
@@ -121,7 +121,7 @@ class DirWatchService extends ServiceBase {
      * @param modifiers
      * @return
      */
-    DirWatchService setModifiers(List<WatchEvent.Modifier> modifiers) {
+    DirWatchService setModifiers(final List<WatchEvent.Modifier> modifiers) {
         this.modifiers = modifiers
         return this
     }
@@ -138,7 +138,7 @@ class DirWatchService extends ServiceBase {
      * Default is every 5 seconds.
      * @return this (for chaining calls)
      */
-    DirWatchService setCron(String cron) {
+    DirWatchService setCron(final String cron) {
         this.cron = ServiceUtil.toQuartzCron(cron)
         return this
     }
@@ -155,7 +155,7 @@ class DirWatchService extends ServiceBase {
      * Default is a scheduler shared by all jexlers in the same jexler container.
      * @return this (for chaining calls)
      */
-    DirWatchService setScheduler(Scheduler scheduler) {
+    DirWatchService setScheduler(final Scheduler scheduler) {
         this.scheduler = scheduler
         return this
     }
@@ -185,9 +185,9 @@ class DirWatchService extends ServiceBase {
             watchKey = path.register(watchService,
                     kinds as WatchEvent.Kind[],
                     modifiers as WatchEvent.Modifier[])
-        } catch (IOException e) {
+        } catch (final IOException eCreate) {
             jexler.trackIssue(this,
-                    "Could not create watch service or key for directory '$dir.absolutePath'.", e)
+                    "Could not create watch service or key for directory '$dir.absolutePath'.", eCreate)
             return
         }
 
@@ -219,8 +219,8 @@ class DirWatchService extends ServiceBase {
         watchKey.cancel()
         try {
             watchService.close()
-        } catch (IOException e) {
-            log.trace('failed to close watch service', e)
+        } catch (final IOException e) {
+            LOG.trace('failed to close watch service', e)
         }
         state = ServiceState.OFF
     }
@@ -236,15 +236,15 @@ class DirWatchService extends ServiceBase {
                 if (scheduler != null) {
                     try {
                         scheduler.unscheduleJob(triggerKey)
-                    } catch (Throwable t) {
-                        log.trace('failed to unschedule cron job', t)
+                    } catch (final Throwable tUnschedule) {
+                        LOG.trace('failed to unschedule cron job', tUnschedule)
                     }
                 }
                 try {
                     watchKey.cancel()
                     watchService.close()
-                } catch (Throwable t) {
-                    log.trace('failed stop watching directory', t)
+                } catch (final Throwable tStop) {
+                    LOG.trace('failed stop watching directory', tStop)
                 }
             }
         }.start()
@@ -254,15 +254,15 @@ class DirWatchService extends ServiceBase {
      * Internal class, only public because otherwise not called by quartz scheduler.
      */
     static class DirWatchJob implements Job {
-        void execute(JobExecutionContext ctx) throws JobExecutionException {
+        void execute(final JobExecutionContext ctx) throws JobExecutionException {
             final DirWatchService service = (DirWatchService)ctx.jobDetail.jobDataMap.service
             final String savedName = Thread.currentThread().name
             Thread.currentThread().name = "$service.jexler.id|$service.id"
-            for (WatchEvent watchEvent : service.watchKey.pollEvents()) {
+            for (final WatchEvent watchEvent : service.watchKey.pollEvents()) {
                 final Path contextPath = ((Path) watchEvent.context())
                 final File file = new File(service.dir, contextPath.toFile().name)
                 final WatchEvent.Kind kind = watchEvent.kind()
-                log.trace("event $kind '$file.absolutePath'")
+                LOG.trace("event $kind '$file.absolutePath'")
                 service.jexler.handle(new DirWatchEvent(service, file, kind))
             }
             Thread.currentThread().name = savedName

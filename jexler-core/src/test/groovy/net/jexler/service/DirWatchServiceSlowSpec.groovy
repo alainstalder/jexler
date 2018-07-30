@@ -37,7 +37,7 @@ import java.nio.file.StandardWatchEventKinds
 class DirWatchServiceSlowSpec extends Specification {
 
     @Rule
-    public TemporaryFolder tempFolder = new TemporaryFolder();
+    public TemporaryFolder tempFolder = new TemporaryFolder()
 
     private final static long MS_3_SEC = 3000
     private final static String CRON_EVERY_SEC = '*/1 * * * * *'
@@ -45,10 +45,10 @@ class DirWatchServiceSlowSpec extends Specification {
     def 'TEST SLOW (40 sec) create/modify/remove files in watch dir'() {
         given:
         def watchDir = tempFolder.root
-        def jexler = new TestJexler();
+        final def jexler = new TestJexler()
 
         when:
-        def service = new DirWatchService(jexler, 'watchid')
+        final def service = new DirWatchService(jexler, 'watchid')
         service.dir = watchDir
         service.cron = CRON_EVERY_SEC
         service.modifiers = [ SensitivityWatchEventModifier.HIGH ]
@@ -139,10 +139,11 @@ class DirWatchServiceSlowSpec extends Specification {
         service.state == ServiceState.OFF
     }
 
-    private static void checkCreateModifyDeleteEventsTriggered(Jexler jexler, Service service, File watchDir) {
+    private static void checkCreateModifyDeleteEventsTriggered(
+            final Jexler jexler, final Service service, final File watchDir) {
 
         // create file
-        def tempFile = new File(watchDir, 'temp')
+        final def tempFile = new File(watchDir, 'temp')
         tempFile.createNewFile()
 
         def event = jexler.takeEvent(MS_3_SEC)

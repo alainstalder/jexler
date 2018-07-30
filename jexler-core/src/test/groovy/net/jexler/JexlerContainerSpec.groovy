@@ -41,8 +41,8 @@ class JexlerContainerSpec extends Specification {
 
     def 'TEST main functionality in detail'() {
         given:
-        def dir = tempFolder.root
-        def jexlerBody = """\
+        final def dir = tempFolder.root
+        final def jexlerBody = """\
             while (true) {
               event = events.take()
               if (event instanceof StopEvent) {
@@ -67,9 +67,9 @@ class JexlerContainerSpec extends Specification {
         container.issues.empty
 
         when:
-        def jexler1 = container.getJexler('Jexler1')
-        def jexler2 = container.getJexler('Jexler2')
-        def jexler3 = container.getJexler('Jexler3')
+        final def jexler1 = container.getJexler('Jexler1')
+        final def jexler2 = container.getJexler('Jexler2')
+        final def jexler3 = container.getJexler('Jexler3')
 
         then:
         jexler1.id == 'Jexler1'
@@ -191,11 +191,11 @@ class JexlerContainerSpec extends Specification {
 
     def 'TEST track issue'() {
         given:
-        def dir = tempFolder.root
-        def container = new JexlerContainer(dir)
+        final def dir = tempFolder.root
+        final def container = new JexlerContainer(dir)
 
         when:
-        def e = new RuntimeException()
+        final def e = new RuntimeException()
         container.trackIssue(null, 'some issue', e)
 
         then:
@@ -211,7 +211,7 @@ class JexlerContainerSpec extends Specification {
         container.issues.empty
 
         when:
-        def t = new Throwable()
+        final def t = new Throwable()
         container.trackIssue(new Issue(container, 'container issue', t))
 
         then:
@@ -229,7 +229,7 @@ class JexlerContainerSpec extends Specification {
 
     def 'TEST constructor throws because directory does not exist'() {
         when:
-        def dir = new File('does-not-exist')
+        final def dir = new File('does-not-exist')
         new JexlerContainer(dir)
 
         then:
@@ -239,8 +239,8 @@ class JexlerContainerSpec extends Specification {
 
     def 'TEST constructor throws because file is not a directory'() {
         when:
-        def dir = tempFolder.root
-        def file = new File(dir, "file.tmp")
+        final def dir = tempFolder.root
+        final def file = new File(dir, "file.tmp")
         file.createNewFile()
         new JexlerContainer(file)
 
@@ -251,8 +251,8 @@ class JexlerContainerSpec extends Specification {
 
     def 'TEST get jexler id'() {
         when:
-        def dir = tempFolder.root
-        def container = new JexlerContainer(dir)
+        final def dir = tempFolder.root
+        final def container = new JexlerContainer(dir)
 
         then:
         container.getJexlerId(new File(dir, 'Foo.groovy')) == 'Foo'
@@ -264,11 +264,11 @@ class JexlerContainerSpec extends Specification {
 
     def 'TEST get jexler file'() {
         given:
-        def dir = tempFolder.root
-        def container = new JexlerContainer(dir)
+        final def dir = tempFolder.root
+        final def container = new JexlerContainer(dir)
 
         when:
-        def file = container.getJexlerFile('Foo')
+        final def file = container.getJexlerFile('Foo')
 
         then:
         file.canonicalPath == new File(dir, 'Foo.groovy').canonicalPath
@@ -276,12 +276,12 @@ class JexlerContainerSpec extends Specification {
 
     def 'TEST shared scheduler and close'() {
         given:
-        def dir = tempFolder.root
-        def container = new JexlerContainer(dir)
+        final def dir = tempFolder.root
+        final def container = new JexlerContainer(dir)
 
         when:
-        def scheduler1 = container.scheduler
-        def scheduler2 = container.scheduler
+        final def scheduler1 = container.scheduler
+        final def scheduler2 = container.scheduler
 
         then:
         // must be same reference
@@ -296,7 +296,7 @@ class JexlerContainerSpec extends Specification {
         scheduler1.shutdown
 
         when:
-        def scheduler3 = container.scheduler
+        final def scheduler3 = container.scheduler
 
         then:
         // must get a new reference
@@ -314,12 +314,12 @@ class JexlerContainerSpec extends Specification {
 
     def 'TEST getAsConfig'() {
         given:
-        def dir = tempFolder.root
-        def file = new File(dir, 'Test.groovy')
-        file.setText("a { x=1; y=true; z { aa='hello' } }")
+        final def dir = tempFolder.root
+        final def file = new File(dir, 'Test.groovy')
+        file.text = "a { x=1; y=true; z { aa='hello' } }"
 
         when:
-        def container = new JexlerContainer(dir)
+        final def container = new JexlerContainer(dir)
 
         then:
         container.getAsConfig('Test').a.x == 1

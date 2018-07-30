@@ -41,7 +41,7 @@ class Issue implements Comparable<Issue> {
     /**
      * Constructor from service, message and exception.
      */
-    Issue(Service service, String message, Throwable cause) {
+    Issue(final Service service, final String message, final Throwable cause) {
         date = new Date()
         this.service = service
         this.message = message
@@ -89,7 +89,7 @@ class Issue implements Comparable<Issue> {
      * Comparator, newer date is smaller (first).
      */
     @Override
-    int compareTo(Issue issue) {
+    int compareTo(final Issue issue) {
         return -date.compareTo(issue.date)
     }
 

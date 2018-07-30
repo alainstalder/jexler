@@ -38,7 +38,7 @@ class ServiceUtilSlowSpec extends Specification {
         Thread threadToInterrupt
         long interruptAfterMs
         boolean hasInterrupted
-        InterruptingThread(Thread threadToInterrupt, long interruptAfterMs) {
+        InterruptingThread(final Thread threadToInterrupt, final long interruptAfterMs) {
             this.threadToInterrupt = threadToInterrupt
             this.interruptAfterMs = interruptAfterMs
         }
@@ -54,7 +54,7 @@ class ServiceUtilSlowSpec extends Specification {
         Service service
         ServiceState stateToSet
         long setAfterMs
-        ServiceStateSettingThread(Service service, ServiceState stateToSet, long setAfterMs) {
+        ServiceStateSettingThread(final Service service, final ServiceState stateToSet, final long setAfterMs) {
             this.service = service
             this.stateToSet = stateToSet
             this.setAfterMs = setAfterMs
@@ -68,7 +68,7 @@ class ServiceUtilSlowSpec extends Specification {
 
     def 'TEST SLOW (3 sec) wait for startup'() {
         given:
-        def service = new MockService(null, 'mock')
+        final def service = new MockService(null, 'mock')
 
         when:
         service.state = ServiceState.BUSY_STARTING
@@ -77,7 +77,7 @@ class ServiceUtilSlowSpec extends Specification {
         !ServiceUtil.waitForStartup(service, 0)
 
         when:
-        def interruptingThread = new InterruptingThread(Thread.currentThread(), MS_1_SEC)
+        final def interruptingThread = new InterruptingThread(Thread.currentThread(), MS_1_SEC)
         interruptingThread.start()
         new ServiceStateSettingThread(service, ServiceState.IDLE, MS_2_SEC).start()
 
@@ -89,7 +89,7 @@ class ServiceUtilSlowSpec extends Specification {
 
     def 'TEST SLOW (3 sec) wait for shutdown'() {
         given:
-        def service = new MockService(null, 'mock')
+        final def service = new MockService(null, 'mock')
 
         when:
         service.state = ServiceState.IDLE
@@ -98,7 +98,7 @@ class ServiceUtilSlowSpec extends Specification {
         !ServiceUtil.waitForShutdown(service, 0)
 
         when:
-        def interruptingThread = new InterruptingThread(Thread.currentThread(), MS_1_SEC)
+        final def interruptingThread = new InterruptingThread(Thread.currentThread(), MS_1_SEC)
         interruptingThread.start()
         new ServiceStateSettingThread(service, ServiceState.OFF, MS_2_SEC).start()
 

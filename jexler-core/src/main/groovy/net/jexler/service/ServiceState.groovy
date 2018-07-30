@@ -43,7 +43,7 @@ enum ServiceState {
     /**
      * Constructor from info.
      */
-    ServiceState(String info) {
+    ServiceState(final String info) {
         this.info = info
     }
 

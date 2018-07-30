@@ -34,21 +34,22 @@ class DirWatchServiceSpec extends Specification {
 
     def 'TEST no watch dir'() {
         given:
-        def dir = new File('does-not-exist')
-        def jexler = new TestJexler()
+        final def dirNotExist = new File('does-not-exist')
+        final def jexler = new TestJexler()
 
         when:
-        def service = new DirWatchService(jexler, 'watchid')
-                .setDir(dir)
-                .setKinds([ StandardWatchEventKinds.ENTRY_CREATE ])
-                .setModifiers([])
-                .setCron('* * * * *')
-                .setScheduler(null)
+        final def service = new DirWatchService(jexler, 'watchid')
+        service.with {
+            dir = dirNotExist
+            kinds = [ StandardWatchEventKinds.ENTRY_CREATE ]
+            cron = '* * * * *'
+            scheduler = null
+        }
         service.start()
 
         then:
         service.state.off
-        service.dir == dir
+        service.dir == dirNotExist
         service.kinds.size() == 1
         service.kinds.first() == StandardWatchEventKinds.ENTRY_CREATE
         service.modifiers.empty

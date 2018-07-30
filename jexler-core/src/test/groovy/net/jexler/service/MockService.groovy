@@ -28,7 +28,7 @@ import groovy.transform.CompileStatic
 @CompileStatic
 class MockService extends ServiceBase {
 
-    private static final Map<String,MockService> instances = new HashMap<>()
+    private static final Map<String,MockService> INSTANCES = [:]
 
     private Jexler jexler
     volatile int nStarted = 0
@@ -38,17 +38,17 @@ class MockService extends ServiceBase {
     volatile int nEventsGotBack = 0
     volatile RuntimeException stopRuntimeException = null
 
-    static MockService getInstance(String id) {
-        synchronized(instances) {
-            return instances.get(id)
+    static MockService getInstance(final String id) {
+        synchronized(INSTANCES) {
+            return INSTANCES[id]
         }
     }
 
-    MockService(Jexler jexler, String id) {
+    MockService(final Jexler jexler, final String id) {
         super(id)
         this.jexler = jexler
-        synchronized(instances) {
-            instances.put(id, this)
+        synchronized(INSTANCES) {
+            INSTANCES[id] = this
         }
     }
 
@@ -83,7 +83,7 @@ class MockService extends ServiceBase {
         nEventsSent++
     }
 
-    void notifyJexler(Event event) {
+    void notifyJexler(final Event event) {
         jexler.handle(event)
         nEventsSent++
     }

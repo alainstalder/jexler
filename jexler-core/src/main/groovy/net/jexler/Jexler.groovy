@@ -39,12 +39,12 @@ import java.util.regex.Pattern
 @CompileStatic
 class Jexler implements Service, IssueTracker {
 
-    private static final Logger log = LoggerFactory.getLogger(Jexler.class)
+    private static final Logger LOG = LoggerFactory.getLogger(Jexler.class)
 
     private static final Grengine META_CONFIG_GRENGINE = new Grengine()
 
     private static final Pattern META_CONFIG_PATTERN = Pattern.compile(
-            '^//\\s*jexler\\s*\\{\\s*(.*?)\\s*\\}$', Pattern.CASE_INSENSITIVE)
+            /^\/\/\s*jexler\s*\{\s*(.*?)\s*\}$/, Pattern.CASE_INSENSITIVE)
 
     /**
      * Blocking queue for events sent to a Jexler
@@ -86,8 +86,8 @@ class Jexler implements Service, IssueTracker {
          * Return true if the event queue contains a stop event.
          */
         boolean hasStop() {
-            Object[] events = toArray()
-            for (Object event : events) {
+            final Object[] events = toArray()
+            for (final Object event : events) {
                 if (event instanceof StopEvent) {
                     return true
                 }
@@ -125,7 +125,7 @@ class Jexler implements Service, IssueTracker {
      * @param file file with jexler script
      * @param container jexler container that contains this jexler
      */
-    Jexler(File file, JexlerContainer container) {
+    Jexler(final File file, final JexlerContainer container) {
         this.file = file
         this.container = container
         id = container.getJexlerId(file)
@@ -146,7 +146,7 @@ class Jexler implements Service, IssueTracker {
      */
     @Override
     void start() {
-        log.info("*** Jexler start: $id")
+        LOG.info("*** Jexler start: $id")
         if (state.on) {
             return
         }
@@ -174,16 +174,16 @@ class Jexler implements Service, IssueTracker {
                                 'container' : container,
                                 'events' : events,
                                 'services' : services,
-                                'log' : log,
+                                'log' : LOG,
                         ])
 
                         // compile and load class
                         final Class clazz
                         try {
                             clazz = container.grengine.load(file)
-                        } catch (Throwable t) {
+                        } catch (final Throwable tCompile) {
                             // (may throw almost anything, checked or not)
-                            trackIssue(jexler, 'Script compile failed.', t)
+                            trackIssue(jexler, 'Script compile failed.', tCompile)
                             state = ServiceState.OFF
                             return
                         }
@@ -197,9 +197,9 @@ class Jexler implements Service, IssueTracker {
                         // create script instance
                         try {
                             script = (Script)clazz.newInstance()
-                        } catch (Throwable t) {
+                        } catch (final Throwable tCreate) {
                             // (may throw anything, checked or not)
-                            trackIssue(jexler, 'Script create failed.', t)
+                            trackIssue(jexler, 'Script create failed.', tCreate)
                             state = ServiceState.OFF
                             return
                         }
@@ -208,17 +208,17 @@ class Jexler implements Service, IssueTracker {
                         script.binding = binding
                         try {
                             script.run()
-                        } catch (Throwable t) {
+                        } catch (final Throwable tRun) {
                             // (script may throw anything, checked or not)
-                            trackIssue(jexler, 'Script run failed.', t)
+                            trackIssue(jexler, 'Script run failed.', tRun)
                         }
 
                         state = ServiceState.BUSY_STOPPING
 
                         try {
                             services.stop()
-                        } catch (Throwable t) {
-                            trackIssue(services, 'Could not stop services.', t)
+                        } catch (final Throwable tStop) {
+                            trackIssue(services, 'Could not stop services.', tStop)
                         }
                         events.clear()
                         services.services.clear()
@@ -235,7 +235,7 @@ class Jexler implements Service, IssueTracker {
     /**
      * Handle given event.
      */
-    void handle(Event event) {
+    void handle(final Event event) {
         events.add(event)
     }
 
@@ -244,7 +244,7 @@ class Jexler implements Service, IssueTracker {
      */
     @Override
     void stop() {
-        log.info("*** Jexler stop: $id")
+        LOG.info("*** Jexler stop: $id")
         if (state.off) {
             return
         }
@@ -258,7 +258,7 @@ class Jexler implements Service, IssueTracker {
 
     @Override
     void zap() {
-        log.info("*** Jexler zap: $id")
+        LOG.info("*** Jexler zap: $id")
         if (state.off) {
             return
         }
@@ -274,8 +274,8 @@ class Jexler implements Service, IssueTracker {
                 if (scriptThread != null) {
                     try {
                         scriptThread.stop()
-                    } catch (Throwable t) {
-                        trackIssue(jexler, 'Failed to stop jexler thread.', t)
+                    } catch (final Throwable tZap) {
+                        trackIssue(jexler, 'Failed to stop jexler thread.', tZap)
                     }
                 }
             }
@@ -288,12 +288,12 @@ class Jexler implements Service, IssueTracker {
     }
 
     @Override
-    void trackIssue(Issue issue) {
+    void trackIssue(final Issue issue) {
         issueTracker.trackIssue(issue)
     }
 
     @Override
-    void trackIssue(Service service, String message, Throwable cause) {
+    void trackIssue(final Service service, final String message, final Throwable cause) {
         issueTracker.trackIssue(service, message, cause)
     }
 
@@ -349,7 +349,7 @@ class Jexler implements Service, IssueTracker {
      * the state at startup if already running, else reads from file.
      */
     boolean isRunnable() {
-        return getMetaConfig() != null
+        return metaConfig != null
     }
 
     /**
@@ -380,7 +380,6 @@ class Jexler implements Service, IssueTracker {
     }
 
     private ConfigObject readMetaConfig() {
-
         if (!file.exists()) {
             return null
         }
@@ -388,17 +387,17 @@ class Jexler implements Service, IssueTracker {
         final List<String> lines
         try {
             lines = file.readLines()
-        } catch (IOException e) {
-            String msg = "Could not read meta config from jexler file '$file.absolutePath'."
-            trackIssue(this.container, msg, e)
+        } catch (final IOException eRead) {
+            final String msg = "Could not read meta config from jexler file '$file.absolutePath'."
+            trackIssue(this.container, msg, eRead)
             return null
         }
-        if (lines.isEmpty()) {
+        if (lines.empty) {
             return null
         }
 
-        String line = lines.first().trim()
-        Matcher matcher = META_CONFIG_PATTERN.matcher(line)
+        final String line = lines.first().trim()
+        final Matcher matcher = META_CONFIG_PATTERN.matcher(line)
         if (!matcher.matches()) {
             return null
         }
@@ -409,10 +408,10 @@ class Jexler implements Service, IssueTracker {
         try {
             final Script script = META_CONFIG_GRENGINE.create(metaConfigText)
             return new ConfigSlurper().parse(script)
-        } catch (Throwable t) {
+        } catch (final Throwable tParse) {
             // (script may throw anything, checked or not)
-            String msg = "Could not parse meta config of jexler '$id'."
-            trackIssue(this, msg, t)
+            final String msg = "Could not parse meta config of jexler '$id'."
+            trackIssue(this, msg, tParse)
             return new ConfigObject()
         }
     }

@@ -36,7 +36,7 @@ import java.text.ParseException
 @CompileStatic
 class ServiceUtil {
 
-    private static final Logger log = LoggerFactory.getLogger(ServiceUtil.class)
+    private static final Logger LOG = LoggerFactory.getLogger(ServiceUtil.class)
 
     /**
      * Wait until service state is not BUSY_STARTING or timeout.
@@ -44,8 +44,8 @@ class ServiceUtil {
      * @param timeout timeout in ms
      * @return true if no timeout, false otherwise
      */
-    static boolean waitForStartup(Service service, long timeout) {
-        long t0 = System.currentTimeMillis()
+    static boolean waitForStartup(final Service service, final long timeout) {
+        final long t0 = System.currentTimeMillis()
         while (true) {
             if (!service.state.busyStarting) {
                 return true
@@ -63,7 +63,7 @@ class ServiceUtil {
      * @param timeout timeout in ms
      * @return true if no timeout, false otherwise
      */
-    static boolean waitForShutdown(Service service, long timeout) {
+    static boolean waitForShutdown(final Service service, final long timeout) {
         final long t0 = System.currentTimeMillis()
         while (true) {
             if (service.state.off) {
@@ -91,7 +91,7 @@ class ServiceUtil {
      *
      * @throws IllegalArgumentException if the resulting cron string is not a valid quartz cron string
      */
-    static String toQuartzCron(String cron) throws IllegalArgumentException {
+    static String toQuartzCron(final String cron) throws IllegalArgumentException {
         if (CronService.CRON_NOW == cron | CronService.CRON_NOW_AND_STOP == cron) {
             return cron
         }
@@ -111,16 +111,16 @@ class ServiceUtil {
 
         final String quartzCron = list.join(' ')
         if (quartzCron != cron) {
-            log.trace("cron '$cron' => '$quartzCron'")
+            LOG.trace("cron '$cron' => '$quartzCron'")
         }
         final CronExpression cronExpression
         try {
             cronExpression = new CronExpression(quartzCron)
-        } catch (ParseException e) {
+        } catch (final ParseException e) {
             throw new IllegalArgumentException("Could not parse cron '$quartzCron': $e.message", e)
         }
         final String next = cronExpression.getNextValidTimeAfter(new Date())?.format('EEE dd MMM yyyy HH:mm:ss')
-        log.trace("next '$quartzCron' => $next")
+        LOG.trace("next '$quartzCron' => $next")
         return quartzCron
     }
 

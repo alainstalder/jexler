@@ -60,8 +60,8 @@ class JexlerDispatcherSpec extends Specification {
     
     def 'TEST minimal methods and no suitable event handler'() {
         given:
-        def dir = tempFolder.root
-        def file = new File(dir, 'Test.groovy')
+        final def dir = tempFolder.root
+        final def file = new File(dir, 'Test.groovy')
         file.text = """\
             // Jexler {}
             mockService = new MockService(jexler, 'MockService')
@@ -72,7 +72,7 @@ class JexlerDispatcherSpec extends Specification {
             }
             """.stripIndent()
         when:
-        def jexler = new Jexler(file, new JexlerContainer(dir))
+        final def jexler = new Jexler(file, new JexlerContainer(dir))
         jexler.start()
         JexlerUtil.waitForStartup(jexler, MS_10_SEC)
 
@@ -81,7 +81,7 @@ class JexlerDispatcherSpec extends Specification {
         jexler.issues.empty
 
         when:
-        def mockService = MockService.getInstance('MockService')
+        final def mockService = MockService.getInstance('MockService')
 
         then:
         mockService.nStarted == 1
@@ -124,8 +124,8 @@ class JexlerDispatcherSpec extends Specification {
 
     def 'TEST mandatory start method missing'() {
         given:
-        def dir = tempFolder.root
-        def file = new File(dir, 'Test.groovy')
+        final def dir = tempFolder.root
+        final def file = new File(dir, 'Test.groovy')
         file.text = """\
             // Jexler {}
             mockService = new MockService(jexler, 'MockService')
@@ -136,7 +136,7 @@ class JexlerDispatcherSpec extends Specification {
             }
             """.stripIndent()
         when:
-        def jexler = new Jexler(file, new JexlerContainer(dir))
+        final def jexler = new Jexler(file, new JexlerContainer(dir))
         jexler.start()
         JexlerUtil.waitForStartup(jexler, MS_10_SEC)
 
@@ -150,8 +150,8 @@ class JexlerDispatcherSpec extends Specification {
 
     def 'TEST all methods and handlers'() {
         given:
-        def dir = tempFolder.root
-        def file = new File(dir, 'Test.groovy')
+        final def dir = tempFolder.root
+        final def file = new File(dir, 'Test.groovy')
         file.text = """\
             // Jexler {}
             JexlerDispatcher.dispatch(this)
@@ -182,7 +182,7 @@ class JexlerDispatcherSpec extends Specification {
             }
             """.stripIndent()
         when:
-        def jexler = new Jexler(file, new JexlerContainer(dir))
+        final def jexler = new Jexler(file, new JexlerContainer(dir))
         jexler.start()
         JexlerUtil.waitForStartup(jexler, MS_10_SEC)
 
@@ -191,7 +191,7 @@ class JexlerDispatcherSpec extends Specification {
         jexler.issues.empty
 
         when:
-        def mockService = MockService.getInstance('MockService')
+        final def mockService = MockService.getInstance('MockService')
 
         then:
         mockService.nStarted == 1
@@ -280,8 +280,8 @@ class JexlerDispatcherSpec extends Specification {
 
     def 'TEST handle throws'() {
         given:
-        def dir = tempFolder.root
-        def file = new File(dir, 'Test.groovy')
+        final def dir = tempFolder.root
+        final def file = new File(dir, 'Test.groovy')
         file.text = """\
             // Jexler {}
             JexlerDispatcher.dispatch(this)            
@@ -305,7 +305,7 @@ class JexlerDispatcherSpec extends Specification {
             }
             """.stripIndent()
         when:
-        def jexler = new Jexler(file, new JexlerContainer(dir))
+        final def jexler = new Jexler(file, new JexlerContainer(dir))
         jexler.start()
         JexlerUtil.waitForStartup(jexler, MS_10_SEC)
 
@@ -314,7 +314,7 @@ class JexlerDispatcherSpec extends Specification {
         jexler.issues.empty
 
         when:
-        def mockService = MockService.getInstance('MockService')
+        final def mockService = MockService.getInstance('MockService')
         mockService.notifyJexler()
         JexlerUtil.waitAtLeast(MS_1_SEC)
 

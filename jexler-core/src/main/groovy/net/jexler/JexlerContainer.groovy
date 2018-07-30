@@ -47,7 +47,7 @@ import org.slf4j.LoggerFactory
 @CompileStatic
 class JexlerContainer extends ServiceGroup implements Service, IssueTracker, Closeable {
 
-    private static final Logger log = LoggerFactory.getLogger(JexlerContainer.class)
+    private static final Logger LOG = LoggerFactory.getLogger(JexlerContainer.class)
 
     private static final String EXT = '.groovy'
 
@@ -68,7 +68,7 @@ class JexlerContainer extends ServiceGroup implements Service, IssueTracker, Clo
      * @param dir directory which contains jexler scripts
      * @throws RuntimeException if given dir is not a directory or does not exist
      */
-    JexlerContainer(File dir) {
+    JexlerContainer(final File dir) {
         // service ID is directory name
         super(dir.exists() ? dir.name : null)
         if (!dir.exists()) {
@@ -92,19 +92,19 @@ class JexlerContainer extends ServiceGroup implements Service, IssueTracker, Clo
     void refresh() {
         synchronized (jexlerMap) {
             // list directory and create jexlers in map for new script files in directory
-            dir.listFiles()?.each { File file ->
+            dir.listFiles()?.each { final File file ->
                 if (file.isFile() && !file.isHidden()) {
                     final String id = getJexlerId(file)
                     if (id != null && !jexlerMap.containsKey(id)) {
                         final Jexler jexler = new Jexler(file, this)
-                        jexlerMap.put(jexler.id, jexler)
+                        jexlerMap[jexler.id] = jexler
                     }
                 }
             }
 
             // recreate list while omitting jexlers without script file that are stopped
             services.clear()
-            jexlerMap.each { id, jexler ->
+            jexlerMap.each { final id, final jexler ->
                 if (jexler.file.exists() || jexler.state.on) {
                     services.add(jexler)
                 }
@@ -112,8 +112,8 @@ class JexlerContainer extends ServiceGroup implements Service, IssueTracker, Clo
 
             // recreate map with list entries
             jexlerMap.clear()
-            for (Jexler jexler : jexlers) {
-                jexlerMap.put(jexler.id, jexler)
+            for (final Jexler jexler : jexlers) {
+                jexlerMap[jexler.id] = jexler
             }
         }
     }
@@ -123,7 +123,7 @@ class JexlerContainer extends ServiceGroup implements Service, IssueTracker, Clo
      */
     @Override
     void start() {
-        for (Jexler jexler : jexlers) {
+        for (final Jexler jexler : jexlers) {
             if (jexler.metaConfig?.autostart) {
                 jexler.start()
             }
@@ -138,12 +138,12 @@ class JexlerContainer extends ServiceGroup implements Service, IssueTracker, Clo
     }
 
     @Override
-    void trackIssue(Issue issue) {
+    void trackIssue(final Issue issue) {
         issueTracker.trackIssue(issue)
     }
 
     @Override
-    void trackIssue(Service service, String message, Throwable cause) {
+    void trackIssue(final Service service, final String message, final Throwable cause) {
         issueTracker.trackIssue(service, message, cause)
     }
 
@@ -186,7 +186,7 @@ class JexlerContainer extends ServiceGroup implements Service, IssueTracker, Clo
      * Get the jexler for the given id.
      * @return jexler for given id or null if none
      */
-    Jexler getJexler(String id) {
+    Jexler getJexler(final String id) {
         synchronized(jexlerMap) {
             return jexlerMap.get(id)
         }
@@ -203,7 +203,7 @@ class JexlerContainer extends ServiceGroup implements Service, IssueTracker, Clo
      * Get the file for the given jexler id,
      * even if no such file exists (yet).
      */
-    File getJexlerFile(String id) {
+    File getJexlerFile(final String id) {
         return new File(dir, "$id$EXT")
     }
 
@@ -212,7 +212,7 @@ class JexlerContainer extends ServiceGroup implements Service, IssueTracker, Clo
      * even if the file does not exist (any more),
      * or null if not a jexler script.
      */
-    String getJexlerId(File jexlerFile) {
+    String getJexlerId(final File jexlerFile) {
         final String name = jexlerFile.name
         if (name.endsWith(EXT)) {
             return name.substring(0, name.length() - EXT.length())
@@ -230,9 +230,9 @@ class JexlerContainer extends ServiceGroup implements Service, IssueTracker, Clo
                 final String uuid = UUID.randomUUID()
                 final String name = "JexlerContainerScheduler-$id-$uuid"
                 final String instanceId = name
-                DirectSchedulerFactory.getInstance().createScheduler(name, instanceId,
+                DirectSchedulerFactory.instance.createScheduler(name, instanceId,
                         new SimpleThreadPool(5, Thread.currentThread().priority), new RAMJobStore())
-                scheduler = DirectSchedulerFactory.getInstance().getScheduler(name)
+                scheduler = DirectSchedulerFactory.instance.getScheduler(name)
                 scheduler.start()
             }
             return scheduler
@@ -255,15 +255,15 @@ class JexlerContainer extends ServiceGroup implements Service, IssueTracker, Clo
      * Get logger for container.
      */
     static Logger getLogger() {
-        return log
+        return LOG
     }
 
     /**
      * Convenience method for getting ConfigSlurper config from parsing
      * the given jexler; uses the class already compiled by Grengine.
      */
-    ConfigObject getAsConfig(String jexlerId) {
-        Class clazz = grengine.load(new File(dir, "${jexlerId}.groovy"))
+    ConfigObject getAsConfig(final String jexlerId) {
+        final Class clazz = grengine.load(new File(dir, "${jexlerId}.groovy"))
         return new ConfigSlurper().parse(clazz)
     }
 

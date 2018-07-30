@@ -36,14 +36,14 @@ class ShellToolSpec extends Specification {
 
     def 'TEST default'() {
         given:
-        def tool = new ShellTool()
+        final def tool = new ShellTool()
 
         expect:
         tool.workingDirectory == null
         tool.env == null
         tool.stdoutLineHandler == null
         tool.stderrLineHandler == null
-        def result = tool.run(cmd)
+        final def result = tool.run(cmd)
         result != null
         result.rc == 0
         result.stdout != ''
@@ -56,11 +56,11 @@ class ShellToolSpec extends Specification {
 
     def 'TEST with working directory and stdout line handler'() {
         given:
-        def tool = new ShellTool()
+        final def tool = new ShellTool()
 
-        def dir = tempFolder.root
-        def file1 = new File(dir, 'file1')
-        def file2 = new File(dir, 'file2')
+        final def dir = tempFolder.root
+        final def file1 = new File(dir, 'file1')
+        final def file2 = new File(dir, 'file2')
         file1.createNewFile()
         file2.createNewFile()
         tool.workingDirectory = dir
@@ -73,7 +73,7 @@ class ShellToolSpec extends Specification {
         tool.env == null
         tool.stdoutLineHandler != null
         tool.stderrLineHandler == null
-        def result = tool.run(cmd)
+        final def result = tool.run(cmd)
         result.rc == 0
         result.stdout != ''
         result.stdout.contains('file1')
@@ -90,15 +90,15 @@ class ShellToolSpec extends Specification {
 
     def 'TEST with custom environment and stdout line handler'() {
         given:
-        def tool = new ShellTool()
+        final def tool = new ShellTool()
         tool.environment = [ 'MYVAR' : 'there' ]
 
         def stdout = ''
         tool.stdoutLineHandler = { stdout += it }
 
         when:
-        def cmd = (windows ? [ 'cmd', '/c', 'echo hello %MyVar%' ] : [ 'sh', '-c', 'echo hello $MYVAR' ])
-        def result = tool.run(cmd)
+        final def cmd = (windows ? [ 'cmd', '/c', 'echo hello %MyVar%' ] : [ 'sh', '-c', 'echo hello $MYVAR' ])
+        final def result = tool.run(cmd)
 
         then:
         tool.workingDirectory == null
@@ -116,14 +116,14 @@ class ShellToolSpec extends Specification {
 
     def 'TEST error in command, with stderr line handler'() {
         given:
-        def tool = new ShellTool()
+        final def tool = new ShellTool()
 
         def stderr = ''
         tool.stderrLineHandler = { stderr += it }
 
         when:
-        def cmd = (isWindows() ? 'cmd /c type there-is-no-such-file' : 'cat there-is-no-such-file')
-        def result = tool.run(cmd)
+        final def cmd = (isWindows() ? 'cmd /c type there-is-no-such-file' : 'cat there-is-no-such-file')
+        final def result = tool.run(cmd)
 
         then:
         tool.workingDirectory == null
@@ -140,10 +140,10 @@ class ShellToolSpec extends Specification {
 
     def 'TEST exception if no such command'() {
         given:
-        def tool = new ShellTool()
+        final def tool = new ShellTool()
 
         expect:
-        def result = tool.run(cmd)
+        final def result = tool.run(cmd)
         result.rc != 0
         result.stdout == ''
         result.stderr != ''
