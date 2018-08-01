@@ -18,6 +18,3 @@ mv guide.html index.html
 date
 
 trap - EXIT
-
-
-
