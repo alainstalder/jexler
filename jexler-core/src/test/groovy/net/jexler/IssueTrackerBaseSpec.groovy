@@ -50,7 +50,7 @@ class IssueTrackerBaseSpec extends Specification {
         then:
         tracker.issues.size() == 2
         tracker.issues.first().message == 'issue2'
-        tracker.issues.get(1).message == 'issue1'
+        tracker.issues[1].message == 'issue1'
 
         when:
         tracker.forgetIssues()

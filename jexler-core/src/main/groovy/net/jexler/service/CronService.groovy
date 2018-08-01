@@ -125,7 +125,7 @@ class CronService extends ServiceBase {
             LOG.trace("new cron event: $cron")
             jexler.handle(new CronEvent(this, cron))
             state = IDLE
-            if (cron.equals(CRON_NOW_AND_STOP)) {
+            if (cron == CRON_NOW_AND_STOP) {
                 jexler.handle(new StopEvent(this))
                 state = OFF
             }

@@ -33,6 +33,8 @@ import javax.servlet.http.HttpServletResponse
 import javax.servlet.jsp.PageContext
 import java.text.SimpleDateFormat
 
+import static net.jexler.JexlerUtil.SHUTDOWN_TIMEOUT_MSG
+
 /**
  * Container/jexler view, used in Jexler.jsp.
  *
@@ -193,7 +195,7 @@ class JexlerContainerView {
         }
         if (jexlerId != '' && jexler.state.on) {
             for (final Issue issue : jexler.issues) {
-                if (issue.message == JexlerUtil.SHUTDOWN_TIMEOUT_MSG) {
+                if (issue.message == SHUTDOWN_TIMEOUT_MSG) {
                     return zap
                 }
             }

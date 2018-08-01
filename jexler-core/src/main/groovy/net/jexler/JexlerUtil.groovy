@@ -16,7 +16,6 @@
 
 package net.jexler
 
-import net.jexler.service.ServiceState
 import net.jexler.service.ServiceUtil
 
 import groovy.transform.CompileStatic

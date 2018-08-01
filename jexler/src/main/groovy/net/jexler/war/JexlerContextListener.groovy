@@ -50,7 +50,7 @@ class JexlerContextListener implements ServletContextListener    {
     static ServletContext servletContext
 
     // Slurped settings
-    static Map settings
+    static Map<String,Object> settings
 
     // The one and only jexler container in this webapp
     static JexlerContainer container
@@ -66,14 +66,14 @@ class JexlerContextListener implements ServletContextListener    {
     static boolean scriptConfirmDelete
 
     @Override
-    void contextInitialized(ServletContextEvent event) {
+    void contextInitialized(final ServletContextEvent event) {
 
         // Get and log versions (no versions in unit tests or IDE)
-        String coreVersion = Jexler.class.package.implementationVersion
+        String coreVersion = Jexler.class.getPackage().implementationVersion
         coreVersion = (coreVersion == null) ? '0.0.0' : coreVersion
-        String grengineVersion = Grengine.class.package.implementationVersion
+        String grengineVersion = Grengine.class.getPackage().implementationVersion
         grengineVersion = (grengineVersion == null) ? '0.0.0' : grengineVersion
-        String groovyVersion = GroovyClassLoader.class.package.implementationVersion
+        String groovyVersion = GroovyClassLoader.class.getPackage().implementationVersion
         groovyVersion = (groovyVersion == null) ? '0.0.0' : groovyVersion
         LOG.info("Welcome to jexler.")
         LOG.info("Jexler $GUI_VERSION | jexler-core: $coreVersion | Grengine: $grengineVersion | Groovy: $groovyVersion")
@@ -116,7 +116,7 @@ class JexlerContextListener implements ServletContextListener    {
         for (final Logger logger : context.loggerList) {
             if (logger instanceof ch.qos.logback.classic.Logger) {
                 ch.qos.logback.classic.Logger classicLogger = (ch.qos.logback.classic.Logger)logger
-                classicLogger.iteratorForAppenders().each() { appender ->
+                classicLogger.iteratorForAppenders().each() { final appender ->
                     if (appender instanceof FileAppender) {
                         logfile = new File(((FileAppender)appender).file)
                     }

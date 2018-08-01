@@ -37,13 +37,13 @@ class StringObfuscatorToolSpec extends Specification {
         final int expectedObfuscatedLen = 2 * (byteBufferPadLen + blockSize)
 
         expect:
-        final def obfus1 = tool.obfuscate(plain)
-        final def obfus2 = tool.obfuscate(plain)
-        obfus1.length() == expectedObfuscatedLen
-        obfus2.length() == expectedObfuscatedLen
-        obfus1 != obfus2
-        tool.deobfuscate(obfus1) == plain
-        tool.deobfuscate(obfus2) == plain
+        final def obfuscated1 = tool.obfuscate(plain)
+        final def obfuscated2 = tool.obfuscate(plain)
+        obfuscated1.length() == expectedObfuscatedLen
+        obfuscated2.length() == expectedObfuscatedLen
+        obfuscated1 != obfuscated2
+        tool.deobfuscate(obfuscated1) == plain
+        tool.deobfuscate(obfuscated2) == plain
 
         where:
         plain << [ 'test', 'longer string with unicode \u03D4', '',
@@ -58,7 +58,7 @@ class StringObfuscatorToolSpec extends Specification {
         tool.obfuscate('12345678901234567890123456789012345678901234567\u1234')
 
         then:
-        IllegalArgumentException e = thrown()
+        final IllegalArgumentException e = thrown()
         e.message == 'Input string too long (50 bytes UTF-8 encoded, max allowed: 47)'
     }
 
@@ -72,13 +72,13 @@ class StringObfuscatorToolSpec extends Specification {
         final int expectedObfuscatedLen = 2 * (byteBufferPadLen + blockSize)
 
         expect:
-        final def obfus1 = tool.obfuscate(plain)
-        final def obfus2 = tool.obfuscate(plain)
-        obfus1.length() == expectedObfuscatedLen
-        obfus2.length() == expectedObfuscatedLen
-        obfus1 != obfus2
-        tool.deobfuscate(obfus1) == plain
-        tool.deobfuscate(obfus2) == plain
+        final def obfuscated1 = tool.obfuscate(plain)
+        final def obfuscated2 = tool.obfuscate(plain)
+        obfuscated1.length() == expectedObfuscatedLen
+        obfuscated2.length() == expectedObfuscatedLen
+        obfuscated1 != obfuscated2
+        tool.deobfuscate(obfuscated1) == plain
+        tool.deobfuscate(obfuscated2) == plain
 
         where:
         plain << [ 'test', 'longer string with unicode \u03D4', '',

@@ -19,12 +19,10 @@ package net.jexler
 import net.jexler.service.MockEvent
 import net.jexler.service.MockService
 import net.jexler.service.ServiceBase
-import net.jexler.service.ServiceState
 import net.jexler.service.StopEvent
 import net.jexler.test.FastTests
 
 import ch.grengine.except.CompileException
-import org.codehaus.groovy.control.CompilationFailedException
 import org.junit.Rule
 import org.junit.experimental.categories.Category
 import org.junit.rules.TemporaryFolder
@@ -42,7 +40,7 @@ import static net.jexler.service.ServiceState.OFF
 class JexlerSpec extends Specification {
 
     @Rule
-    public TemporaryFolder tempFolder = new TemporaryFolder();
+    public TemporaryFolder tempFolder = new TemporaryFolder()
 
     private final static long MS_1_SEC = 1000
     private final static long MS_10_SEC = 10000
@@ -311,8 +309,8 @@ class JexlerSpec extends Specification {
 
         when:
         jexler.zap()
-        JexlerUtil.waitForShutdown(jexler, MS_10_SEC)
-        JexlerUtil.waitAtLeast(MS_10_SEC)
+        JexlerUtil.waitForShutdown(jexler, MS_1_SEC)
+        JexlerUtil.waitAtLeast(MS_1_SEC)
 
         then:
         jexler.state == OFF
@@ -524,7 +522,7 @@ class JexlerSpec extends Specification {
         file.text = text
 
         expect:
-        def jexler = new Jexler(file, new JexlerContainer(dir))
+        final def jexler = new Jexler(file, new JexlerContainer(dir))
         jexler.metaConfig == null
 
         where:

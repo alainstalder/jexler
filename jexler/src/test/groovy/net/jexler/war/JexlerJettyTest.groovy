@@ -20,6 +20,7 @@ import net.jexler.test.DemoTests
 
 import groovy.transform.CompileStatic
 import org.eclipse.jetty.server.Server
+import org.eclipse.jetty.webapp.Configuration
 import org.eclipse.jetty.webapp.WebAppContext
 import org.junit.Test
 import org.junit.experimental.categories.Category
@@ -56,12 +57,11 @@ class JexlerJettyTest {
         context.setAttribute('org.eclipse.jetty.server.webapp.ContainerIncludeJarPattern','.*/[^/]*jstl.*\\.jar$')
 
         // "4. Enabling the Annotation based configuration" in context
-        org.eclipse.jetty.webapp.Configuration.ClassList classlist =
-                org.eclipse.jetty.webapp.Configuration.ClassList.setServerDefault(server)
-        classlist.addAfter("org.eclipse.jetty.webapp.FragmentConfiguration",
+        final Configuration.ClassList classList = Configuration.ClassList.setServerDefault(server)
+        classList.addAfter("org.eclipse.jetty.webapp.FragmentConfiguration",
                 "org.eclipse.jetty.plus.webapp.EnvConfiguration",
                 "org.eclipse.jetty.plus.webapp.PlusConfiguration")
-        classlist.addBefore("org.eclipse.jetty.webapp.JettyWebXmlConfiguration",
+        classList.addBefore("org.eclipse.jetty.webapp.JettyWebXmlConfiguration",
                 "org.eclipse.jetty.annotations.AnnotationConfiguration")
 
         // Set handler and start server

@@ -25,6 +25,9 @@ import org.slf4j.LoggerFactory
 
 import java.text.ParseException
 
+import static net.jexler.service.CronService.CRON_NOW
+import static net.jexler.service.CronService.CRON_NOW_AND_STOP
+
 /**
  * Service utilities.
  *
@@ -92,7 +95,7 @@ class ServiceUtil {
      * @throws IllegalArgumentException if the resulting cron string is not a valid quartz cron string
      */
     static String toQuartzCron(final String cron) throws IllegalArgumentException {
-        if (CronService.CRON_NOW == cron | CronService.CRON_NOW_AND_STOP == cron) {
+        if (CRON_NOW == cron | CRON_NOW_AND_STOP == cron) {
             return cron
         }
         final List<String> list = cron.trim().split(/\s/) as List<String>

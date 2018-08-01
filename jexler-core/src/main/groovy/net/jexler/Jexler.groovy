@@ -50,7 +50,7 @@ class Jexler implements Service, IssueTracker {
     private static final Grengine META_CONFIG_GRENGINE = new Grengine()
 
     private static final Pattern META_CONFIG_PATTERN = Pattern.compile(
-            /^\/\/\s*jexler\s*\{\s*(.*?)\s*\}$/, Pattern.CASE_INSENSITIVE)
+            /^\/\/\s*jexler\s*\{\s*(.*?)\s*}$/, Pattern.CASE_INSENSITIVE)
 
     /**
      * Blocking queue for events sent to a Jexler

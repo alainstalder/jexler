@@ -32,7 +32,7 @@ import spock.lang.Specification
 class ShellToolSpec extends Specification {
 
     @Rule
-    public TemporaryFolder tempFolder = new TemporaryFolder();
+    public TemporaryFolder tempFolder = new TemporaryFolder()
 
     def 'TEST default'() {
         given:
@@ -122,7 +122,7 @@ class ShellToolSpec extends Specification {
         tool.stderrLineHandler = { stderr += it }
 
         when:
-        final def cmd = (isWindows() ? 'cmd /c type there-is-no-such-file' : 'cat there-is-no-such-file')
+        final def cmd = (windows ? 'cmd /c type there-is-no-such-file' : 'cat there-is-no-such-file')
         final def result = tool.run(cmd)
 
         then:
@@ -158,7 +158,7 @@ class ShellToolSpec extends Specification {
         result.toString() == string
 
         where:
-        result                                        | string
+        result                                                        | string
         new ShellTool.Result(5, 'file1\nfile2\n', '') | "[rc=5,stdout='file1%nfile2%n',stderr='']"
         new ShellTool.Result(-1, '', 'error')         | "[rc=-1,stdout='',stderr='error']"
     }

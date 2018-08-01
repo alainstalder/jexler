@@ -16,7 +16,7 @@
 
 package net.jexler
 
-import net.jexler.service.ServiceState
+
 import net.jexler.service.StopEvent
 import net.jexler.test.FastTests
 
@@ -38,7 +38,7 @@ import static net.jexler.service.ServiceState.OFF
 class JexlerContainerSpec extends Specification {
 
     @Rule
-    public TemporaryFolder tempFolder = new TemporaryFolder();
+    public TemporaryFolder tempFolder = new TemporaryFolder()
 
     private final static long MS_1_SEC = 1000
     private final static long MS_10_SEC = 10000
@@ -237,7 +237,7 @@ class JexlerContainerSpec extends Specification {
         new JexlerContainer(dir)
 
         then:
-        RuntimeException e = thrown()
+        final RuntimeException e = thrown()
         e.message == "Directory '$dir.absolutePath' does not exist."
     }
 
@@ -249,7 +249,7 @@ class JexlerContainerSpec extends Specification {
         new JexlerContainer(file)
 
         then:
-        RuntimeException e = thrown()
+        final RuntimeException e = thrown()
         e.message == "File '$file.absolutePath' is not a directory."
     }
 

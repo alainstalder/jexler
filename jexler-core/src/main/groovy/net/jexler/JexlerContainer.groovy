@@ -169,7 +169,7 @@ class JexlerContainer extends ServiceGroup implements Service, IssueTracker, Clo
         final List<Jexler> jexlers = new LinkedList<>()
         final List<Jexler> nonRunnables = new LinkedList<>()
         synchronized(jexlerMap) {
-            for (Service service : services) {
+            for (final Service service : services) {
                 Jexler jexler = (Jexler)service
                 if (jexler.runnable) {
                     jexlers.add(jexler)
@@ -188,7 +188,7 @@ class JexlerContainer extends ServiceGroup implements Service, IssueTracker, Clo
      */
     Jexler getJexler(final String id) {
         synchronized(jexlerMap) {
-            return jexlerMap.get(id)
+            return jexlerMap[id]
         }
     }
 

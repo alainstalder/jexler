@@ -19,7 +19,6 @@ package net.jexler
 import net.jexler.service.CronEvent
 import net.jexler.service.DirWatchEvent
 import net.jexler.service.MockService
-import net.jexler.service.ServiceState
 import net.jexler.test.FastTests
 
 import org.junit.Rule
@@ -41,7 +40,7 @@ import static net.jexler.service.ServiceState.OFF
 class JexlerDispatcherSpec extends Specification {
 
     @Rule
-    public TemporaryFolder tempFolder = new TemporaryFolder();
+    public TemporaryFolder tempFolder = new TemporaryFolder()
 
     private final static long MS_1_SEC = 1000
     private final static long MS_10_SEC = 10000

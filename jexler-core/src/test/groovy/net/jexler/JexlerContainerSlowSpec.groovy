@@ -16,7 +16,7 @@
 
 package net.jexler
 
-import net.jexler.service.ServiceState
+
 import net.jexler.test.SlowTests
 
 import org.junit.Rule
@@ -24,6 +24,8 @@ import org.junit.experimental.categories.Category
 import org.junit.rules.TemporaryFolder
 import spock.lang.Specification
 
+import static net.jexler.JexlerUtil.SHUTDOWN_TIMEOUT_MSG
+import static net.jexler.JexlerUtil.STARTUP_TIMEOUT_MSG
 import static net.jexler.service.ServiceState.BUSY_STARTING
 import static net.jexler.service.ServiceState.BUSY_STOPPING
 import static net.jexler.service.ServiceState.IDLE
@@ -44,7 +46,7 @@ class JexlerContainerSlowSpec extends Specification {
     private final static long MS_3_SEC = 3000
     private final static long MS_6_SEC = 6000
     
-    def 'TEST SLOW (8 sec) startup and shutdown too slower than time waited'() {
+    def 'TEST SLOW (12 sec) startup and shutdown too slower than time waited'() {
         given:
         final def dir = tempFolder.root
         final def jexlerBodyFast = """\
@@ -101,10 +103,10 @@ class JexlerContainerSlowSpec extends Specification {
         jexler3.state == BUSY_STARTING
         container.issues.empty
         jexler1.issues.size() == 1
-        jexler1.issues.first().message == JexlerUtil.STARTUP_TIMEOUT_MSG
+        jexler1.issues.first().message == STARTUP_TIMEOUT_MSG
         jexler2.issues.empty
         jexler3.issues.size() == 1
-        jexler3.issues.first().message == JexlerUtil.STARTUP_TIMEOUT_MSG
+        jexler3.issues.first().message == STARTUP_TIMEOUT_MSG
 
         when:
         container.forgetIssues()
@@ -134,10 +136,10 @@ class JexlerContainerSlowSpec extends Specification {
         jexler3.state == BUSY_STOPPING
         container.issues.empty
         jexler1.issues.size() == 1
-        jexler1.issues.first().message == JexlerUtil.SHUTDOWN_TIMEOUT_MSG
+        jexler1.issues.first().message == SHUTDOWN_TIMEOUT_MSG
         jexler2.issues.empty
         jexler3.issues.size() == 1
-        jexler3.issues.first().message == JexlerUtil.SHUTDOWN_TIMEOUT_MSG
+        jexler3.issues.first().message == SHUTDOWN_TIMEOUT_MSG
 
         when:
         container.forgetIssues()
