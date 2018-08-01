@@ -39,6 +39,9 @@ import java.nio.file.WatchEvent
 import java.nio.file.WatchKey
 import java.nio.file.WatchService
 
+import static net.jexler.service.ServiceState.IDLE
+import static net.jexler.service.ServiceState.OFF
+
 /**
  * Directory watch service, creates an event when a file
  * in a given directory is created, modified oder deleted.
@@ -207,7 +210,7 @@ class DirWatchService extends ServiceBase {
             scheduler = jexler.container.scheduler
         }
         scheduler.scheduleJob(job, trigger)
-        state = ServiceState.IDLE
+        state = IDLE
     }
 
     @Override
@@ -222,7 +225,7 @@ class DirWatchService extends ServiceBase {
         } catch (final IOException e) {
             LOG.trace('failed to close watch service', e)
         }
-        state = ServiceState.OFF
+        state = OFF
     }
 
     @Override
@@ -230,7 +233,7 @@ class DirWatchService extends ServiceBase {
         if (state.off) {
             return
         }
-        state = ServiceState.OFF
+        state = OFF
         new Thread() {
             void run() {
                 if (scheduler != null) {

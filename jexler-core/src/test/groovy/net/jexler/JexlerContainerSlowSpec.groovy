@@ -24,6 +24,11 @@ import org.junit.experimental.categories.Category
 import org.junit.rules.TemporaryFolder
 import spock.lang.Specification
 
+import static net.jexler.service.ServiceState.BUSY_STARTING
+import static net.jexler.service.ServiceState.BUSY_STOPPING
+import static net.jexler.service.ServiceState.IDLE
+import static net.jexler.service.ServiceState.OFF
+
 /**
  * Tests the respective class.
  *
@@ -90,10 +95,10 @@ class JexlerContainerSlowSpec extends Specification {
         JexlerUtil.waitForStartup(container, MS_1_SEC)
 
         then:
-        container.state == ServiceState.BUSY_STARTING
-        jexler1.state == ServiceState.BUSY_STARTING
-        jexler2.state == ServiceState.IDLE
-        jexler3.state == ServiceState.BUSY_STARTING
+        container.state == BUSY_STARTING
+        jexler1.state == BUSY_STARTING
+        jexler2.state == IDLE
+        jexler3.state == BUSY_STARTING
         container.issues.empty
         jexler1.issues.size() == 1
         jexler1.issues.first().message == JexlerUtil.STARTUP_TIMEOUT_MSG
@@ -109,10 +114,10 @@ class JexlerContainerSlowSpec extends Specification {
         JexlerUtil.waitForStartup(container, MS_6_SEC)
 
         then:
-        container.state == ServiceState.IDLE
-        jexler1.state == ServiceState.IDLE
-        jexler2.state == ServiceState.IDLE
-        jexler3.state == ServiceState.IDLE
+        container.state == IDLE
+        jexler1.state == IDLE
+        jexler2.state == IDLE
+        jexler3.state == IDLE
         container.issues.empty
         jexler1.issues.empty
         jexler2.issues.empty
@@ -123,10 +128,10 @@ class JexlerContainerSlowSpec extends Specification {
         JexlerUtil.waitForShutdown(container, MS_1_SEC)
 
         then:
-        container.state == ServiceState.BUSY_STOPPING
-        jexler1.state == ServiceState.BUSY_STOPPING
-        jexler2.state == ServiceState.OFF
-        jexler3.state == ServiceState.BUSY_STOPPING
+        container.state == BUSY_STOPPING
+        jexler1.state == BUSY_STOPPING
+        jexler2.state == OFF
+        jexler3.state == BUSY_STOPPING
         container.issues.empty
         jexler1.issues.size() == 1
         jexler1.issues.first().message == JexlerUtil.SHUTDOWN_TIMEOUT_MSG
@@ -142,10 +147,10 @@ class JexlerContainerSlowSpec extends Specification {
         JexlerUtil.waitForShutdown(container, MS_6_SEC)
 
         then:
-        container.state == ServiceState.OFF
-        jexler1.state == ServiceState.OFF
-        jexler2.state == ServiceState.OFF
-        jexler3.state == ServiceState.OFF
+        container.state == OFF
+        jexler1.state == OFF
+        jexler2.state == OFF
+        jexler3.state == OFF
         container.issues.empty
         jexler1.issues.empty
         jexler2.issues.empty

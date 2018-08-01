@@ -21,6 +21,9 @@ import net.jexler.service.ServiceUtil
 
 import groovy.transform.CompileStatic
 
+import static net.jexler.service.ServiceState.BUSY_STARTING
+import static net.jexler.service.ServiceState.OFF
+
 /**
  * Jexler utilities.
  * Includes some static methods that could be useful in Groovy scripts
@@ -69,7 +72,7 @@ class JexlerUtil {
             return true
         }
         for (final Jexler jexler : container.jexlers) {
-            if (jexler.state == ServiceState.BUSY_STARTING) {
+            if (jexler.state == BUSY_STARTING) {
                 jexler.trackIssue(jexler, STARTUP_TIMEOUT_MSG, null)
             }
         }
@@ -86,7 +89,7 @@ class JexlerUtil {
             return true
         }
         for (final Jexler jexler : container.jexlers) {
-            if (jexler.state != ServiceState.OFF) {
+            if (jexler.state != OFF) {
                 jexler.trackIssue(jexler, SHUTDOWN_TIMEOUT_MSG, null)
             }
         }

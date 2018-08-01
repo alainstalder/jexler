@@ -30,39 +30,49 @@ import spock.lang.Specification
 @Category(FastTests.class)
 class IssueSpec extends Specification {
 
+    def 'TEST construct and get null values'() {
+        when:
+        final def issue = new Issue(null, null, null)
+
+        then:
+        issue.service == null
+        issue.message == null
+        issue.cause == null
+        issue.stackTrace == ''
+        issue.toString() == "Issue: [message=null,service=null,cause=null,stackTrace='']"
+    }
+
     def 'TEST construct and get without cause'() {
-        expect:
+        when:
+        final def service = new MockService(null, 'mockid')
+        final def message = 'hi \r a \n b \r\n c \r\n\r\n'
+        final def issue = new Issue(service, message, null)
+
+        then:
         issue.service == service
         issue.message == message
-        issue.cause == cause
+        issue.cause == null
         issue.stackTrace == ''
-        issue.toString() == string
-
-        where:
-        service | message | cause | string
-        null | null | null |
-                "Issue: [message=null,service=null,cause=null,stackTrace='']"
-        new MockService(null, 'mockid') | 'hi \r a \n b \r\n c \r\n\r\n' | null |
-                "Issue: [message='hi %n a %n b %n c %n%n',service='${MockService.class.name}:mockid',cause=null,stackTrace='']"
-        issue = new Issue(service, message, cause)
+        issue.toString() == "Issue: [message='hi %n a %n b %n c %n%n',service='${MockService.class.name}:mockid'," +
+                "cause=null,stackTrace='']"
     }
 
     def 'TEST construct and get with cause'() {
-        expect:
+        when:
+        final def service = new MockService(null, 'mockid')
+        final def message = 'hi'
+        final def cause = new RuntimeException('run')
+        final def issue = new Issue(service, message, cause)
+
+        then:
         issue.service == service
         issue.message == message
         issue.cause == cause
         issue.stackTrace != ''
-        issue.toString().startsWith(string)
+        issue.toString().startsWith("Issue: [message='hi',service='${MockService.class.name}:mockid'" +
+                ",cause='java.lang.RuntimeException: run',stackTrace='java.lang.RuntimeException: run")
         !issue.toString().contains('\r')
         !issue.toString().contains('\n')
-
-        where:
-        service | message | cause | string
-        new MockService(null, 'mockid') | 'hi' | new RuntimeException('run') |
-                "Issue: [message='hi',service='${MockService.class.name}:mockid'" +
-                ",cause='java.lang.RuntimeException: run',stackTrace='java.lang.RuntimeException: run"
-        issue = new Issue(service, message, cause)
     }
 
     def 'TEST compare'() {

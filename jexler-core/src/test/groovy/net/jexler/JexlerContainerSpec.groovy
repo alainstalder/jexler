@@ -25,6 +25,10 @@ import org.junit.experimental.categories.Category
 import org.junit.rules.TemporaryFolder
 import spock.lang.Specification
 
+import static net.jexler.service.ServiceState.BUSY_STARTING
+import static net.jexler.service.ServiceState.IDLE
+import static net.jexler.service.ServiceState.OFF
+
 /**
  * Tests the respective class.
  *
@@ -59,7 +63,7 @@ class JexlerContainerSpec extends Specification {
         def container = new JexlerContainer(dir)
 
         then:
-        container.state == ServiceState.OFF
+        container.state == OFF
         container.state.off
         container.dir == dir
         container.id == dir.name
@@ -75,20 +79,20 @@ class JexlerContainerSpec extends Specification {
         jexler1.id == 'Jexler1'
         jexler2.id == 'Jexler2'
         jexler3.id == 'Jexler3'
-        jexler1.state == ServiceState.OFF
-        jexler2.state == ServiceState.OFF
-        jexler3.state == ServiceState.OFF
+        jexler1.state == OFF
+        jexler2.state == OFF
+        jexler3.state == OFF
 
         when:
         container.start()
         JexlerUtil.waitForStartup(container, MS_10_SEC)
 
         then:
-        container.state == ServiceState.IDLE
+        container.state == IDLE
         container.state.on
-        jexler1.state == ServiceState.OFF
-        jexler2.state == ServiceState.IDLE
-        jexler3.state == ServiceState.IDLE
+        jexler1.state == OFF
+        jexler2.state == IDLE
+        jexler3.state == IDLE
         container.issues.empty
 
         when:
@@ -96,10 +100,10 @@ class JexlerContainerSpec extends Specification {
         JexlerUtil.waitForShutdown(container, MS_10_SEC)
 
         then:
-        container.state == ServiceState.OFF
-        jexler1.state == ServiceState.OFF
-        jexler2.state == ServiceState.OFF
-        jexler3.state == ServiceState.OFF
+        container.state == OFF
+        jexler1.state == OFF
+        jexler2.state == OFF
+        jexler3.state == OFF
         container.issues.empty
 
         when:
@@ -107,11 +111,11 @@ class JexlerContainerSpec extends Specification {
         JexlerUtil.waitForStartup(container, MS_10_SEC)
 
         then:
-        container.state == ServiceState.IDLE
+        container.state == IDLE
         container.state.on
-        jexler1.state == ServiceState.OFF
-        jexler2.state == ServiceState.IDLE
-        jexler3.state == ServiceState.IDLE
+        jexler1.state == OFF
+        jexler2.state == IDLE
+        jexler3.state == IDLE
         container.issues.empty
 
         when:
@@ -119,11 +123,11 @@ class JexlerContainerSpec extends Specification {
         JexlerUtil.waitAtLeast(MS_1_SEC)
 
         then:
-        container.state == ServiceState.IDLE
+        container.state == IDLE
         container.state.on
-        jexler1.state == ServiceState.OFF
-        jexler2.state == ServiceState.IDLE
-        jexler3.state == ServiceState.OFF
+        jexler1.state == OFF
+        jexler2.state == IDLE
+        jexler3.state == OFF
         container.issues.empty
 
         when:
@@ -150,10 +154,10 @@ class JexlerContainerSpec extends Specification {
         container.refresh()
 
         then:
-        container.state == ServiceState.OFF
-        jexler1.state == ServiceState.OFF
-        jexler2.state == ServiceState.OFF
-        jexler3.state == ServiceState.OFF
+        container.state == OFF
+        jexler1.state == OFF
+        jexler2.state == OFF
+        jexler3.state == OFF
         container.issues.empty
         container.jexlers.size() == 2
 
@@ -162,7 +166,7 @@ class JexlerContainerSpec extends Specification {
         JexlerUtil.waitForStartup(container, MS_10_SEC)
 
         then:
-        container.state == ServiceState.IDLE
+        container.state == IDLE
         container.issues.empty
         container.jexlers.size() == 2
 
@@ -180,13 +184,13 @@ class JexlerContainerSpec extends Specification {
         JexlerUtil.waitForStartup(container, MS_10_SEC)
 
         then:
-        container.state == ServiceState.BUSY_STARTING
+        container.state == BUSY_STARTING
 
         when:
         container.zap()
 
         then:
-        container.state == ServiceState.OFF
+        container.state == OFF
     }
 
     def 'TEST track issue'() {

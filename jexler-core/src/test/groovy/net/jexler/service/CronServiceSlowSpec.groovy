@@ -22,6 +22,9 @@ import net.jexler.test.SlowTests
 import org.junit.experimental.categories.Category
 import spock.lang.Specification
 
+import static net.jexler.service.ServiceState.IDLE
+import static net.jexler.service.ServiceState.OFF
+
 /**
  * Tests the respective class.
  *
@@ -81,7 +84,7 @@ class CronServiceSlowSpec extends Specification {
         service.start()
 
         then:
-        service.state == ServiceState.IDLE
+        service.state == IDLE
 
         when:
         event = jexler.takeEvent(MS_4_SEC)
@@ -109,19 +112,19 @@ class CronServiceSlowSpec extends Specification {
         service.start()
 
         then:
-        service.state == ServiceState.IDLE
+        service.state == IDLE
 
         when:
         service.zap()
 
         then:
-        service.state == ServiceState.OFF
+        service.state == OFF
 
         when:
         service.zap()
 
         then:
-        service.state == ServiceState.OFF
+        service.state == OFF
 
         cleanup:
         jexler.container.close()

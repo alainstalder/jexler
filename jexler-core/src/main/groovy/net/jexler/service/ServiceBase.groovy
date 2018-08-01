@@ -18,6 +18,8 @@ package net.jexler.service
 
 import groovy.transform.CompileStatic
 
+import static net.jexler.service.ServiceState.OFF
+
 /**
  * Abstract service base implementation.
  *
@@ -36,7 +38,7 @@ abstract class ServiceBase implements Service {
      */
     ServiceBase(final String id) {
         this.id = id
-        state = ServiceState.OFF
+        state = OFF
     }
 
     /**

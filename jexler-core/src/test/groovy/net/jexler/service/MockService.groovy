@@ -20,6 +20,9 @@ import net.jexler.Jexler
 
 import groovy.transform.CompileStatic
 
+import static net.jexler.service.ServiceState.IDLE
+import static net.jexler.service.ServiceState.OFF
+
 /**
  * Mock service implementation for unit tests.
  *
@@ -55,7 +58,7 @@ class MockService extends ServiceBase {
     @Override
     void start() {
         nStarted++
-        state = ServiceState.IDLE
+        state = IDLE
     }
 
     @Override
@@ -64,14 +67,14 @@ class MockService extends ServiceBase {
         if (stopRuntimeException != null) {
             throw stopRuntimeException
         }
-        state = ServiceState.OFF
+        state = OFF
     }
 
     @Override
     void zap() {
         nZapped++
         nStopped++
-        state = ServiceState.OFF
+        state = OFF
     }
 
     void notifyGotEvent() {

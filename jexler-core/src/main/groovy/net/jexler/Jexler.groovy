@@ -31,6 +31,12 @@ import java.util.concurrent.LinkedBlockingQueue
 import java.util.regex.Matcher
 import java.util.regex.Pattern
 
+import static net.jexler.service.ServiceState.BUSY_EVENT
+import static net.jexler.service.ServiceState.BUSY_STARTING
+import static net.jexler.service.ServiceState.BUSY_STOPPING
+import static net.jexler.service.ServiceState.IDLE
+import static net.jexler.service.ServiceState.OFF
+
 /**
  * Jexler, runs a Groovy script that handles events.
  *
@@ -62,11 +68,11 @@ class Jexler implements Service, IssueTracker {
          */
         @Override
         Event take() {
-            state = ServiceState.IDLE
+            state = IDLE
             while (true) {
                 try {
                     final Event event = (Event)super.take()
-                    state = ServiceState.BUSY_EVENT
+                    state = BUSY_EVENT
                     return event
                 } catch (InterruptedException e) {
                     trackIssue(Jexler.this, 'Could not take event.', e)
@@ -129,7 +135,7 @@ class Jexler implements Service, IssueTracker {
         this.file = file
         this.container = container
         id = container.getJexlerId(file)
-        state = ServiceState.OFF
+        state = OFF
         events = new Events()
         services = new ServiceGroup("${id}.services")
         issueTracker = new IssueTrackerBase()
@@ -151,7 +157,7 @@ class Jexler implements Service, IssueTracker {
             return
         }
 
-        state = ServiceState.BUSY_STARTING
+        state = BUSY_STARTING
         forgetIssues()
         final Jexler jexler = this
 
@@ -164,7 +170,7 @@ class Jexler implements Service, IssueTracker {
                         metaConfigAtStart = readMetaConfig()
                         final boolean runnable = metaConfigAtStart != null
                         if (!runnable || !issues.empty) {
-                            state = ServiceState.OFF
+                            state = OFF
                             return
                         }
 
@@ -184,13 +190,13 @@ class Jexler implements Service, IssueTracker {
                         } catch (final Throwable tCompile) {
                             // (may throw almost anything, checked or not)
                             trackIssue(jexler, 'Script compile failed.', tCompile)
-                            state = ServiceState.OFF
+                            state = OFF
                             return
                         }
 
                         // not a runnable script?
                         if (!Script.class.isAssignableFrom(clazz)) {
-                            state = ServiceState.OFF
+                            state = OFF
                             return
                         }
 
@@ -200,7 +206,7 @@ class Jexler implements Service, IssueTracker {
                         } catch (final Throwable tCreate) {
                             // (may throw anything, checked or not)
                             trackIssue(jexler, 'Script create failed.', tCreate)
-                            state = ServiceState.OFF
+                            state = OFF
                             return
                         }
 
@@ -213,7 +219,7 @@ class Jexler implements Service, IssueTracker {
                             trackIssue(jexler, 'Script run failed.', tRun)
                         }
 
-                        state = ServiceState.BUSY_STOPPING
+                        state = BUSY_STOPPING
 
                         try {
                             services.stop()
@@ -224,7 +230,7 @@ class Jexler implements Service, IssueTracker {
                         services.services.clear()
 
                         script = null
-                        state = ServiceState.OFF
+                        state = OFF
                     }
                 })
         scriptThread.daemon = true
@@ -262,7 +268,7 @@ class Jexler implements Service, IssueTracker {
         if (state.off) {
             return
         }
-        state = ServiceState.OFF
+        state = OFF
         final ServiceGroup services = this.services
         final Thread scriptThread = this.scriptThread
         final Jexler jexler = this

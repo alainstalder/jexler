@@ -22,6 +22,10 @@ import net.jexler.test.SlowTests
 import org.junit.experimental.categories.Category
 import spock.lang.Specification
 
+import static net.jexler.service.ServiceState.BUSY_STARTING
+import static net.jexler.service.ServiceState.IDLE
+import static net.jexler.service.ServiceState.OFF
+
 /**
  * Tests the respective class.
  *
@@ -71,7 +75,7 @@ class ServiceUtilSlowSpec extends Specification {
         final def service = new MockService(null, 'mock')
 
         when:
-        service.state = ServiceState.BUSY_STARTING
+        service.state = BUSY_STARTING
 
         then:
         !ServiceUtil.waitForStartup(service, 0)
@@ -79,12 +83,12 @@ class ServiceUtilSlowSpec extends Specification {
         when:
         final def interruptingThread = new InterruptingThread(Thread.currentThread(), MS_1_SEC)
         interruptingThread.start()
-        new ServiceStateSettingThread(service, ServiceState.IDLE, MS_2_SEC).start()
+        new ServiceStateSettingThread(service, IDLE, MS_2_SEC).start()
 
         then:
         ServiceUtil.waitForStartup(service, MS_3_SEC)
         interruptingThread.hasInterrupted
-        service.state == ServiceState.IDLE
+        service.state == IDLE
     }
 
     def 'TEST SLOW (3 sec) wait for shutdown'() {
@@ -92,7 +96,7 @@ class ServiceUtilSlowSpec extends Specification {
         final def service = new MockService(null, 'mock')
 
         when:
-        service.state = ServiceState.IDLE
+        service.state = IDLE
 
         then:
         !ServiceUtil.waitForShutdown(service, 0)
@@ -100,12 +104,12 @@ class ServiceUtilSlowSpec extends Specification {
         when:
         final def interruptingThread = new InterruptingThread(Thread.currentThread(), MS_1_SEC)
         interruptingThread.start()
-        new ServiceStateSettingThread(service, ServiceState.OFF, MS_2_SEC).start()
+        new ServiceStateSettingThread(service, OFF, MS_2_SEC).start()
 
         then:
         ServiceUtil.waitForShutdown(service, MS_3_SEC)
         interruptingThread.hasInterrupted
-        service.state == ServiceState.OFF
+        service.state == OFF
     }
 
 }

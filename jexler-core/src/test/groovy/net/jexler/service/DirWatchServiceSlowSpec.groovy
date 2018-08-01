@@ -28,6 +28,9 @@ import spock.lang.Specification
 
 import java.nio.file.StandardWatchEventKinds
 
+import static net.jexler.service.ServiceState.IDLE
+import static net.jexler.service.ServiceState.OFF
+
 /**
  * Tests the respective class.
  *
@@ -95,7 +98,7 @@ class DirWatchServiceSlowSpec extends Specification {
         service.start()
 
         then:
-        service.state == ServiceState.IDLE
+        service.state == IDLE
 
         when:
         checkCreateModifyDeleteEventsTriggered(jexler, service, watchDir)
@@ -130,13 +133,13 @@ class DirWatchServiceSlowSpec extends Specification {
         service.zap()
 
         then:
-        service.state == ServiceState.OFF
+        service.state == OFF
 
         when:
         service.zap()
 
         then:
-        service.state == ServiceState.OFF
+        service.state == OFF
     }
 
     private static void checkCreateModifyDeleteEventsTriggered(

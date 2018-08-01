@@ -33,6 +33,9 @@ import org.quartz.TriggerKey
 import org.slf4j.Logger
 import org.slf4j.LoggerFactory
 
+import static net.jexler.service.ServiceState.IDLE
+import static net.jexler.service.ServiceState.OFF
+
 /**
  * A cron service, creates events at configurable times.
  * Implemented using the quartz library.
@@ -121,10 +124,10 @@ class CronService extends ServiceBase {
         if (cron.startsWith(CRON_NOW)) {
             LOG.trace("new cron event: $cron")
             jexler.handle(new CronEvent(this, cron))
-            state = ServiceState.IDLE
+            state = IDLE
             if (cron.equals(CRON_NOW_AND_STOP)) {
                 jexler.handle(new StopEvent(this))
-                state = ServiceState.OFF
+                state = OFF
             }
             return
         }
@@ -145,7 +148,7 @@ class CronService extends ServiceBase {
             scheduler = jexler.container.scheduler
         }
         scheduler.scheduleJob(job, trigger)
-        state = ServiceState.IDLE
+        state = IDLE
     }
 
     @Override
@@ -156,7 +159,7 @@ class CronService extends ServiceBase {
         if (scheduler != null) {
             scheduler.unscheduleJob(triggerKey)
         }
-        state = ServiceState.OFF
+        state = OFF
     }
 
     @Override
@@ -164,7 +167,7 @@ class CronService extends ServiceBase {
         if (state.off) {
             return
         }
-        state = ServiceState.OFF
+        state = OFF
         if (scheduler != null) {
             new Thread() {
                 void run() {

@@ -20,6 +20,12 @@ import groovy.transform.CompileStatic
 import org.slf4j.Logger
 import org.slf4j.LoggerFactory
 
+import static net.jexler.service.ServiceState.BUSY_EVENT
+import static net.jexler.service.ServiceState.BUSY_STARTING
+import static net.jexler.service.ServiceState.BUSY_STOPPING
+import static net.jexler.service.ServiceState.IDLE
+import static net.jexler.service.ServiceState.OFF
+
 /**
  * Service which is a group of services.
  * Starting starts all, stopping stops all.
@@ -100,16 +106,16 @@ class ServiceGroup implements Service {
                 set.add(service.state)
             }
         }
-        if (set.contains(ServiceState.BUSY_STARTING)) {
-            return ServiceState.BUSY_STARTING
-        } else if (set.contains(ServiceState.BUSY_STOPPING)) {
-            return ServiceState.BUSY_STOPPING
-        } else if (set.contains(ServiceState.BUSY_EVENT)) {
-            return ServiceState.BUSY_EVENT
-        } else if (set.contains(ServiceState.IDLE)) {
-            return ServiceState.IDLE
+        if (set.contains(BUSY_STARTING)) {
+            return BUSY_STARTING
+        } else if (set.contains(BUSY_STOPPING)) {
+            return BUSY_STOPPING
+        } else if (set.contains(BUSY_EVENT)) {
+            return BUSY_EVENT
+        } else if (set.contains(IDLE)) {
+            return IDLE
         } else {
-            return ServiceState.OFF
+            return OFF
         }
     }
 
