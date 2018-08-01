@@ -6,7 +6,7 @@ trap "echo \"$(tput bold)`basename \"$0\"` failed\$(tput sgr 0)\" >&2" EXIT
 cd "${0%/*}"
 
 # build doc...
-gradle clean asciidoctor
+../../gradlew clean asciidoctor
 
 # rename
 cd build/asciidoc
