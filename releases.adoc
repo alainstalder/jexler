@@ -6,6 +6,7 @@ image:https://www.jexler.net/jexler.jpg["jexler logo", link="https://www.jexler.
 
 * If removed running jexler source, do not add to sources to
   compile any more.
+* Grengine 2.0.0, quartz 2.3.0
 
 === 3.0.2 (2017-03-04)
 
