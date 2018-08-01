@@ -1,7 +1,7 @@
 #!/bin/bash
 
 set -e -u
-trap "echo \"$(tput bold)`basename \"$0\"` failed\$(tput sgr 0)\" >&2" EXIT
+trap "echo \"$(tput bold)`basename \"$0\"` failed$(tput sgr 0)\" >&2" EXIT
 
 cd "${0%/*}"
 
