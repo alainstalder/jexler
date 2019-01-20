@@ -174,8 +174,8 @@ class BasicServiceGroupSpec extends Specification {
         group.state == IDLE
 
         when:
-        final RuntimeException ex1 = new RuntimeException()
-        final RuntimeException ex2 = new RuntimeException()
+        RuntimeException ex1 = new RuntimeException()
+        RuntimeException ex2 = new RuntimeException()
         service1.stopRuntimeException = ex1
         service2.stopRuntimeException = ex2
         group.stop()

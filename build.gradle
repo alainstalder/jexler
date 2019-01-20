@@ -25,20 +25,20 @@ subprojects {
   }
 
   dependencies {
-    //compile files('../../groovy/target/libs/groovy-all-2.5.0-SNAPSHOT-indy.jar')
-    //compile files('../../groovy/target/libs/groovy-all-2.5.0-SNAPSHOT.jar')
-    compile 'org.codehaus.groovy:groovy-all:2.4.15:indy'
+    compile 'org.codehaus.groovy:groovy-all:2.5.5'
     compile 'org.apache.ivy:ivy:2.4.0'
     compile('ch.grengine:grengine:2.0.0') {
       exclude group: 'org.codehaus.groovy', module: 'groovy'
     }
-    compile 'org.slf4j:slf4j-api:1.7.22'
-    compile 'ch.qos.logback:logback-classic:1.2.1'
-    testCompile('org.spockframework:spock-core:1.1-groovy-2.4') {
+    compile 'org.slf4j:slf4j-api:1.7.25'
+    compile 'ch.qos.logback:logback-classic:1.2.3'
+    // for javax.activation.MimetypesFileTypeMap in Java 11
+    compile 'com.sun.activation:javax.activation:1.2.0'
+    testCompile('org.spockframework:spock-core:1.2-groovy-2.5') {
       exclude group: 'org.codehaus.groovy', module: 'groovy-all'
     }
     testCompile 'junit:junit:4.12'
-    jansiForGroovydoc 'org.fusesource.jansi:jansi:1.14'
+    jansiForGroovydoc 'org.fusesource.jansi:jansi:1.17.1'
   }
 
   groovydoc {

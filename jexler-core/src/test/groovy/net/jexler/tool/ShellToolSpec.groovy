@@ -122,8 +122,8 @@ class ShellToolSpec extends Specification {
         tool.stderrLineHandler = { stderr += it }
 
         when:
-        final def cmd = (windows ? 'cmd /c type there-is-no-such-file' : 'cat there-is-no-such-file')
-        final def result = tool.run(cmd)
+        def cmd = (windows ? 'cmd /c type there-is-no-such-file' : 'cat there-is-no-such-file')
+        def result = tool.run(cmd)
 
         then:
         tool.workingDirectory == null

@@ -233,7 +233,7 @@ class JexlerContainerSpec extends Specification {
 
     def 'TEST constructor throws because directory does not exist'() {
         when:
-        final def dir = new File('does-not-exist')
+        def dir = new File('does-not-exist')
         new JexlerContainer(dir)
 
         then:
@@ -244,7 +244,7 @@ class JexlerContainerSpec extends Specification {
     def 'TEST constructor throws because file is not a directory'() {
         when:
         final def dir = tempFolder.root
-        final def file = new File(dir, "file.tmp")
+        def file = new File(dir, "file.tmp")
         file.createNewFile()
         new JexlerContainer(file)
 

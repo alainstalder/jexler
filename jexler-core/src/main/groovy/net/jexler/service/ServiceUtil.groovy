@@ -24,6 +24,7 @@ import org.slf4j.Logger
 import org.slf4j.LoggerFactory
 
 import java.text.ParseException
+import java.text.SimpleDateFormat
 
 import static net.jexler.service.CronService.CRON_NOW
 import static net.jexler.service.CronService.CRON_NOW_AND_STOP
@@ -116,13 +117,15 @@ class ServiceUtil {
         if (quartzCron != cron) {
             LOG.trace("cron '$cron' => '$quartzCron'")
         }
-        final CronExpression cronExpression
+        CronExpression cronExpression
         try {
             cronExpression = new CronExpression(quartzCron)
         } catch (final ParseException e) {
             throw new IllegalArgumentException("Could not parse cron '$quartzCron': $e.message", e)
         }
-        final String next = cronExpression.getNextValidTimeAfter(new Date())?.format('EEE dd MMM yyyy HH:mm:ss')
+        final SimpleDateFormat format = new SimpleDateFormat('EEE dd MMM yyyy HH:mm:ss.SSS')
+        final Date nextDate = cronExpression.getNextValidTimeAfter(new Date())
+        final String next = nextDate == null ? null : format.format(nextDate)
         LOG.trace("next '$quartzCron' => $next")
         return quartzCron
     }
