@@ -69,11 +69,11 @@ class JexlerContextListener implements ServletContextListener    {
     void contextInitialized(final ServletContextEvent event) {
 
         // Get and log versions (no versions in unit tests or IDE)
-        String coreVersion = Jexler.class.getPackage().implementationVersion
+        String coreVersion = Jexler.class.package.implementationVersion
         coreVersion = (coreVersion == null) ? '0.0.0' : coreVersion
-        String grengineVersion = Grengine.class.getPackage().implementationVersion
+        String grengineVersion = Grengine.class.package.implementationVersion
         grengineVersion = (grengineVersion == null) ? '0.0.0' : grengineVersion
-        String groovyVersion = GroovyClassLoader.class.getPackage().implementationVersion
+        String groovyVersion = GroovyClassLoader.class.package.implementationVersion
         groovyVersion = (groovyVersion == null) ? '0.0.0' : groovyVersion
         LOG.info("Welcome to jexler.")
         LOG.info("Jexler $GUI_VERSION | jexler-core: $coreVersion | Grengine: $grengineVersion | Groovy: $groovyVersion")
