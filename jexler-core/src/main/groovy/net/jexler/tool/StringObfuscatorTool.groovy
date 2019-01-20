@@ -24,7 +24,6 @@ import javax.crypto.IllegalBlockSizeException
 import javax.crypto.NoSuchPaddingException
 import javax.crypto.spec.IvParameterSpec
 import javax.crypto.spec.SecretKeySpec
-import javax.xml.bind.DatatypeConverter
 import java.security.InvalidAlgorithmParameterException
 import java.security.InvalidKeyException
 import java.security.NoSuchAlgorithmException
@@ -71,8 +70,8 @@ class StringObfuscatorTool {
     StringObfuscatorTool setParameters(final String hexKey, final String hexIv,
                                        final String algorithm, final String transformation)
             throws NoSuchAlgorithmException, NoSuchPaddingException {
-        key = new SecretKeySpec(DatatypeConverter.parseHexBinary(hexKey), algorithm)
-        iv = new IvParameterSpec(DatatypeConverter.parseHexBinary(hexIv))
+        key = new SecretKeySpec(hexKey.decodeHex(), algorithm)
+        iv = new IvParameterSpec(hexIv.decodeHex())
         cipher = Cipher.getInstance(transformation)
         return this
     }
@@ -112,7 +111,7 @@ class StringObfuscatorTool {
         plainPaddedBytes[byteBufferPadLen-1] = (byte)lenActual
         cipher.init(Cipher.ENCRYPT_MODE, key, iv)
         final byte[] enc = cipher.doFinal(plainPaddedBytes)
-        return DatatypeConverter.printHexBinary(enc)
+        return enc.encodeHex().toString()
     }
     
     /**
@@ -123,7 +122,7 @@ class StringObfuscatorTool {
             throws InvalidKeyException, IllegalBlockSizeException,
             BadPaddingException, UnsupportedEncodingException,
             InvalidAlgorithmParameterException {
-        final byte[] enc = DatatypeConverter.parseHexBinary(encHex)
+        final byte[] enc = encHex.decodeHex()
         cipher.init(Cipher.DECRYPT_MODE, key, iv)
         final byte[] plain = cipher.doFinal(enc)
         if (plain.length != byteBufferPadLen) {
