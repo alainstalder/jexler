@@ -45,7 +45,7 @@ class Util {
   def sendMail(recipients, subject, msg) {
     try {
       new SimpleEmail().with {
-        setFrom "jex@jexler.net"
+        setFrom "jexler@artecat.ch"
         for (to in recipients) {
           addTo to
         }

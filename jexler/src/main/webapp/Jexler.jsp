@@ -1,5 +1,5 @@
 <%--
-Copyright 2012-now $(whois jexler.net)
+Copyright 2012-now  Jex Jexler (Alain Stalder)
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
@@ -19,7 +19,7 @@ limitations under the License.
 <%@ page trimDirectiveWhitespaces="true" %>
 
 <%-- Set 'container' to main view --%>
-<jsp:useBean id="container" class="net.jexler.war.JexlerContainerView">
+<jsp:useBean id="container" class="ch.artecat.jexler.war.JexlerContainerView">
 
 <%-- Handle request (start/stop jexler, etc.) --%>
 <%= container.handleCommands(pageContext) %>
@@ -62,7 +62,7 @@ limitations under the License.
   <table class="frame">
   <tr id="header">
   <td class="frame">
-  <a href="https://www.jexler.net/"><img class="jexler" src="jexler.jpg" title="${container.jexlerTooltip}"></a>
+  <a href="https://www.artecat.ch/jexler/"><img class="jexler" src="jexler.jpg" title="${container.jexlerTooltip}"></a>
   </td>
   <td class="frame frame-buttons">
     <c:choose>

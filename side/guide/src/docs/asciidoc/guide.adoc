@@ -1,8 +1,8 @@
-image:jexler.jpg["jexler", link="https://www.jexler.net/"]
+image:jexler.jpg["jexler", link="https://www.artecat.ch/jexler/"]
 
 == Jexler User Guide
 
-https://www.jexler.net/[Jexler] is a simple relaxed
+https://www.artecat.ch/jexler/[Jexler] is a simple relaxed
 http://www.groovy-lang.org[Groovy] framework for starting/stopping
 Groovy scripts as services and enabling them to react to events
 of their choice - great for prototyping and useful for automating.
@@ -52,7 +52,7 @@ while (true) {
   event = events.take();
   if (event instanceof CronEvent) {
     new SimpleEmail().with {
-      setFrom 'jex@jexler.net'
+      setFrom 'jexler@artecat.ch'
       addTo 'bugs@acme.org'
       // ...
       setSubject 'hello'
@@ -407,7 +407,7 @@ that you would read from a file, or maybe even consider something like the follo
 Subclass the StringObfuscatorTool class in Groovy (or Java):
 
 [source,groovy]
-class MyObfuscatorTool extends net.jexler.tool.StringObfuscatorTool {
+class MyObfuscatorTool extends ch.artecat.jexler.tool.StringObfuscatorTool {
   public MyObfuscatorTool() {
     setParameters("00--my-AES-128-secret-key-hex-00", "00--my-AES-128-secret-iv-hex--00",
       "AES", "AES/CBC/PKCS5Padding")
@@ -722,9 +722,9 @@ The jexler webapp is very simple and contains a demo unit test that starts it in
 
 The following packages are automatically imported:
 
-* `net.jexler`
-* `net.jexler.service`
-* `net.jexler.tool`
+* `ch.artecat.jexler`
+* `ch.artecat.jexler.service`
+* `ch.artecat.jexler.tool`
 
 and the following variables are available to jexler Groovy scripts (binding):
 
@@ -778,8 +778,10 @@ if you use the jexler core library in a different context.
 
 * The jexler-core JAR is at https://search.maven.org/#search%7Cga%7C1%7Cjexler-core[Maven Central]
 * The jexler webapp is at https://sourceforge.net/projects/jexler/[Sourceforge] (see "Files" tab)
-* The website https://www.jexler.net/[www.jexler.net] hosts https://www.jexler.net/groovydoc/[Groovydoc],
-  https://www.jexler.net/jacoco/[JaCoCo] and this https://www.jexler.net/guide/[guide]
+* The website https://www.artecat.ch/jexler/[www.artecat.ch/jexler] hosts
+  https://www.artecat.ch/jexler/groovydoc/[Groovydoc],
+  https://www.artecat.ch/jexler/jacoco/[JaCoCo]
+  and this https://www.artecat.ch/jexler/guide/[guide]
 
 == Use Cases
 
@@ -801,7 +803,6 @@ web servers, proxy servers and web browsers. httest can emulate clients and serv
 in the same test script, very useful for testing proxys."
 * Project: https://htt.sourceforge.net/
 * Sourceforge: https://sourceforge.net/projects/htt/
-* Binaries (by me): https://www.jexler.net/htt/
 
 Release builds were triggered automatically by polling sourceforge for a new httest
 source release. After checking out the source and building the binaries, the binaries
@@ -829,7 +830,7 @@ from a technical and an artistic perspective - that's reward enough for me :)
 Jexler is maybe more suited for tasks that have some leisure in them, but in principle
 you could also imagine to write a web server with jexlers as handlers or similar things.
 
-Keep me updated at mailto:jex@jexler.net[jex@jexler.net].
+Keep me updated at mailto:jexlerx@artecat.ch[jexler@artecat.ch].
 
 == Roadmap
 
@@ -848,8 +849,8 @@ Or to put it a bit more poetically, to me jexler is an island,
 things may flow freely around it, but jexler itself is unlikely
 to change much.
 
-Copyright &copy; 2012-now $(whois jexler.net) +
-https://www.jexler.net/
+Copyright &copy; 2012-now Jex Jexler (Alain Stalder) +
+https://www.artecat.ch/jexler/
 
 Note also that the jexler logo with the bat is my own creation (*2010).
 

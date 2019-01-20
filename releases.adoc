@@ -1,4 +1,4 @@
-image:https://www.jexler.net/jexler.jpg["jexler logo", link="https://www.jexler.net/"]
+image:https://www.artecat.ch/jexler/jexler.jpg["jexler logo", link="https://www.artecat.ch/jexler/"]
 
 = jexler releases
 

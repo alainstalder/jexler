@@ -7,9 +7,9 @@ subprojects {
   sourceCompatibility = 1.8
   targetCompatibility = 1.8
 
-  version = '3.0.4-SNAPSHOT' // IMPORTANT: keep in sync with version in JexlerContextListener
+  version = '4.0.0-SNAPSHOT' // IMPORTANT: keep in sync with version in JexlerContextListener
 
-  project.group = 'net.jexler'
+  project.group = 'ch.artecat.jexler'
 
   jar {
     manifest.attributes provider: 'gradle'
@@ -69,7 +69,7 @@ subprojects {
   test {
     //testLogging.showStandardStreams = true
     useJUnit {
-      includeCategories 'net.jexler.test.FastTests'
+      includeCategories 'ch.artecat.jexler.test.FastTests'
     }
     //afterTest { desc, result ->
     //  println "Executing test ${desc.name} [${desc.className}] with result: ${result.resultType}"
@@ -77,20 +77,20 @@ subprojects {
   }
 
   jacoco {
-    toolVersion = "0.7.9"
+    toolVersion = "0.8.2"
   }
 
   task slowTests(type: Test, dependsOn: 'test') {
     //testLogging.showStandardStreams = true
     useJUnit {
-      includeCategories 'net.jexler.test.SlowTests'
+      includeCategories 'ch.artecat.jexler.test.SlowTests'
     }
   }
   
-  task demo(type: Test) {
+  task demoTests(type: Test) {
     testLogging.showStandardStreams = true
     useJUnit {
-      includeCategories 'net.jexler.test.DemoTests'
+      includeCategories 'ch.artecat.jexler.test.DemoTests'
     }
   }
 
@@ -110,7 +110,7 @@ subprojects {
         project {
           name 'jexler'
           description project.description
-          url 'https://www.jexler.net/'
+          url 'https://www.artecat.ch/jexler/'
           packaging project.ext.pkg
           licenses {
             license {
@@ -127,8 +127,8 @@ subprojects {
           developers {
             developer {
               id 'jexler'
-              name 'Jex Jexler (whois jexler.net)'
-              email 'jex@jexler.net'
+              name 'Jex Jexler (Alain Stalder)'
+              email 'jexler@artecat.ch'
             }
           }
         }
