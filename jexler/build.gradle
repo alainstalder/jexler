@@ -15,6 +15,9 @@ war {
 dependencies {
   compile project(':jexler-core')
   testCompile project (path: ":jexler-core", configuration: 'testArtifacts')
+  
+  // for javax.activation.MimetypesFileTypeMap in Java 11
+  compile 'com.sun.activation:javax.activation:1.2.0'
 
   // Embedded Jetty with JSP support
   // See https://examples.javacodegeeks.com/enterprise-java/jetty/jetty-jsp-example/

@@ -32,8 +32,6 @@ subprojects {
     }
     compile 'org.slf4j:slf4j-api:1.7.25'
     compile 'ch.qos.logback:logback-classic:1.2.3'
-    // for javax.activation.MimetypesFileTypeMap in Java 11
-    compile 'com.sun.activation:javax.activation:1.2.0'
     testCompile('org.spockframework:spock-core:1.2-groovy-2.5') {
       exclude group: 'org.codehaus.groovy', module: 'groovy-all'
     }
