@@ -2,11 +2,13 @@ image:https://www.artecat.ch/jexler/jexler.jpg["jexler logo", link="https://www.
 
 = jexler releases
 
-=== 3.0.3-SNAPSHOT (20XX-XX-XX)
+=== 4.0.0-SNAPSHOT (20XX-XX-XX)
 
+* Changed package names from `net.jexler` to `ch.artecat.jexler`.
 * If removed running jexler source, do not add to sources to
   compile any more.
-* Grengine 2.0.0, quartz 2.3.0
+* Eliminated dependency on `javax.xml.bind.DatatypeConverter`.
+* Grengine 3.0.0, Groovy 2.5.5, quartz 2.3.0
 
 === 3.0.2 (2017-03-04)
 
