@@ -119,7 +119,7 @@ limitations under the License.
 </table>
 
 <p class="grengine">
-  <a href="https://www.grengine.ch/"><img src="powered-by-grengine.gif" title="www.grengine.ch"></a>
+  <a href="https://www.artecat.ch/grengine/"><img src="powered-by-grengine.gif" title="artecat.ch/grengine"></a>
 </p>
 
 <%-- Skip if getting status table from js, not if requesting page in browser --%>

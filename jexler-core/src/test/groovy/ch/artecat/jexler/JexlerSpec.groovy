@@ -22,7 +22,7 @@ import ch.artecat.jexler.service.ServiceBase
 import ch.artecat.jexler.service.StopEvent
 import ch.artecat.jexler.test.FastTests
 
-import ch.grengine.except.CompileException
+import ch.artecat.grengine.except.CompileException
 import org.junit.Rule
 import org.junit.experimental.categories.Category
 import org.junit.rules.TemporaryFolder

@@ -27,7 +27,7 @@ subprojects {
   dependencies {
     compile 'org.codehaus.groovy:groovy-all:2.5.5'
     compile 'org.apache.ivy:ivy:2.4.0'
-    compile('ch.grengine:grengine:2.0.0') {
+    compile('ch.artecat.grengine:grengine:3.0.0') {
       exclude group: 'org.codehaus.groovy', module: 'groovy'
     }
     compile 'org.slf4j:slf4j-api:1.7.25'

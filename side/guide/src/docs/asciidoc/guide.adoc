@@ -7,10 +7,10 @@ http://www.groovy-lang.org[Groovy] framework for starting/stopping
 Groovy scripts as services and enabling them to react to events
 of their choice - great for prototyping and useful for automating.
 
-Jexler uses https://www.grengine.ch/[Grengine] to run its container
+Jexler uses https://www.artecat.ch/grengine/[Grengine] to run its container
 of Groovy scripts and utility classes.
 
-image:powered-by-grengine.gif["Powered by Grengine", link="https://www.grengine.ch/"]
+image:powered-by-grengine.gif["Powered by Grengine", link="https://www.artecat.ch/grengine/"]
 
 == Introduction
 
@@ -806,7 +806,7 @@ in the same test script, very useful for testing proxys."
 
 Release builds were triggered automatically by polling sourceforge for a new httest
 source release. After checking out the source and building the binaries, the binaries
-were uploaded via FTP to www.jexler.net and notification mails sent, as needed.
+were uploaded via FTP to the jexler website and notification mails sent, as needed.
 The builds (nightly and release) included also to run all tests automatically and
 provide a test report. The Windows build resulted also in a Visual Studio Solution,
 complete with all needed external libraries and includes. For building on Windows,

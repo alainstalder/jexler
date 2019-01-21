@@ -20,7 +20,7 @@ import ch.artecat.jexler.Jexler
 import ch.artecat.jexler.JexlerContainer
 import ch.artecat.jexler.JexlerUtil
 
-import ch.grengine.Grengine
+import ch.artecat.grengine.Grengine
 import ch.qos.logback.classic.LoggerContext
 import ch.qos.logback.core.FileAppender
 import groovy.transform.CompileStatic

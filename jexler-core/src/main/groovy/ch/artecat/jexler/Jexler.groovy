@@ -22,7 +22,7 @@ import ch.artecat.jexler.service.ServiceGroup
 import ch.artecat.jexler.service.ServiceState
 import ch.artecat.jexler.service.StopEvent
 
-import ch.grengine.Grengine
+import ch.artecat.grengine.Grengine
 import groovy.transform.CompileStatic
 import org.slf4j.Logger
 import org.slf4j.LoggerFactory

@@ -22,7 +22,7 @@ import ch.artecat.jexler.JexlerContainer
 import ch.artecat.jexler.JexlerUtil
 import ch.artecat.jexler.service.Service
 
-import ch.grengine.except.GrengineException
+import ch.artecat.grengine.except.GrengineException
 import groovy.transform.CompileStatic
 import org.slf4j.Logger
 import org.slf4j.LoggerFactory
