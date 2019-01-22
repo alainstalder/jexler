@@ -2,7 +2,11 @@ image:https://www.artecat.ch/jexler/jexler.jpg["jexler logo", link="https://www.
 
 = jexler releases
 
-=== 4.0.1 (20XX-XX-XX)
+=== 4.0.2-SNAPSHOT (20XX-XX-XX)
+
+* ...
+
+=== 4.0.1 (2019-01-22)
 
 * Fixed Maven dependencies.
 
