@@ -14,6 +14,16 @@ mv html5 guide
 cd guide
 mv guide.html index.html
 
+# swallow the black footer with date+time
+mv index.html work.html
+cat work.html | awk '
+  /<div id=.footer.>/ { swallow=1 }
+  /<.body>/ { swallow=0 }
+  /.*/ {
+    if (!swallow) { print }
+  }' > index.html
+rm work.html
+
 #tput bel
 date
 
