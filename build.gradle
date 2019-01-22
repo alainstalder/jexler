@@ -7,9 +7,20 @@ subprojects {
   sourceCompatibility = 1.8
   targetCompatibility = 1.8
 
-  version = '4.0.1-SNAPSHOT' // IMPORTANT: keep in sync with version in JexlerContextListener
+  version = '4.0.1' // IMPORTANT: keep in sync with version in JexlerContextListener
 
   project.group = 'ch.artecat.jexler'
+
+  ext {
+    groovyVersion='2.5.5'
+    grengineVersion='3.0.0'
+    ivyVersion='2.4.0'
+    slf4jVersion='1.7.25'
+    logbackVersion='1.2.3'
+    spockVersion='1.2-groovy-2.5'
+    junitVersion='4.12'
+    jansiVersion='1.17.1'
+  }
 
   jar {
     manifest.attributes provider: 'gradle'
@@ -20,27 +31,37 @@ subprojects {
   }
 
   configurations {
-    jansiForGroovydoc.extendsFrom(runtime)
+    groovyDoc.extendsFrom runtime
     testArtifacts
   }
 
   dependencies {
-    compile 'org.codehaus.groovy:groovy-all:2.5.5'
-    compile 'org.apache.ivy:ivy:2.4.0'
-    compile('ch.artecat.grengine:grengine:3.0.0') {
+    compile "org.codehaus.groovy:groovy:$groovyVersion:indy"
+    compile("ch.artecat.grengine:grengine:$grengineVersion") {
       exclude group: 'org.codehaus.groovy', module: 'groovy'
     }
-    compile 'org.slf4j:slf4j-api:1.7.25'
-    compile 'ch.qos.logback:logback-classic:1.2.3'
-    testCompile('org.spockframework:spock-core:1.2-groovy-2.5') {
-      exclude group: 'org.codehaus.groovy', module: 'groovy-all'
+    compile "org.apache.ivy:ivy:$ivyVersion"
+    compile "org.slf4j:slf4j-api:$slf4jVersion"
+    compile "ch.qos.logback:logback-classic:$logbackVersion"
+
+    // Unit tests
+    testCompile("org.spockframework:spock-core:$spockVersion") {
+      //exclude group: 'org.codehaus.groovy', module: 'groovy-all'
     }
-    testCompile 'junit:junit:4.12'
-    jansiForGroovydoc 'org.fusesource.jansi:jansi:1.17.1'
+    testCompile "junit:junit:$junitVersion"
+
+    // Groovydoc
+    groovyDoc "org.fusesource.jansi:jansi:$jansiVersion"
+    groovyDoc "org.codehaus.groovy:groovy-groovydoc:$groovyVersion"
+    groovyDoc "org.codehaus.groovy:groovy-ant:$groovyVersion"
+  }
+
+  tasks.withType(Groovydoc) {
+    groovyClasspath = project.configurations.groovyDoc
   }
 
   groovydoc {
-    groovyClasspath = project.configurations.jansiForGroovydoc
+    //
   }
 
   task sourcesJar(type: Jar, dependsOn:classes) {
