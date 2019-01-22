@@ -2,6 +2,10 @@ image:https://www.artecat.ch/jexler/jexler.jpg["jexler logo", link="https://www.
 
 = jexler releases
 
+=== 4.0.1-SNAPSHOT (20XX-XX-XX)
+
+* ...
+
 === 4.0.0 (2019-01-22)
 
 * Changed package names from `net.jexler` to `ch.artecat.jexler`.
