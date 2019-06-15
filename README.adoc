@@ -1,6 +1,6 @@
 image:https://www.artecat.ch/jexler/jexler.jpg["jexler logo", link="https://www.artecat.ch/jexler/"]
 
-= jexler TEST
+= jexler
 
 Jexler is a simple relaxed Groovy framework for starting/stopping
 Groovy scripts as services and enabling them to react to events
