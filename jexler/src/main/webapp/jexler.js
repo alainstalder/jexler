@@ -16,90 +16,108 @@ function onPageLoad() {
     setHeight();
     isGetStatusPending = false;
     isLogGetStatus = false;
-    window.setInterval(getStatus, 1000);
     preloadDim();
+
+    window.setInterval(getStatus, 1000);
 }
 
-var previousStatusText = "";
+var previousStatusText = '';
 
 function getStatus() {
     if (isGetStatusPending) {
-        logGetStatus('skipping');
+        logGetStatus('already pending, skipping...');
         return;
     }
-    var xmlhttp = new XMLHttpRequest();
-    xmlhttp.onreadystatechange = function() {
-        if (xmlhttp.readyState === 4) {
+    logGetStatus('=> pending', true);
+    var req = getGetStatusXMLHttpRequest();
+    try {
+        req.open('GET', '?cmd=status', true);
+    } catch (e) {
+        logGetStatus('=> open failed', false);
+        return;
+    }
+    req.setRequestHeader('X-Requested-With', 'XMLHttpRequest');
+    try {
+        req.send();
+    } catch (e) {
+        logGetStatus('=> send failed', false);
+    }
+}
+
+function getGetStatusXMLHttpRequest() {
+    var req = new XMLHttpRequest();
+    req.onreadystatechange = function() {
+        if (isLogGetStatus) {
+            logGetStatus('=> readyState ' + req.readyState + ' (' + getReadyStateName(req.readyState) + ')')
+        }
+        if (req.readyState === 4) {
             try {
-                logGetStatus('=> readyState 4');
-                var text = xmlhttp.responseText;
-                if (xmlhttp.status / 100 != 2) {
-                    text = ""
+                var text = req.responseText;
+                if (req.status / 100 !== 2) {
+                    text = ''
                 }
-                if (text == "") {
+                if (text === '') {
                     text = previousStatusText;
-                    if (text.indexOf("(offline)") < 0) {
-                        text = text.replace("<strong>Jexlers</strong>", "<strong>(offline)</strong>");
-                        text = text.replace(/\.gif'/g, "-dim.gif'");
-                        text = text.replace(/\.gif"/g, "-dim.gif\"");
-                        text = text.replace(/<a href=.\?cmd=[a-z]+&jexler=[A-Za-z0-9]*.>/g, "");
-                        text = text.replace(/<\/a>/g, "");
-                        text = text.replace(/<button.* formaction=.\?jexler=[A-Za-z0-9]*.>/g, "");
-                        text = text.replace(/<\/button>/g, "");
-                        text = text.replace(/status-name/g, "status-name status-offline");
+                    if (text.indexOf('(offline)') < 0) {
+                        text = text.replace('<strong>Jexlers</strong>', '<strong>(offline)</strong>');
+                        text = text.replace(/\.gif'/g, '-dim.gif');
+                        text = text.replace(/\.gif"/g, '-dim.gif"');
+                        text = text.replace(/<a href=.\?cmd=[a-z]+&jexler=[A-Za-z0-9]*.>/g, '');
+                        text = text.replace(/<\/a>/g, '');
+                        text = text.replace(/<button.* formaction=.\?jexler=[A-Za-z0-9]*.>/g, '');
+                        text = text.replace(/<\/button>/g, '');
+                        text = text.replace(/status-name/g, 'status-name status-offline');
                     }
                 }
-                if (text != previousStatusText) {
+                if (text !== previousStatusText) {
                     previousStatusText = text;
-                    var statusDiv = document.getElementById("statusdiv");
+                    var statusDiv = document.getElementById('statusdiv');
                     statusDiv.innerHTML = text;
                 }
             } finally {
-                logGetStatus('=> finally');
-                isGetStatusPending = false;
+                logGetStatus('=> finally', false);
             }
         }
     };
-    xmlhttp.onabort = function() {
-        logGetStatus('=> aborted');
-        isGetStatusPending = false;
-    };
-    xmlhttp.onerror = function() {
-        logGetStatus('=> error');
-        isGetStatusPending = false;
-    };
-    xmlhttp.onload = function() {
-        logGetStatus('=> loaded');
-        isGetStatusPending = false;
-    };
-    xmlhttp.ontimeout = function() {
-        logGetStatus('=> timeout');
-        isGetStatusPending = false;
-    };
-    xmlhttp.open('GET', '?cmd=status', true);
-    xmlhttp.setRequestHeader('X-Requested-With', 'XMLHttpRequest');
-    xmlhttp.timeout = 5000;
-    logGetStatus('pending...');
-    isGetStatusPending = true;
-    xmlhttp.send(null);
+    req.onabort = function() { logGetStatus('=> aborted', false); };
+    req.onerror = function() { logGetStatus('=> error', false); };
+    req.onload = function() { logGetStatus('=> loaded', false); };
+    req.ontimeout = function() { logGetStatus('=> timeout', false); };
+    req.timeout = 5000;
+    return req;
 }
 
-function logGetStatus(info) {
+function getReadyStateName(state) {
+    switch (state) {
+        case 0: return 'UNSENT';
+        case 1: return 'OPENED';
+        case 2: return 'HEADERS_RECEIVED';
+        case 3: return 'LOADING';
+        case 4: return 'DONE';
+        default: return '?????';
+    }
+
+}
+
+function logGetStatus(info, isPending) {
     if (isLogGetStatus) {
-        console.log(info);
+        console.log('getStatus (pending ' + isGetStatusPending + (isPending == null ? '' : '=>' + isPending) + ')  ' +info);
+    }
+    if (isPending != null) {
+        isGetStatusPending = isPending
     }
 }
 
 function updateSaveIndicator(jexlerId) {
     currentSource = editor.getValue();
-    hasSourceChanged = (savedSource != currentSource);
-    hasJexlerChanged = jexlerId != document.getElementById('newjexlername').value;
+    hasSourceChanged = (savedSource !== currentSource);
+    hasJexlerChanged = jexlerId !== document.getElementById('newjexlername').value;
     if (hasJexlerChanged) {
-        document.getElementById('savestatus').setAttribute("src", "ok.gif")
+        document.getElementById('savestatus').setAttribute('src', 'ok.gif')
     } else if (hasSourceChanged) {
-        document.getElementById('savestatus').setAttribute("src", "log.gif")
+        document.getElementById('savestatus').setAttribute('src', 'log.gif')
     } else {
-        document.getElementById('savestatus').setAttribute("src", "space.gif")
+        document.getElementById('savestatus').setAttribute('src', 'space.gif')
     }
 }
 
@@ -115,24 +133,24 @@ function isPostSave(confirmSave, jexlerId) {
     var xmlhttp = new XMLHttpRequest();
     xmlhttp.onreadystatechange = function() {
         if (xmlhttp.readyState === 4) {
-            if (xmlhttp.status / 100 == 2 && xmlhttp.responseText != "") {
+            if (xmlhttp.status / 100 === 2 && xmlhttp.responseText !== '') {
                 editor.focus();
                 savedSource = currentSource;
                 hasSourceChanged = false;
-                document.getElementById('savestatus').setAttribute("src", "space.gif")
+                document.getElementById('savestatus').setAttribute('src', 'space.gif')
             }
         }
     };
     xmlhttp.open('POST', '?cmd=save&jexler=' + jexlerId, true);
     xmlhttp.setRequestHeader('X-Requested-With', 'XMLHttpRequest');
-    xmlhttp.setRequestHeader("Content-type","application/x-www-form-urlencoded; charset=utf-8");
+    xmlhttp.setRequestHeader('Content-type','application/x-www-form-urlencoded; charset=utf-8');
     xmlhttp.timeout = 5000;
-    xmlhttp.send("source=" + encodeURIComponent(currentSource));
+    xmlhttp.send('source=' + encodeURIComponent(currentSource));
     return false;
 }
 
 function isPostDelete(confirmDelete, jexlerId) {
-    console.log("confirmDelete: " + confirmDelete);
+    console.log('confirmDelete: ' + confirmDelete);
     if (confirmDelete) {
         return confirm("Are you sure you want to delete '" + jexlerId + "'?");
     } else {
@@ -148,22 +166,22 @@ function setHeight() {
     var hTotal = document.documentElement.clientHeight;
     var hHeader = document.getElementById('header').offsetHeight;
     var h = hTotal - hHeader - 50;
-    document.getElementById('sourcediv').style.height = "" + h + "px";
-    document.getElementById('statusdiv').style.height = "" + h + "px";
+    document.getElementById('sourcediv').style.height = '' + h + 'px';
+    document.getElementById('statusdiv').style.height = '' + h + 'px';
 }
 
 function preloadDim() {
-    new Image().src = "error-dim.gif";
-    new Image().src = "info-dim.gif";
-    new Image().src = "log-dim.gif";
-    new Image().src = "neutral-dim.gif";
-    new Image().src = "ok-dim.gif";
-    new Image().src = "powered-by-grengine-dim.gif";
-    new Image().src = "restart-dim.gif";
-    new Image().src = "space-dim.gif";
-    new Image().src = "start-dim.gif";
-    new Image().src = "stop-dim.gif";
-    new Image().src = "web-dim.gif";
-    new Image().src = "wheel-dim.gif";
-    new Image().src = "zap-dim.gif";
+    new Image().src = 'error-dim.gif';
+    new Image().src = 'info-dim.gif';
+    new Image().src = 'log-dim.gif';
+    new Image().src = 'neutral-dim.gif';
+    new Image().src = 'ok-dim.gif';
+    new Image().src = 'powered-by-grengine-dim.gif';
+    new Image().src = 'restart-dim.gif';
+    new Image().src = 'space-dim.gif';
+    new Image().src = 'start-dim.gif';
+    new Image().src = 'stop-dim.gif';
+    new Image().src = 'web-dim.gif';
+    new Image().src = 'wheel-dim.gif';
+    new Image().src = 'zap-dim.gif';
 }
