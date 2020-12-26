@@ -21,10 +21,10 @@ dependencies {
 
   // Embedded Jetty with JSP support
   // See https://examples.javacodegeeks.com/enterprise-java/jetty/jetty-jsp-example/
-  providedCompile 'org.eclipse.jetty:jetty-server:9.4.1.v20170120'
-  providedCompile 'org.eclipse.jetty:jetty-webapp:9.4.1.v20170120'
-  providedCompile 'org.eclipse.jetty:jetty-annotations:9.4.1.v20170120'
-  providedCompile 'org.eclipse.jetty:apache-jsp:9.4.1.v20170120'
+  providedCompile 'org.eclipse.jetty:jetty-server:9.4.35.v20201120'
+  providedCompile 'org.eclipse.jetty:jetty-webapp:9.4.35.v20201120'
+  providedCompile 'org.eclipse.jetty:jetty-annotations:9.4.35.v20201120'
+  providedCompile 'org.eclipse.jetty:apache-jsp:9.4.35.v20201120'
   runtime 'javax.servlet:jstl:1.2'
 
   runtime files('src/main/resources')
