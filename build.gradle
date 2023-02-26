@@ -12,14 +12,28 @@ subprojects {
   project.group = 'ch.artecat.jexler'
 
   ext {
-    groovyVersion='2.5.5'
-    grengineVersion='3.0.0'
-    ivyVersion='2.4.0'
-    slf4jVersion='1.7.25'
-    logbackVersion='1.2.3'
-    spockVersion='1.2-groovy-2.5'
-    junitVersion='4.12'
-    jansiVersion='1.17.1'
+    groovy4GroupId='org.apache.groovy'
+    groovy4Version='4.0.9'
+    spock4Version='2.4-M1-groovy-4.0'
+    groovy3GroupId='org.codehaus.groovy'
+    groovy3Version='3.0.15'
+    spock3Version='2.4-M1-groovy-3.0'
+    groovy2GroupId=groovy3GroupId
+    groovy2Version='2.5.21'
+    spock2Version='2.4-M1-groovy-2.5'
+
+    groovyGroupId=groovy4GroupId
+    groovyVersion=groovy4Version
+    spockVersion=spock4Version
+
+    grengineVersion='3.0.2'
+
+    ivyVersion='2.5.1'
+    slf4jVersion='1.7.36'
+    logbackVersion='1.3.5'
+
+    junitVersion='4.13.2'
+    jansiVersion='1.18'
   }
 
   jar {
@@ -36,7 +50,7 @@ subprojects {
   }
 
   dependencies {
-    compile "org.codehaus.groovy:groovy:$groovyVersion:indy"
+    compile "$groovyGroupId:groovy:$groovyVersion"
     compile("ch.artecat.grengine:grengine:$grengineVersion") {
       exclude group: 'org.codehaus.groovy', module: 'groovy'
     }
@@ -45,15 +59,13 @@ subprojects {
     compile "ch.qos.logback:logback-classic:$logbackVersion"
 
     // Unit tests
-    testCompile("org.spockframework:spock-core:$spockVersion") {
-      //exclude group: 'org.codehaus.groovy', module: 'groovy-all'
-    }
+    testCompile"org.spockframework:spock-core:$spockVersion"
     testCompile "junit:junit:$junitVersion"
 
     // Groovydoc
     groovyDoc "org.fusesource.jansi:jansi:$jansiVersion"
-    groovyDoc "org.codehaus.groovy:groovy-groovydoc:$groovyVersion"
-    groovyDoc "org.codehaus.groovy:groovy-ant:$groovyVersion"
+    groovyDoc "$groovyGroupId:groovy-groovydoc:$groovyVersion"
+    groovyDoc "$groovyGroupId:groovy-ant:$groovyVersion"
   }
 
   tasks.withType(Groovydoc) {

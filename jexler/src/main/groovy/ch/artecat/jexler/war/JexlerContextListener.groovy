@@ -75,6 +75,7 @@ class JexlerContextListener implements ServletContextListener    {
         grengineVersion = (grengineVersion == null) ? '0.0.0' : grengineVersion
         String groovyVersion = GroovyClassLoader.class.package.implementationVersion
         groovyVersion = (groovyVersion == null) ? '0.0.0' : groovyVersion
+        final String javaVersion = System.getProperty("java.version")
         LOG.info("Welcome to jexler.")
         LOG.info("Jexler $GUI_VERSION | jexler-core: $coreVersion | Grengine: $grengineVersion | Groovy: $groovyVersion")
 
@@ -83,7 +84,8 @@ class JexlerContextListener implements ServletContextListener    {
             Jexler $GUI_VERSION
             • jexler-core: $coreVersion
             • Grengine: $grengineVersion
-            • Groovy: $groovyVersion""".stripIndent()
+            • Groovy: $groovyVersion
+            • Java: $javaVersion""".stripIndent()
 
         // Set servlet context
         servletContext = event.servletContext

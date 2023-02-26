@@ -264,7 +264,7 @@ class DirWatchService extends ServiceBase {
             for (final WatchEvent watchEvent : service.watchKey.pollEvents()) {
                 final Path contextPath = ((Path) watchEvent.context())
                 final File file = new File(service.dir, contextPath.toFile().name)
-                final WatchEvent.Kind kind = watchEvent.kind()
+                final WatchEvent.Kind<Path> kind = (WatchEvent.Kind<Path>)watchEvent.kind()
                 LOG.trace("event $kind '$file.absolutePath'")
                 service.jexler.handle(new DirWatchEvent(service, file, kind))
             }
