@@ -2,9 +2,13 @@ image:https://www.artecat.ch/jexler/jexler.jpg["jexler logo", link="https://www.
 
 = jexler releases
 
+=== 4.0.3 (20XX-YY-ZZ)
+
+* ...
+
 === 4.0.2 (2023-02-26)
 
-* Groovy 4.0.9, Grengine 3.0.2.
+* Groovy 4.0.9, Grengine 3.0.2 (works also with Groovy 2 and 3).
 * Shows Java version in Jexler tooltip.
 
 === 4.0.1 (2019-01-22)
