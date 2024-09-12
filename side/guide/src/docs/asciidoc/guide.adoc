@@ -101,11 +101,11 @@ log file, edit the scripts, etc.
 
 If you want to try it out and play with jexler immediately:
 
-* Get the jexler source from gitlab: https://gitlab.com/jexler/jexler
+* Get the jexler source from GitHub: https://github.com/jexler/jexler
 * Install the Java 8 JDK (or later) and Gradle
 * `gradle demo`
 * Open http://localhost:9080/ in a web browser
-* See the README at gitlab for alternatives...
+* See the README at GitHub for alternatives...
 
 === Dispatching
 
@@ -183,7 +183,7 @@ void handleCronEvent(def event) {
 
 Under the hood, it is still just a running Groovy script (and if you do not
 like the default behavior of `JexlerDispatcher`, get its Groovy source from the jexler
-source at gitlab and copy it to a  Groovy script called e.g. `MyJexlerDispatcher.groovy`
+source at GitHub and copy it to a  Groovy script called e.g. `MyJexlerDispatcher.groovy`
 put it into the jexlers directory, adjust it as needed, and then call
 `MyJexlerDispatcher.dispatch(this)` instead at the top of your jexler scripts).
 
@@ -703,7 +703,7 @@ webapp.
 
 == Source Code
 
-The source code is at GitLab: https://gitlab.com/jexler/jexler
+The source code is at GitLab: https://github.com/jexler/jexler
 
 See there for instructions how to build.
 
