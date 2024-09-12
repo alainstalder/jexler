@@ -1,16 +1,16 @@
-image:jexler.jpg["jexler", link="https://www.artecat.ch/jexler/"]
+image:jexler.jpg["jexler", link="https://grengine.ch/jexler/"]
 
 == Jexler User Guide
 
-https://www.artecat.ch/jexler/[Jexler] is a simple relaxed
+https://grengine.ch/jexler/[Jexler] is a simple relaxed
 http://www.groovy-lang.org[Groovy] framework for starting/stopping
 Groovy scripts as services and enabling them to react to events
 of their choice - great for prototyping and useful for automating.
 
-Jexler uses https://www.artecat.ch/grengine/[Grengine] to run its container
+Jexler uses https://grengine.ch/[Grengine] to run its container
 of Groovy scripts and utility classes.
 
-image:powered-by-grengine.gif["Powered by Grengine", link="https://www.artecat.ch/grengine/"]
+image:powered-by-grengine.gif["Powered by Grengine", link="https://grengine.ch/"]
 
 == Introduction
 
@@ -778,10 +778,10 @@ if you use the jexler core library in a different context.
 
 * The jexler-core JAR is at https://search.maven.org/#search%7Cga%7C1%7Cjexler-core[Maven Central]
 * The jexler webapp is at https://sourceforge.net/projects/jexler/[Sourceforge] (see "Files" tab)
-* The website https://www.artecat.ch/jexler/[www.artecat.ch/jexler] hosts
-  https://www.artecat.ch/jexler/groovydoc/[Groovydoc],
-  https://www.artecat.ch/jexler/jacoco/[JaCoCo]
-  and this https://www.artecat.ch/jexler/guide/[guide]
+* The website https://grengine.ch/jexler/[grengine.ch/jexler] hosts
+  https://grengine.ch/jexler/groovydoc/[Groovydoc],
+  https://grengine.ch/jexler/jacoco/[JaCoCo]
+  and this https://grengine.ch/jexler/guide/[guide]
 
 == Use Cases
 
@@ -850,7 +850,7 @@ things may flow freely around it, but jexler itself is unlikely
 to change much.
 
 Copyright &copy; 2012-now Jex Jexler (Alain Stalder) +
-https://www.artecat.ch/jexler/
+https://grengine.ch/jexler/
 
 Note also that the jexler logo with the bat is my own creation (*2010).
 

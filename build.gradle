@@ -141,7 +141,7 @@ subprojects {
         project {
           name 'jexler'
           description project.description
-          url 'https://www.artecat.ch/jexler/'
+          url 'https://grengine.ch/jexler/'
           packaging project.ext.pkg
           licenses {
             license {

@@ -62,7 +62,7 @@ limitations under the License.
   <table class="frame">
   <tr id="header">
   <td class="frame">
-  <a href="https://www.artecat.ch/jexler/"><img class="jexler" src="jexler.jpg" title="${container.jexlerTooltip}"></a>
+  <a href="https://grengine.ch/jexler/"><img class="jexler" src="jexler.jpg" title="${container.jexlerTooltip}"></a>
   </td>
   <td class="frame frame-buttons">
     <c:choose>
@@ -119,7 +119,7 @@ limitations under the License.
 </table>
 
 <p class="grengine">
-  <a href="https://www.artecat.ch/grengine/"><img src="powered-by-grengine.gif" title="artecat.ch/grengine"></a>
+  <a href="https://grengine.ch/"><img src="powered-by-grengine.gif" title="grengine.ch"></a>
 </p>
 
 <%-- Skip if getting status table from js, not if requesting page in browser --%>
