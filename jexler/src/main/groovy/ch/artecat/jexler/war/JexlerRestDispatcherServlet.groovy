@@ -1,5 +1,5 @@
 /*
-   Copyright 2012-now  Jex Jexler (Alain Stalder)
+   Copyright 2012-now by Alain Stalder. Made in Switzerland.
 
    Licensed under the Apache License, Version 2.0 (the "License");
    you may not use this file except in compliance with the License.
@@ -42,7 +42,7 @@ import javax.servlet.http.HttpServletResponse
  * called and then threw while having already committed at least part
  * of the response).
  *
- * @author Jex Jexler (Alain Stalder)
+ * @author Alain Stalder
  */
 @CompileStatic
 class JexlerRestDispatcherServlet extends HttpServlet    {

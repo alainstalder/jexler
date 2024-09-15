@@ -1,5 +1,5 @@
 /*
-   Copyright 2012-now  Jex Jexler (Alain Stalder)
+   Copyright 2012-now by Alain Stalder. Made in Switzerland.
 
    Licensed under the Apache License, Version 2.0 (the "License");
    you may not use this file except in compliance with the License.
@@ -40,7 +40,7 @@ import static ch.artecat.jexler.service.ServiceState.OFF
 /**
  * Jexler, runs a Groovy script that handles events.
  *
- * @author Jex Jexler (Alain Stalder)
+ * @author Alain Stalder
  */
 @CompileStatic
 class Jexler implements Service, IssueTracker {
@@ -59,7 +59,7 @@ class Jexler implements Service, IssueTracker {
      * Typically events are taken with {@link Events#take()}
      * in an event loop in the jexler script.
      *
-     * @author Jex Jexler (Alain Stalder)
+     * @author Alain Stalder
      */
     @CompileStatic
     class Events extends LinkedBlockingQueue<Event> {

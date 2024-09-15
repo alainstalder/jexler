@@ -1,5 +1,5 @@
 /*
-   Copyright 2012-now  Jex Jexler (Alain Stalder)
+   Copyright 2012-now by Alain Stalder. Made in Switzerland.
 
    Licensed under the Apache License, Version 2.0 (the "License");
    you may not use this file except in compliance with the License.
@@ -29,7 +29,7 @@ import groovy.transform.PackageScope
  * with Groovy APIs, which may or may not be more convenient depending
  * on your use case.
  *
- * @author Jex Jexler (Alain Stalder)
+ * @author Alain Stalder
  */
 @CompileStatic
 class ShellTool {
@@ -37,7 +37,7 @@ class ShellTool {
     /**
      * Simple bean for the result of executing a shell command.
      *
-     * @author Jex Jexler (Alain Stalder)
+     * @author Alain Stalder
      */
     @CompileStatic
     static class Result {

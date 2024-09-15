@@ -1,5 +1,5 @@
 /*
-   Copyright 2012-now  Jex Jexler (Alain Stalder)
+   Copyright 2012-now by Alain Stalder. Made in Switzerland.
 
    Licensed under the Apache License, Version 2.0 (the "License");
    you may not use this file except in compliance with the License.
@@ -27,7 +27,7 @@ import groovy.transform.CompileStatic
  * or jexler container if something could not be done,
  * often because some exception occurred.
  *
- * @author Jex Jexler (Alain Stalder)
+ * @author Alain Stalder
  */
 @CompileStatic
 class Issue implements Comparable<Issue> {

@@ -1,5 +1,5 @@
 /*
-   Copyright 2012-now  Jex Jexler (Alain Stalder)
+   Copyright 2012-now by Alain Stalder. Made in Switzerland.
 
    Licensed under the Apache License, Version 2.0 (the "License");
    you may not use this file except in compliance with the License.
@@ -24,7 +24,7 @@ import groovy.transform.CompileStatic
  * Jexler for unit tests, no args constructor
  * and allows to poll events from event queue with timeout.
  *
- * @author Jex Jexler (Alain Stalder)
+ * @author Alain Stalder
  */
 @CompileStatic
 class TestJexler extends Jexler {

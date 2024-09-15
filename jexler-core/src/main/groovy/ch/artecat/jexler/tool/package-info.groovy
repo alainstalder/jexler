@@ -1,5 +1,5 @@
 /*
-   Copyright 2012-now  Jex Jexler (Alain Stalder)
+   Copyright 2012-now by Alain Stalder. Made in Switzerland.
 
    Licensed under the Apache License, Version 2.0 (the "License");
    you may not use this file except in compliance with the License.
@@ -17,6 +17,6 @@
 /**
  * Tools (shell, string obfuscator) that can be useful in jexler scripts.
  *
- * @author Jex Jexler (Alain Stalder)
+ * @author Alain Stalder
  */
 package ch.artecat.jexler.tool

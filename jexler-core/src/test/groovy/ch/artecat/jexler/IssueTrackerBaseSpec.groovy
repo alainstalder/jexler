@@ -1,5 +1,5 @@
 /*
-   Copyright 2012-now  Jex Jexler (Alain Stalder)
+   Copyright 2012-now by Alain Stalder. Made in Switzerland.
 
    Licensed under the Apache License, Version 2.0 (the "License");
    you may not use this file except in compliance with the License.
@@ -24,7 +24,7 @@ import spock.lang.Specification
 /**
  * Tests the respective class.
  *
- * @author Jex Jexler (Alain Stalder)
+ * @author Alain Stalder
  */
 @Category(FastTests.class)
 class IssueTrackerBaseSpec extends Specification {
