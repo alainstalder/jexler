@@ -2,6 +2,7 @@ subprojects {
   apply plugin: 'groovy'
   apply plugin: 'eclipse'
   apply plugin: 'maven'
+  apply plugin: 'war'
 
   sourceCompatibility = 1.8
   targetCompatibility = 1.8
@@ -9,6 +10,18 @@ subprojects {
   version = '4.0.3-SNAPSHOT' // IMPORTANT: keep in sync with version in JexlerContextListener
 
   project.group = 'ch.grengine.jexler'
+
+  description = 'jexler webapp - simple relaxed web GUI for the jexler core library.'
+
+  project.ext {
+    pkg = 'war'
+  }
+
+  war {
+    manifest {
+      attributes 'Implementation-Title': 'jexler', 'Implementation-Version': version
+    }
+  }
 
   ext {
     groovy4GroupId='org.apache.groovy'
@@ -44,7 +57,6 @@ subprojects {
   }
 
   configurations {
-    groovyDoc.extendsFrom runtime
     testArtifacts
   }
 
@@ -61,28 +73,28 @@ subprojects {
     testCompile"org.spockframework:spock-core:$spockVersion"
     testCompile "junit:junit:$junitVersion"
 
-    // Groovydoc
-    groovyDoc "org.fusesource.jansi:jansi:$jansiVersion"
-    groovyDoc "$groovyGroupId:groovy-groovydoc:$groovyVersion"
-    groovyDoc "$groovyGroupId:groovy-ant:$groovyVersion"
-  }
 
-  tasks.withType(Groovydoc) {
-    groovyClasspath = project.configurations.groovyDoc
-  }
 
-  groovydoc {
-    //
+    compile 'org.quartz-scheduler:quartz:2.3.0'
+
+    // for javax.activation.MimetypesFileTypeMap in Java 11
+    compile 'com.sun.activation:javax.activation:1.2.0'
+
+    // Embedded Jetty with JSP support
+    // See https://examples.javacodegeeks.com/enterprise-java/jetty/jetty-jsp-example/
+    providedCompile 'org.eclipse.jetty:jetty-server:9.4.35.v20201120'
+    providedCompile 'org.eclipse.jetty:jetty-webapp:9.4.35.v20201120'
+    providedCompile 'org.eclipse.jetty:jetty-annotations:9.4.35.v20201120'
+    providedCompile 'org.eclipse.jetty:apache-jsp:9.4.35.v20201120'
+    runtime 'javax.servlet:jstl:1.2'
+
+    runtime files('src/main/resources')
+
   }
 
   task sourcesJar(type: Jar, dependsOn:classes) {
     classifier = 'sources'
     from sourceSets.main.allSource
-  }
-
-  task groovydocJar(type: Jar, dependsOn:groovydoc) {
-    classifier = 'javadoc'
-    from groovydoc.destinationDir
   }
 
   task testJar(type: Jar) {
@@ -91,8 +103,7 @@ subprojects {
   }
 
   artifacts {
-    archives sourcesJar 
-    archives groovydocJar
+    archives sourcesJar
     testArtifacts testJar
   }
    

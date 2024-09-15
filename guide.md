@@ -368,7 +368,7 @@ Implemented using `Runtime.getRuntime().exec()`.
 ### StringObfuscatorTool
 
 This tool can help to obfuscate passwords and other sensitive strings.
-By default, it uses 128 bit AES with a hard-coded key, see below plus code/groovydoc for full details.
+By default, it uses 128-bit AES with a hard-coded key, see below plus code for full details.
 
 * `String obfuscate(String plain)`:
   UTF-8 encode, pad with random bytes, encipher and hex encode given string.
@@ -780,8 +780,7 @@ if you use the jexler core library in a different context.
 * The jexler-core JAR is at [Maven Central](https://search.maven.org/#search%7Cga%7C1%7Cjexler-core)
 * The jexler webapp is at [Sourceforge](https://sourceforge.net/projects/jexler/) (see "Files" tab)
 * The website [grengine.ch/jexler](https://grengine.ch/jexler/) hosts
-  [Groovydoc](https://grengine.ch/jexler/groovydoc/)
-  and this [guide](https://grengine.ch/jexler/guide/)
+  this [guide](https://grengine.ch/jexler/guide/)
 
 ## use cases
 
