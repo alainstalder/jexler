@@ -101,6 +101,6 @@ task slowTests(type: Test, dependsOn: 'test') {
 task demoTests(type: Test) {
   testLogging.showStandardStreams = true
   useJUnitPlatform {
-    includeTags "DemoTests"
+    includeTags "demo"
   }
 }
