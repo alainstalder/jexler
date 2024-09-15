@@ -23,7 +23,7 @@
     </encoder>
   </appender>
 
-  <logger name="ch.artecat.jexler" level="TRACE">
+  <logger name="ch.grengine.jexler" level="TRACE">
     <appender-ref ref="FILE" />
   </logger>
 

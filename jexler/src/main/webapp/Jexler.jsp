@@ -19,7 +19,7 @@ limitations under the License.
 <%@ page trimDirectiveWhitespaces="true" %>
 
 <%-- Set 'container' to main view --%>
-<jsp:useBean id="container" class="ch.artecat.jexler.war.JexlerContainerView">
+<jsp:useBean id="container" class="ch.grengine.jexler.war.JexlerContainerView">
 
 <%-- Handle request (start/stop jexler, etc.) --%>
 <%= container.handleCommands(pageContext) %>

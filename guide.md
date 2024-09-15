@@ -51,7 +51,7 @@ while (true) {
   event = events.take();
   if (event instanceof CronEvent) {
     new SimpleEmail().with {
-      setFrom 'jexler@artecat.ch'
+      setFrom 'astalder@span.ch'
       addTo 'bugs@acme.org'
       // ...
       setSubject 'hello'
@@ -408,7 +408,7 @@ that you would read from a file, or maybe even consider something like the follo
 Subclass the StringObfuscatorTool class in Groovy (or Java):
 
 ```groovy
-class MyObfuscatorTool extends ch.artecat.jexler.tool.StringObfuscatorTool {
+class MyObfuscatorTool extends tool.ch.grengine.jexler.StringObfuscatorTool {
   public MyObfuscatorTool() {
     setParameters("00--my-AES-128-secret-key-hex-00", "00--my-AES-128-secret-iv-hex--00",
       "AES", "AES/CBC/PKCS5Padding")
@@ -728,9 +728,9 @@ The jexler webapp is very simple and contains a demo unit test that starts it in
 
 The following packages are automatically imported:
 
-* `ch.artecat.jexler`
-* `ch.artecat.jexler.service`
-* `ch.artecat.jexler.tool`
+* `ch.grengine.jexler`
+* `ch.grengine.jexler.service`
+* `ch.grengine.jexler.tool`
 
 and the following variables are available to jexler Groovy scripts (binding):
 
@@ -834,14 +834,14 @@ from a technical and an artistic perspective - that's reward enough for me :)
 Jexler is maybe more suited for tasks that have some leisure in them, but in principle
 you could also imagine to write a web server with jexlers as handlers or similar things.
 
-Keep me updated at mailto:jexlerx@artecat.ch[jexler@artecat.ch].
+Keep me updated at [astalder@span.ch](mailto:astalder@span.ch).
 
 ## roadmap
 
 Well, there is none, except to keep jexler really small and to keep the quality high. :)
 
 Then again, in spring 2015 I migrated Jexler from Java 7/JUnit to Groovy/Spock
-(and scheduling from Cron4j to Quartz, which now allows scheduling per second)
+(and scheduling from cron4j to Quartz, which now allows scheduling per second)
 for Jexler 2, and in winter 2017 I made a lot of GUI improvements and more for
 Jexler 2.1.x, so you might never know...
 

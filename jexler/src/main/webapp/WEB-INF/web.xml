@@ -12,7 +12,7 @@
 
   <servlet>
     <servlet-name>jexler-rest-servlet</servlet-name>
-    <servlet-class>ch.artecat.jexler.war.JexlerRestDispatcherServlet</servlet-class>
+    <servlet-class>ch.grengine.jexler.war.JexlerRestDispatcherServlet</servlet-class>
   </servlet>
 
   <servlet-mapping>
@@ -39,7 +39,7 @@
 
   <listener>
     <listener-class>
-      ch.artecat.jexler.war.JexlerContextListener
+        ch.grengine.jexler.war.JexlerContextListener
     </listener-class>
   </listener>
 </web-app>

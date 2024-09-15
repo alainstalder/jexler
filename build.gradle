@@ -9,7 +9,7 @@ subprojects {
 
   version = '4.0.3-SNAPSHOT' // IMPORTANT: keep in sync with version in JexlerContextListener
 
-  project.group = 'ch.artecat.jexler'
+  project.group = 'ch.grengine.jexler'
 
   ext {
     groovy4GroupId='org.apache.groovy'
@@ -100,7 +100,7 @@ subprojects {
   test {
     //testLogging.showStandardStreams = true
     useJUnit {
-      includeCategories 'ch.artecat.jexler.test.FastTests'
+      includeCategories 'ch.grengine.jexler.test.FastTests'
     }
     //afterTest { desc, result ->
     //  println "Executing test ${desc.name} [${desc.className}] with result: ${result.resultType}"
@@ -114,14 +114,14 @@ subprojects {
   task slowTests(type: Test, dependsOn: 'test') {
     //testLogging.showStandardStreams = true
     useJUnit {
-      includeCategories 'ch.artecat.jexler.test.SlowTests'
+      includeCategories 'ch.grengine.jexler.test.SlowTests'
     }
   }
   
   task demoTests(type: Test) {
     testLogging.showStandardStreams = true
     useJUnit {
-      includeCategories 'ch.artecat.jexler.test.DemoTests'
+      includeCategories 'ch.grengine.jexler.test.DemoTests'
     }
   }
 

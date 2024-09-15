@@ -4,7 +4,7 @@
 
 ### 4.0.3 (20XX-YY-ZZ)
 
-* ...
+* Changed packages to `ch.grengine.jexler.*`.
 
 ### 4.0.2 (2023-02-26)
 
