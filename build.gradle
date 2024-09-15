@@ -1,134 +1,101 @@
-subprojects {
-  apply plugin: 'groovy'
-  apply plugin: 'eclipse'
-  apply plugin: 'maven'
-  apply plugin: 'war'
 
-  sourceCompatibility = 1.8
-  targetCompatibility = 1.8
+plugins {
+  id 'groovy'
+  id 'eclipse'
+  id 'war'
+}
 
-  version = '4.0.3-SNAPSHOT' // IMPORTANT: keep in sync with version in JexlerContextListener
-
-  project.group = 'ch.grengine.jexler'
-
-  description = 'jexler webapp - simple relaxed web GUI for the jexler core library.'
-
-  project.ext {
-    pkg = 'war'
+java {
+  toolchain {
+    languageVersion = JavaLanguageVersion.of(8)
   }
+}
 
-  war {
-    manifest {
-      attributes 'Implementation-Title': 'jexler', 'Implementation-Version': version
-    }
+version = '4.0.3-SNAPSHOT' // IMPORTANT: keep in sync with version in JexlerContextListener
+
+//project.group = 'ch.grengine.jexler'
+
+description = 'jexler webapp - simple relaxed web GUI for the jexler core library.'
+
+project.ext {
+  pkg = 'war'
+}
+
+ext {
+  groovy4Version='4.0.22'
+  spock4Version='2.4-M1-groovy-4.0'
+
+  groovyVersion=groovy4Version
+  spockVersion=spock4Version
+
+  grengineVersion='3.0.2'
+
+  ivyVersion='2.5.1'
+  slf4jVersion='1.7.36'
+  logbackVersion='1.3.5'
+
+  junitVersion='4.13.2'
+  jansiVersion='1.18'
+}
+
+war {
+  manifest {
+    attributes 'Implementation-Title': 'jexler', 'Implementation-Version': version
   }
+}
 
-  ext {
-    groovy4GroupId='org.apache.groovy'
-    groovy4Version='4.0.9'
-    spock4Version='2.4-M1-groovy-4.0'
-    groovy3GroupId='org.codehaus.groovy'
-    groovy3Version='3.0.15'
-    spock3Version='2.4-M1-groovy-3.0'
-    groovy2GroupId=groovy3GroupId
-    groovy2Version='2.5.21'
-    spock2Version='2.4-M1-groovy-2.5'
-
-    groovyGroupId=groovy4GroupId
-    groovyVersion=groovy4Version
-    spockVersion=spock4Version
-
-    grengineVersion='3.0.2'
-
-    ivyVersion='2.5.1'
-    slf4jVersion='1.7.36'
-    logbackVersion='1.3.5'
-
-    junitVersion='4.13.2'
-    jansiVersion='1.18'
+dependencies {
+  implementation "org.apache.groovy:groovy:$groovyVersion"
+  implementation("ch.artecat.grengine:grengine:$grengineVersion") {
+    exclude group: 'org.apache.groovy', module: 'groovy'
   }
+  implementation "org.apache.ivy:ivy:$ivyVersion"
+  implementation "org.slf4j:slf4j-api:$slf4jVersion"
+  implementation "ch.qos.logback:logback-classic:$logbackVersion"
+  implementation 'org.quartz-scheduler:quartz:2.3.0'
+  // for javax.activation.MimetypesFileTypeMap in Java 11
+  implementation 'com.sun.activation:javax.activation:1.2.0'
 
-  jar {
-    manifest.attributes provider: 'gradle'
+
+  // Embedded Jetty with JSP support
+  // See https://examples.javacodegeeks.com/enterprise-java/jetty/jetty-jsp-example/
+  providedCompile 'org.eclipse.jetty:jetty-server:9.4.35.v20201120'
+  providedCompile 'org.eclipse.jetty:jetty-webapp:9.4.35.v20201120'
+  providedCompile 'org.eclipse.jetty:jetty-annotations:9.4.35.v20201120'
+  providedCompile 'org.eclipse.jetty:apache-jsp:9.4.35.v20201120'
+
+  // Unit tests
+  testImplementation"org.spockframework:spock-core:$spockVersion"
+  testImplementation "junit:junit:$junitVersion"
+
+  testRuntimeOnly 'javax.servlet:jstl:1.2'
+  testRuntimeOnly files('src/main/resources')
+}
+
+repositories {
+  mavenCentral()
+}
+
+test {
+  //testLogging.showStandardStreams = true
+  useJUnit {
+    includeCategories 'ch.grengine.jexler.test.FastTests'
   }
-
-  repositories {
-    mavenCentral()
+  afterTest { desc, result ->
+    println "Executing test ${desc.name} [${desc.className}] with result: ${result.resultType}"
   }
+}
 
-  configurations {
-    testArtifacts
+task slowTests(type: Test, dependsOn: 'test') {
+  //testLogging.showStandardStreams = true
+  useJUnit {
+    includeCategories 'ch.grengine.jexler.test.SlowTests'
   }
+}
 
-  dependencies {
-    compile "$groovyGroupId:groovy:$groovyVersion"
-    compile("ch.artecat.grengine:grengine:$grengineVersion") {
-      exclude group: 'org.codehaus.groovy', module: 'groovy'
-    }
-    compile "org.apache.ivy:ivy:$ivyVersion"
-    compile "org.slf4j:slf4j-api:$slf4jVersion"
-    compile "ch.qos.logback:logback-classic:$logbackVersion"
-
-    // Unit tests
-    testCompile"org.spockframework:spock-core:$spockVersion"
-    testCompile "junit:junit:$junitVersion"
-
-
-
-    compile 'org.quartz-scheduler:quartz:2.3.0'
-
-    // for javax.activation.MimetypesFileTypeMap in Java 11
-    compile 'com.sun.activation:javax.activation:1.2.0'
-
-    // Embedded Jetty with JSP support
-    // See https://examples.javacodegeeks.com/enterprise-java/jetty/jetty-jsp-example/
-    providedCompile 'org.eclipse.jetty:jetty-server:9.4.35.v20201120'
-    providedCompile 'org.eclipse.jetty:jetty-webapp:9.4.35.v20201120'
-    providedCompile 'org.eclipse.jetty:jetty-annotations:9.4.35.v20201120'
-    providedCompile 'org.eclipse.jetty:apache-jsp:9.4.35.v20201120'
-    runtime 'javax.servlet:jstl:1.2'
-
-    runtime files('src/main/resources')
-
+task demoTests(type: Test) {
+  testLogging.showStandardStreams = true
+  useJUnit {
+    includeCategories 'ch.grengine.jexler.test.DemoTests'
   }
-
-  task sourcesJar(type: Jar, dependsOn:classes) {
-    classifier = 'sources'
-    from sourceSets.main.allSource
-  }
-
-  task testJar(type: Jar) {
-    classifier = 'tests'
-    from sourceSets.test.output
-  }
-
-  artifacts {
-    archives sourcesJar
-    testArtifacts testJar
-  }
-   
-  test {
-    //testLogging.showStandardStreams = true
-    useJUnit {
-      includeCategories 'ch.grengine.jexler.test.FastTests'
-    }
-    //afterTest { desc, result ->
-    //  println "Executing test ${desc.name} [${desc.className}] with result: ${result.resultType}"
-    //}
-  }
-
-  task slowTests(type: Test, dependsOn: 'test') {
-    //testLogging.showStandardStreams = true
-    useJUnit {
-      includeCategories 'ch.grengine.jexler.test.SlowTests'
-    }
-  }
-  
-  task demoTests(type: Test) {
-    testLogging.showStandardStreams = true
-    useJUnit {
-      includeCategories 'ch.grengine.jexler.test.DemoTests'
-    }
-  }
-
 }
