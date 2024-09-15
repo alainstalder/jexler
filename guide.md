@@ -718,9 +718,6 @@ The code is a Gradle project that contains two Java subprojects:
 * *jexler-core*: The core jexler library (JAR) which contains also all services and tools.
 * *jexler*: The jexler web GUI, a simple webapp (WAR) with a single JSP.
 
-jexler-core is deeply tested, close to 100% test coverage in jacoco,
-except for a few artifacts and except that jacoco underrates Groovy
-coverage for purely technical reasons.
 Unit tests are written with https://code.google.com/p/spock/[Spock],
 the fascinating Groovy test framework.
 
@@ -783,8 +780,7 @@ if you use the jexler core library in a different context.
 * The jexler-core JAR is at [Maven Central](https://search.maven.org/#search%7Cga%7C1%7Cjexler-core)
 * The jexler webapp is at [Sourceforge](https://sourceforge.net/projects/jexler/) (see "Files" tab)
 * The website [grengine.ch/jexler](https://grengine.ch/jexler/) hosts
-  [Groovydoc](https://grengine.ch/jexler/groovydoc/),
-  [JaCoCo](https://grengine.ch/jexler/jacoco/)
+  [Groovydoc](https://grengine.ch/jexler/groovydoc/)
   and this [guide](https://grengine.ch/jexler/guide/)
 
 ## use cases

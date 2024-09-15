@@ -2,7 +2,6 @@ subprojects {
   apply plugin: 'groovy'
   apply plugin: 'eclipse'
   apply plugin: 'maven'
-  apply plugin: 'jacoco'
 
   sourceCompatibility = 1.8
   targetCompatibility = 1.8
@@ -107,10 +106,6 @@ subprojects {
     //}
   }
 
-  jacoco {
-    toolVersion = "0.8.8"
-  }
-
   task slowTests(type: Test, dependsOn: 'test') {
     //testLogging.showStandardStreams = true
     useJUnit {
@@ -122,48 +117,6 @@ subprojects {
     testLogging.showStandardStreams = true
     useJUnit {
       includeCategories 'ch.grengine.jexler.test.DemoTests'
-    }
-  }
-
-  task jacoco(type:JacocoReport, dependsOn: 'slowTests') {
-    executionData test, slowTests
-    sourceSets sourceSets.main
-  }
-
-  task jacocoFast(type:JacocoReport, dependsOn: 'test') {
-    executionData test
-    sourceSets sourceSets.main
-  }
-
-  task pom {
-    doLast {
-      pom {
-        project {
-          name 'jexler'
-          description project.description
-          url 'https://grengine.ch/jexler/'
-          packaging project.ext.pkg
-          licenses {
-            license {
-              name 'The Apache Software License, Version 2.0'
-              url 'https://www.apache.org/licenses/LICENSE-2.0'
-              distribution 'repo'
-            }
-          }
-          scm {
-            url 'https://github.com/alainstalder/jexler'
-            connection 'https://github.com/alainstalder/jexler.git'
-            developerConnection 'https://github.com/alainstalder/jexler.git'
-          }
-          developers {
-            developer {
-              id 'alainstalder'
-              name 'Alain Stalder'
-              email 'astalder@span.ch'
-            }
-          }
-        }
-      }.writeTo("$buildDir/libs/${project.name}-${project.version}.pom")
     }
   }
 

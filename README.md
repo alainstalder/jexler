@@ -14,8 +14,7 @@ Comes as a core library (JAR) plus a web GUI (WAR).
 
 ## Build
 
-* Quick build: `./gradlew clean build`
-* Full build: `./gradlew clean build pom jacoco`
+* `./gradlew clean build`
 
 ## Try web GUI
 
