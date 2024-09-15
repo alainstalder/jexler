@@ -17,8 +17,7 @@
 package ch.grengine.jexler.service
 
 import ch.grengine.jexler.TestJexler
-import ch.grengine.jexler.test.FastTests
-import org.junit.experimental.categories.Category
+import spock.lang.Tag
 import spock.lang.Specification
 
 /**
@@ -26,7 +25,6 @@ import spock.lang.Specification
  *
  * @author Alain Stalder
  */
-@Category(FastTests.class)
 class CronServiceSpec extends Specification {
 
     def 'TEST basic construct and set'() {

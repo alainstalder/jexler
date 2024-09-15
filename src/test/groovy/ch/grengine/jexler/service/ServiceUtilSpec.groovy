@@ -16,8 +16,7 @@
 
 package ch.grengine.jexler.service
 
-import ch.grengine.jexler.test.FastTests
-import org.junit.experimental.categories.Category
+import spock.lang.Tag
 import spock.lang.Specification
 
 /**
@@ -25,7 +24,6 @@ import spock.lang.Specification
  *
  * @author Alain Stalder
  */
-@Category(FastTests.class)
 class ServiceUtilSpec extends Specification {
 
     def 'TEST to quartz cron, valid values'() {

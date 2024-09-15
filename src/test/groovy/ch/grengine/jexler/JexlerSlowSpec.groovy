@@ -16,23 +16,20 @@
 
 package ch.grengine.jexler
 
-
-import ch.grengine.jexler.test.SlowTests
-import org.junit.Rule
-import org.junit.experimental.categories.Category
-import org.junit.rules.TemporaryFolder
 import spock.lang.Specification
+import spock.lang.Tag
+import spock.lang.TempDir
 
 /**
  * Tests the respective class.
  *
  * @author Alain Stalder
  */
-@Category(SlowTests.class)
+@Tag("slow")
 class JexlerSlowSpec extends Specification {
 
-    @Rule
-    public TemporaryFolder tempFolder = new TemporaryFolder()
+    @TempDir
+    File tempDir;
 
     private final static long MS_1_SEC = 1000
     private final static long MS_3_SEC = 3000
@@ -40,7 +37,7 @@ class JexlerSlowSpec extends Specification {
     
     def 'TEST SLOW (12 sec) jexler start or shutdown too slow'() {
         given:
-        final File dir = tempFolder.root
+        final File dir = tempDir
         final File file = new File(dir, 'Test.groovy')
         file.text = """\
             // Jexler {}

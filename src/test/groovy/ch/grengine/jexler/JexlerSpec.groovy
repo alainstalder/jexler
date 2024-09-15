@@ -21,11 +21,9 @@ import ch.grengine.jexler.service.MockEvent
 import ch.grengine.jexler.service.MockService
 import ch.grengine.jexler.service.ServiceBase
 import ch.grengine.jexler.service.StopEvent
-import ch.grengine.jexler.test.FastTests
-import org.junit.Rule
-import org.junit.experimental.categories.Category
-import org.junit.rules.TemporaryFolder
 import spock.lang.Specification
+import spock.lang.Tag
+import spock.lang.TempDir
 
 import static ch.grengine.jexler.service.ServiceState.IDLE
 import static ch.grengine.jexler.service.ServiceState.OFF
@@ -35,18 +33,17 @@ import static ch.grengine.jexler.service.ServiceState.OFF
  *
  * @author Alain Stalder
  */
-@Category(FastTests.class)
 class JexlerSpec extends Specification {
 
-    @Rule
-    public TemporaryFolder tempFolder = new TemporaryFolder()
+    @TempDir
+    File tempDir;
 
     private final static long MS_1_SEC = 1000
     private final static long MS_10_SEC = 10000
 
     def 'TEST script simple run (exit immediately)'() {
         given:
-        final def dir = tempFolder.root
+        final def dir = tempDir
         final def file = new File(dir, 'Test.groovy')
         file.text = text
 
@@ -67,7 +64,7 @@ class JexlerSpec extends Specification {
 
     def 'TEST script cannot read meta config'() {
         when:
-        final def dir = tempFolder.root
+        final def dir = tempDir
         final def file = new File(dir, 'Test.groovy')
         final def jexler = new Jexler(file, new JexlerContainer(dir))
         // create directory with name of jexler script file
@@ -84,7 +81,7 @@ class JexlerSpec extends Specification {
 
     def 'TEST script cannot parse meta config'() {
         when:
-        final def dir = tempFolder.root
+        final def dir = tempDir
         final def file = new File(dir, 'Test.groovy')
         final def jexler = new Jexler(file, new JexlerContainer(dir))
         // : instead of =
@@ -101,7 +98,7 @@ class JexlerSpec extends Specification {
 
     def 'TEST script compile, create or run fails'() {
         given:
-        final def dir = tempFolder.root
+        final def dir = tempDir
         final def file = new File(dir, 'Test.groovy')
         file.text = text
 
@@ -154,7 +151,7 @@ class JexlerSpec extends Specification {
 
     def 'TEST simple jexler script life cycle'() {
         given:
-        final def dir = tempFolder.root
+        final def dir = tempDir
         final def file = new File(dir, 'Test.groovy')
         file.text = """\
             // Jexler { autostart = false; foo = 'bar' }
@@ -243,7 +240,7 @@ class JexlerSpec extends Specification {
 
     def 'TEST zap hanging jexler'() {
         given:
-        final def dir = tempFolder.root
+        final def dir = tempDir
         final def file = new File(dir, 'Test.groovy')
         file.text = """\
             // Jexler { autostart = false; foo = 'bar' }
@@ -372,7 +369,7 @@ class JexlerSpec extends Specification {
 
     def 'TEST track issue'() {
         given:
-        final def dir = tempFolder.root
+        final def dir = tempDir
         final def file = new File(dir, 'Test.groovy')
         final def jexler = new Jexler(file, new JexlerContainer(dir))
 
@@ -413,7 +410,7 @@ class JexlerSpec extends Specification {
     def 'TEST runtime exception at jexler shutdown'() {
 
         given:
-        final def dir = tempFolder.root
+        final def dir = tempDir
         final def file = new File(dir, 'Test.groovy')
         file.text = """\
             // Jexler { autostart = false; foo = 'bar' }
@@ -460,7 +457,7 @@ class JexlerSpec extends Specification {
 
     def 'TEST getAsConfig'() {
         given:
-        final def dir = tempFolder.root
+        final def dir = tempDir
         final def file = new File(dir, 'Test.groovy')
 
         when:
@@ -475,7 +472,7 @@ class JexlerSpec extends Specification {
 
     def 'TEST meta config: no file'() {
         given:
-        final def dir = tempFolder.root
+        final def dir = tempDir
         final def file = new File(dir, 'Test.groovy')
 
         when:
@@ -495,7 +492,7 @@ class JexlerSpec extends Specification {
 
     def 'TEST meta config: IOException while reading file'() {
         given:
-        final def dir = tempFolder.root
+        final def dir = tempDir
 
         when:
         // passing dir as jexler file
@@ -516,7 +513,7 @@ class JexlerSpec extends Specification {
 
     def 'TEST meta config: default to null'() {
         given:
-        final def dir = tempFolder.root
+        final def dir = tempDir
         final def file = new File(dir, 'Test.groovy')
         file.text = text
 
@@ -530,7 +527,7 @@ class JexlerSpec extends Specification {
     
     def 'TEST interrupt event take in jexler event loop'() {
         given:
-        final def dir = tempFolder.root
+        final def dir = tempDir
         final def file = new File(dir, 'Test.groovy')
         file.text = """\
             // Jexler { autostart = false }

@@ -17,8 +17,7 @@
 package ch.grengine.jexler.service
 
 import ch.grengine.jexler.TestJexler
-import ch.grengine.jexler.test.FastTests
-import org.junit.experimental.categories.Category
+import spock.lang.Tag
 import spock.lang.Specification
 
 import java.nio.file.StandardWatchEventKinds
@@ -28,7 +27,6 @@ import java.nio.file.StandardWatchEventKinds
  *
  * @author Alain Stalder
  */
-@Category(FastTests.class)
 class DirWatchServiceSpec extends Specification {
 
     def 'TEST no watch dir'() {

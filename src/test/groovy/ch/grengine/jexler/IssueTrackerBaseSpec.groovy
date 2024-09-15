@@ -16,9 +16,7 @@
 
 package ch.grengine.jexler
 
-
-import ch.grengine.jexler.test.FastTests
-import org.junit.experimental.categories.Category
+import spock.lang.Tag
 import spock.lang.Specification
 
 /**
@@ -26,7 +24,6 @@ import spock.lang.Specification
  *
  * @author Alain Stalder
  */
-@Category(FastTests.class)
 class IssueTrackerBaseSpec extends Specification {
 
     def 'TEST track and forget'() {

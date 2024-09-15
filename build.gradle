@@ -15,7 +15,10 @@ version = '4.0.3-SNAPSHOT' // IMPORTANT: keep in sync with version in JexlerCont
 
 //project.group = 'ch.grengine.jexler'
 
-description = 'jexler webapp - simple relaxed web GUI for the jexler core library.'
+description =
+        'Jexler is a simple relaxed Groovy framework for starting/stopping' +
+        ' Groovy scripts as services and enabling them to react to events' +
+        ' of their choice - great for prototyping and useful for automating.'
 
 project.ext {
   pkg = 'war'
@@ -30,12 +33,13 @@ ext {
 
   grengineVersion='3.0.2'
 
-  ivyVersion='2.5.1'
+  ivyVersion='2.5.2'
   slf4jVersion='1.7.36'
   logbackVersion='1.3.5'
+  quartzVersion='2.3.2'
 
-  junitVersion='4.13.2'
-  jansiVersion='1.18'
+  //junitVersion='4.13.2'
+  junitVersion='5.11.0'
 }
 
 war {
@@ -52,10 +56,9 @@ dependencies {
   implementation "org.apache.ivy:ivy:$ivyVersion"
   implementation "org.slf4j:slf4j-api:$slf4jVersion"
   implementation "ch.qos.logback:logback-classic:$logbackVersion"
-  implementation 'org.quartz-scheduler:quartz:2.3.0'
+  implementation "org.quartz-scheduler:quartz:$quartzVersion"
   // for javax.activation.MimetypesFileTypeMap in Java 11
   implementation 'com.sun.activation:javax.activation:1.2.0'
-
 
   // Embedded Jetty with JSP support
   // See https://examples.javacodegeeks.com/enterprise-java/jetty/jetty-jsp-example/
@@ -66,7 +69,8 @@ dependencies {
 
   // Unit tests
   testImplementation"org.spockframework:spock-core:$spockVersion"
-  testImplementation "junit:junit:$junitVersion"
+  testImplementation "org.junit.jupiter:junit-jupiter-api:$junitVersion"
+  //testImplementation "junit:junit:$junitVersion"
 
   testRuntimeOnly 'javax.servlet:jstl:1.2'
   testRuntimeOnly files('src/main/resources')
@@ -78,24 +82,25 @@ repositories {
 
 test {
   //testLogging.showStandardStreams = true
-  useJUnit {
-    includeCategories 'ch.grengine.jexler.test.FastTests'
+  useJUnitPlatform {
+    excludeTags "slow"
+    excludeTags "demo"
   }
-  afterTest { desc, result ->
+  /*afterTest { desc, result ->
     println "Executing test ${desc.name} [${desc.className}] with result: ${result.resultType}"
-  }
+  }*/
 }
 
 task slowTests(type: Test, dependsOn: 'test') {
   //testLogging.showStandardStreams = true
-  useJUnit {
-    includeCategories 'ch.grengine.jexler.test.SlowTests'
+  useJUnitPlatform {
+    includeTags "slow"
   }
 }
 
 task demoTests(type: Test) {
   testLogging.showStandardStreams = true
-  useJUnit {
-    includeCategories 'ch.grengine.jexler.test.DemoTests'
+  useJUnitPlatform {
+    includeTags "DemoTests"
   }
 }

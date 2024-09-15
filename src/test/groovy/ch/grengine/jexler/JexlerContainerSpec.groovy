@@ -17,11 +17,9 @@
 package ch.grengine.jexler
 
 import ch.grengine.jexler.service.StopEvent
-import ch.grengine.jexler.test.FastTests
-import org.junit.Rule
-import org.junit.experimental.categories.Category
-import org.junit.rules.TemporaryFolder
 import spock.lang.Specification
+import spock.lang.Tag
+import spock.lang.TempDir
 
 import static ch.grengine.jexler.service.ServiceState.BUSY_STARTING
 import static ch.grengine.jexler.service.ServiceState.IDLE
@@ -32,18 +30,17 @@ import static ch.grengine.jexler.service.ServiceState.OFF
  *
  * @author Alain Stalder
  */
-@Category(FastTests.class)
 class JexlerContainerSpec extends Specification {
 
-    @Rule
-    public TemporaryFolder tempFolder = new TemporaryFolder()
+    @TempDir
+    File tempDir;
 
     private final static long MS_1_SEC = 1000
     private final static long MS_10_SEC = 10000
 
     def 'TEST main functionality in detail'() {
         given:
-        final def dir = tempFolder.root
+        final def dir = tempDir
         final def jexlerBody = """\
             while (true) {
               event = events.take()
@@ -193,7 +190,7 @@ class JexlerContainerSpec extends Specification {
 
     def 'TEST track issue'() {
         given:
-        final def dir = tempFolder.root
+        final def dir = tempDir
         final def container = new JexlerContainer(dir)
 
         when:
@@ -241,7 +238,7 @@ class JexlerContainerSpec extends Specification {
 
     def 'TEST constructor throws because file is not a directory'() {
         when:
-        final def dir = tempFolder.root
+        final def dir = tempDir
         def file = new File(dir, "file.tmp")
         file.createNewFile()
         new JexlerContainer(file)
@@ -253,7 +250,7 @@ class JexlerContainerSpec extends Specification {
 
     def 'TEST get jexler id'() {
         when:
-        final def dir = tempFolder.root
+        final def dir = tempDir
         final def container = new JexlerContainer(dir)
 
         then:
@@ -266,7 +263,7 @@ class JexlerContainerSpec extends Specification {
 
     def 'TEST get jexler file'() {
         given:
-        final def dir = tempFolder.root
+        final def dir = tempDir
         final def container = new JexlerContainer(dir)
 
         when:
@@ -278,7 +275,7 @@ class JexlerContainerSpec extends Specification {
 
     def 'TEST shared scheduler and close'() {
         given:
-        final def dir = tempFolder.root
+        final def dir = tempDir
         final def container = new JexlerContainer(dir)
 
         when:
@@ -316,7 +313,7 @@ class JexlerContainerSpec extends Specification {
 
     def 'TEST getAsConfig'() {
         given:
-        final def dir = tempFolder.root
+        final def dir = tempDir
         final def file = new File(dir, 'Test.groovy')
         file.text = "a { x=1; y=true; z { aa='hello' } }"
 

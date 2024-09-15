@@ -17,8 +17,7 @@
 package ch.grengine.jexler.service
 
 import ch.grengine.jexler.TestJexler
-import ch.grengine.jexler.test.SlowTests
-import org.junit.experimental.categories.Category
+import spock.lang.Tag
 import spock.lang.Specification
 
 import static CronService.CRON_NOW
@@ -31,7 +30,7 @@ import static ServiceState.OFF
  *
  * @author Alain Stalder
  */
-@Category(SlowTests.class)
+@Tag("slow")
 class CronServiceSlowSpec extends Specification {
 
     private final static long MS_4_SEC = 4000

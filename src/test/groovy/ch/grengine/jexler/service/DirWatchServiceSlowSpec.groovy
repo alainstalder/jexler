@@ -18,12 +18,10 @@ package ch.grengine.jexler.service
 
 import ch.grengine.jexler.Jexler
 import ch.grengine.jexler.TestJexler
-import ch.grengine.jexler.test.SlowTests
 import com.sun.nio.file.SensitivityWatchEventModifier
-import org.junit.Rule
-import org.junit.experimental.categories.Category
-import org.junit.rules.TemporaryFolder
 import spock.lang.Specification
+import spock.lang.Tag
+import spock.lang.TempDir
 
 import java.nio.file.StandardWatchEventKinds
 
@@ -35,18 +33,19 @@ import static ServiceState.OFF
  *
  * @author Alain Stalder
  */
-@Category(SlowTests.class)
+@Tag("slow")
 class DirWatchServiceSlowSpec extends Specification {
 
-    @Rule
-    public TemporaryFolder tempFolder = new TemporaryFolder()
+    @TempDir
+    File tempDir;
 
     private final static long MS_3_SEC = 3000
     private final static String CRON_EVERY_SEC = '*/1 * * * * *'
 
     def 'TEST SLOW (40 sec) create/modify/remove files in watch dir'() {
         given:
-        def watchDir = tempFolder.root
+        def watchDir = new File(tempDir, "watch1")
+        watchDir.mkdir()
         final def jexler = new TestJexler()
 
         when:
@@ -84,7 +83,8 @@ class DirWatchServiceSlowSpec extends Specification {
 
         when:
         // different watch directory
-        watchDir = tempFolder.newFolder()
+        watchDir = new File(tempDir, "watch2")
+        watchDir.mkdir()
         service.dir = watchDir
         service.start()
 
@@ -121,7 +121,8 @@ class DirWatchServiceSlowSpec extends Specification {
 
         when:
         // different watch directory
-        watchDir = tempFolder.newFolder()
+        watchDir = new File(tempDir, "watch3")
+        watchDir.mkdir()
         service.dir = watchDir
         service.start()
 

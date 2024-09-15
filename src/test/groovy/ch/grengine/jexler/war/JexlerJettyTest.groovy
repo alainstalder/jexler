@@ -16,21 +16,19 @@
 
 package ch.grengine.jexler.war
 
-import ch.grengine.jexler.test.DemoTests
-
 import groovy.transform.CompileStatic
 import org.eclipse.jetty.server.Server
 import org.eclipse.jetty.webapp.Configuration
 import org.eclipse.jetty.webapp.WebAppContext
-import org.junit.Test
-import org.junit.experimental.categories.Category
+import org.junit.jupiter.api.Test
+import spock.lang.Tag
 
 /**
  * Starts embedded jetty with jexler webapp.
  *
  * @author Alain Stalder
  */
-@Category(DemoTests.class)
+@Tag("demo")
 @CompileStatic
 class JexlerJettyTest {
 

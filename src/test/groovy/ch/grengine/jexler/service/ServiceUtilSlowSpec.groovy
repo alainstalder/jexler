@@ -17,8 +17,7 @@
 package ch.grengine.jexler.service
 
 import ch.grengine.jexler.JexlerUtil
-import ch.grengine.jexler.test.SlowTests
-import org.junit.experimental.categories.Category
+import spock.lang.Tag
 import spock.lang.Specification
 
 import static ServiceState.BUSY_STARTING
@@ -30,7 +29,7 @@ import static ServiceState.OFF
  *
  * @author Alain Stalder
  */
-@Category(SlowTests.class)
+@Tag("slow")
 class ServiceUtilSlowSpec extends Specification {
 
     private final static long MS_1_SEC = 1000

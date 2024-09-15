@@ -18,8 +18,7 @@ package ch.grengine.jexler
 
 
 import ch.grengine.jexler.service.MockService
-import ch.grengine.jexler.test.FastTests
-import org.junit.experimental.categories.Category
+import spock.lang.Tag
 import spock.lang.Specification
 
 /**
@@ -27,7 +26,6 @@ import spock.lang.Specification
  *
  * @author Alain Stalder
  */
-@Category(FastTests.class)
 class IssueSpec extends Specification {
 
     def 'TEST construct and get null values'() {

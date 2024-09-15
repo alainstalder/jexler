@@ -16,12 +16,9 @@
 
 package ch.grengine.jexler
 
-
-import ch.grengine.jexler.test.SlowTests
-import org.junit.Rule
-import org.junit.experimental.categories.Category
-import org.junit.rules.TemporaryFolder
 import spock.lang.Specification
+import spock.lang.Tag
+import spock.lang.TempDir
 
 import static JexlerUtil.SHUTDOWN_TIMEOUT_MSG
 import static JexlerUtil.STARTUP_TIMEOUT_MSG
@@ -35,11 +32,11 @@ import static ch.grengine.jexler.service.ServiceState.OFF
  *
  * @author Alain Stalder
  */
-@Category(SlowTests.class)
+@Tag("slow")
 class JexlerContainerSlowSpec extends Specification {
 
-    @Rule
-    public TemporaryFolder tempFolder = new TemporaryFolder()
+    @TempDir
+    File tempDir;
 
     private final static long MS_1_SEC = 1000
     private final static long MS_3_SEC = 3000
@@ -47,7 +44,7 @@ class JexlerContainerSlowSpec extends Specification {
     
     def 'TEST SLOW (12 sec) startup and shutdown too slower than time waited'() {
         given:
-        final def dir = tempFolder.root
+        final def dir = tempDir
         final def jexlerBodyFast = """\
             while (true) {
               event = events.take()

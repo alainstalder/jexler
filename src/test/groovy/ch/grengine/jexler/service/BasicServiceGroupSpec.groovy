@@ -17,8 +17,7 @@
 package ch.grengine.jexler.service
 
 import ch.grengine.jexler.TestJexler
-import ch.grengine.jexler.test.FastTests
-import org.junit.experimental.categories.Category
+import spock.lang.Tag
 import spock.lang.Specification
 
 import static ServiceState.BUSY_EVENT
@@ -32,7 +31,6 @@ import static ServiceState.OFF
  *
  * @author Alain Stalder
  */
-@Category(FastTests.class)
 class BasicServiceGroupSpec extends Specification {
 
     def 'TEST basics including group service state'() {

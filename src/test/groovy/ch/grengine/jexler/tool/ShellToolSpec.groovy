@@ -16,22 +16,19 @@
 
 package ch.grengine.jexler.tool
 
-import ch.grengine.jexler.test.FastTests
-import org.junit.Rule
-import org.junit.experimental.categories.Category
-import org.junit.rules.TemporaryFolder
 import spock.lang.Specification
+import spock.lang.Tag
+import spock.lang.TempDir
 
 /**
  * Tests the respective class.
  *
  * @author Alain Stalder
  */
-@Category(FastTests.class)
 class ShellToolSpec extends Specification {
 
-    @Rule
-    public TemporaryFolder tempFolder = new TemporaryFolder()
+    @TempDir
+    File tempDir;
 
     def 'TEST default'() {
         given:
@@ -57,7 +54,7 @@ class ShellToolSpec extends Specification {
         given:
         final def tool = new ShellTool()
 
-        final def dir = tempFolder.root
+        final def dir = tempDir
         final def file1 = new File(dir, 'file1')
         final def file2 = new File(dir, 'file2')
         file1.createNewFile()

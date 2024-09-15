@@ -19,11 +19,9 @@ package ch.grengine.jexler
 import ch.grengine.jexler.service.CronEvent
 import ch.grengine.jexler.service.DirWatchEvent
 import ch.grengine.jexler.service.MockService
-import ch.grengine.jexler.test.FastTests
-import org.junit.Rule
-import org.junit.experimental.categories.Category
-import org.junit.rules.TemporaryFolder
 import spock.lang.Specification
+import spock.lang.Tag
+import spock.lang.TempDir
 
 import java.nio.file.StandardWatchEventKinds
 
@@ -35,11 +33,10 @@ import static ch.grengine.jexler.service.ServiceState.OFF
  *
  * @author Alain Stalder
  */
-@Category(FastTests.class)
 class JexlerDispatcherSpec extends Specification {
 
-    @Rule
-    public TemporaryFolder tempFolder = new TemporaryFolder()
+    @TempDir
+    File tempDir;
 
     private final static long MS_1_SEC = 1000
     private final static long MS_10_SEC = 10000
@@ -61,7 +58,7 @@ class JexlerDispatcherSpec extends Specification {
     
     def 'TEST minimal methods and no suitable event handler'() {
         given:
-        final def dir = tempFolder.root
+        final def dir = tempDir
         final def file = new File(dir, 'Test.groovy')
         file.text = """\
             // Jexler {}
@@ -125,7 +122,7 @@ class JexlerDispatcherSpec extends Specification {
 
     def 'TEST mandatory start method missing'() {
         given:
-        final def dir = tempFolder.root
+        final def dir = tempDir
         final def file = new File(dir, 'Test.groovy')
         file.text = """\
             // Jexler {}
@@ -151,7 +148,7 @@ class JexlerDispatcherSpec extends Specification {
 
     def 'TEST all methods and handlers'() {
         given:
-        final def dir = tempFolder.root
+        final def dir = tempDir
         final def file = new File(dir, 'Test.groovy')
         file.text = """\
             // Jexler {}
@@ -281,7 +278,7 @@ class JexlerDispatcherSpec extends Specification {
 
     def 'TEST handle throws'() {
         given:
-        final def dir = tempFolder.root
+        final def dir = tempDir
         final def file = new File(dir, 'Test.groovy')
         file.text = """\
             // Jexler {}
