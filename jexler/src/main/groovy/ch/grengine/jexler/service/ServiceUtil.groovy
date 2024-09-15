@@ -17,7 +17,6 @@
 package ch.grengine.jexler.service
 
 import ch.grengine.jexler.JexlerUtil
-
 import groovy.transform.CompileStatic
 import org.quartz.CronExpression
 import org.slf4j.Logger

@@ -17,7 +17,6 @@
 package ch.grengine.jexler.service
 
 import ch.grengine.jexler.Jexler
-
 import groovy.transform.CompileStatic
 
 import static ServiceState.IDLE

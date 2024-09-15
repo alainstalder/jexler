@@ -18,7 +18,6 @@ package ch.grengine.jexler.service
 
 import ch.grengine.jexler.JexlerUtil
 import ch.grengine.jexler.test.SlowTests
-
 import org.junit.experimental.categories.Category
 import spock.lang.Specification
 

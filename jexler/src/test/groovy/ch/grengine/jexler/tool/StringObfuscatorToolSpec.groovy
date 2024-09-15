@@ -17,7 +17,6 @@
 package ch.grengine.jexler.tool
 
 import ch.grengine.jexler.test.FastTests
-
 import org.junit.experimental.categories.Category
 import spock.lang.Specification
 

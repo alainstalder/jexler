@@ -13,8 +13,10 @@ war {
 }
 
 dependencies {
-  compile project(':jexler-core')
-  testCompile project (path: ":jexler-core", configuration: 'testArtifacts')
+  //compile project(':jexler-core')
+  //testCompile project (path: ":jexler-core", configuration: 'testArtifacts')
+
+  compile 'org.quartz-scheduler:quartz:2.3.0'
   
   // for javax.activation.MimetypesFileTypeMap in Java 11
   compile 'com.sun.activation:javax.activation:1.2.0'

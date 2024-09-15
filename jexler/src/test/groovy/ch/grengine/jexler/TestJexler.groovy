@@ -17,7 +17,6 @@
 package ch.grengine.jexler
 
 import ch.grengine.jexler.service.Event
-
 import groovy.transform.CompileStatic
 
 /**

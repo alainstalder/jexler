@@ -16,12 +16,11 @@
 
 package ch.grengine.jexler
 
-
-import ch.grengine.jexler.service.ServiceBase
-import ch.grengine.jexler.service.StopEvent
 import ch.artecat.grengine.except.CompileException
 import ch.grengine.jexler.service.MockEvent
 import ch.grengine.jexler.service.MockService
+import ch.grengine.jexler.service.ServiceBase
+import ch.grengine.jexler.service.StopEvent
 import ch.grengine.jexler.test.FastTests
 import org.junit.Rule
 import org.junit.experimental.categories.Category

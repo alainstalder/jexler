@@ -18,8 +18,8 @@ package ch.grengine.jexler
 
 import ch.grengine.jexler.service.CronEvent
 import ch.grengine.jexler.service.DirWatchEvent
-import ch.grengine.jexler.test.FastTests
 import ch.grengine.jexler.service.MockService
+import ch.grengine.jexler.test.FastTests
 import org.junit.Rule
 import org.junit.experimental.categories.Category
 import org.junit.rules.TemporaryFolder

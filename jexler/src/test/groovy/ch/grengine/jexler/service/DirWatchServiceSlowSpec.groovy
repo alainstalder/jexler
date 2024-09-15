@@ -19,7 +19,6 @@ package ch.grengine.jexler.service
 import ch.grengine.jexler.Jexler
 import ch.grengine.jexler.TestJexler
 import ch.grengine.jexler.test.SlowTests
-
 import com.sun.nio.file.SensitivityWatchEventModifier
 import org.junit.Rule
 import org.junit.experimental.categories.Category
