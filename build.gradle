@@ -151,15 +151,15 @@ subprojects {
             }
           }
           scm {
-            url 'https://github.com/jexler/jexler'
-            connection 'https://github.com/jexler/jexler.git'
-            developerConnection 'https://github.com/jexler/jexler.git'
+            url 'https://github.com/alainstalder/jexler'
+            connection 'https://github.com/alainstalder/jexler.git'
+            developerConnection 'https://github.com/alainstalder/jexler.git'
           }
           developers {
             developer {
-              id 'jexler'
-              name 'Jex Jexler (Alain Stalder)'
-              email 'jexler@artecat.ch'
+              id 'alainstalder'
+              name 'Alain Stalder'
+              email 'astalder@span.ch'
             }
           }
         }

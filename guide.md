@@ -709,11 +709,11 @@ webapp.
 
 ## source code
 
-The source code is at GitLab: https://github.com/jexler/jexler
+The source code is at GitLab: https://github.com/alainstalder/jexler
 
 See there for instructions how to build.
 
-The code is a Gradle project that contains two Java sub-projects:
+The code is a Gradle project that contains two Java subprojects:
 
 * *jexler-core*: The core jexler library (JAR) which contains also all services and tools.
 * *jexler*: The jexler web GUI, a simple webapp (WAR) with a single JSP.
