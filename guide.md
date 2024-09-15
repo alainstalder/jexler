@@ -1,22 +1,22 @@
-image:jexler.jpg["jexler", link="https://grengine.ch/jexler/"]
+[![image](jexler.jpg)](https://grengine.ch/jexler/)
 
-== Jexler User Guide
+# jexler user guide
 
-https://grengine.ch/jexler/[Jexler] is a simple relaxed
-http://www.groovy-lang.org[Groovy] framework for starting/stopping
+[Jexler](https://grengine.ch/jexler/) is a simple relaxed
+[Groovy](https://www.groovy-lang.org) framework for starting/stopping
 Groovy scripts as services and enabling them to react to events
 of their choice - great for prototyping and useful for automating.
 
-Jexler uses https://grengine.ch/[Grengine] to run its container
+Jexler uses [Grengine](https://grengine.ch/) to run its container
 of Groovy scripts and utility classes.
 
-image:powered-by-grengine.gif["Powered by Grengine", link="https://grengine.ch/"]
+[![image](guide/powered-by-grengine.gif)](https://grengine.ch/)
 
-== Introduction
+## introduction
 
 Here's a first example of a jexler Groovy script:
-[source,groovy]
-----
+
+```groovy
 // Jexler { autostart = true }
 
 services.add(new CronService(jexler, 'every-minute').setCron('* * * * *'))
@@ -30,7 +30,7 @@ while (true) {
     return
   }
 }
-----
+```
 
 The script registers a cron service that will send it a CronEvent
 every minute and in the event loop below the script waits for events
@@ -38,8 +38,7 @@ until it receives a StopEvent.
 
 Now instead of just logging the word "hello", let's send an email instead:
 
-[source,groovy]
-----
+```groovy
 // Jexler { autostart = true }
 
 @Grab('org.apache.commons:commons-email:1.3')
@@ -63,7 +62,7 @@ while (true) {
     return
   }
 }
-----
+```
 
 This uses Groovy *Grape*, which allows to download external libraries
 and use them immediately in the same script.
@@ -73,12 +72,12 @@ code samples and libraries for almost anything you might want to do.
 
 Here's how the Web GUI looks like:
 
-image:jexler-gui.jpg[web gui]
+![image](guide/jexler-gui.jpg)
 
 What you can see above is essentially a list of jexler Groovy scripts.
 In the webapp in the file system it looks like this:
 
-----
+```
 jexler/
   WEB-INF/
     jexlers/
@@ -93,7 +92,7 @@ jexler/
       ...
     ...
   ...
-----
+```
 
 The first jexlers is busy stopping, the next three are running, the fourth failed
 to stop in time, and you could start or stop them in the GUI, or look at the
@@ -101,19 +100,18 @@ log file, edit the scripts, etc.
 
 If you want to try it out and play with jexler immediately:
 
-* Get the jexler source from GitHub: https://github.com/jexler/jexler
+* Get the jexler source from GitHub: https://github.com/alainstalder/jexler
 * Install the Java 8 JDK (or later) and Gradle
 * `gradle demo`
 * Open http://localhost:9080/ in a web browser
-* See the README at GitHub for alternatives...
+* See the [README](README.md) at GitHub for alternatives...
 
-=== Dispatching
+### dispatching
 
 It is also possible to define a jexler in a more structured way by defining
 methods that handle different life cycle stages and received events:
 
-[source,groovy]
-----
+```groovy
 // Jexler { autostart = true }
 
 // dispatch to methods below
@@ -161,12 +159,11 @@ void stop() {
   log.trace('-- stop()')
   // nothing to do, services.stop() is called automatically after the script returns
 }
-----
+```
 
 So that the first example above could e.g. be written as:
 
-[source,groovy]
-----
+```groovy
 // Jexler { autostart = true }
 
 JexlerDispatcher.dispatch(this)
@@ -179,7 +176,7 @@ void start() {
 void handleCronEvent(def event) {
     log.info('hello')
 }
-----
+```
 
 Under the hood, it is still just a running Groovy script (and if you do not
 like the default behavior of `JexlerDispatcher`, get its Groovy source from the jexler
@@ -187,14 +184,15 @@ source at GitHub and copy it to a  Groovy script called e.g. `MyJexlerDispatcher
 put it into the jexlers directory, adjust it as needed, and then call
 `MyJexlerDispatcher.dispatch(this)` instead at the top of your jexler scripts).
 
-== Services
+## services
 
-=== CronService
+### CronService
 
 This service sends a CronEvent at times configurable with a cron string:
 
-[source,groovy]
+```groovy
 services.add(new CronService(jexler, "hourly").setCron("0 * * * *"))
+```
 
 Note that the `setCron()` method returns its CronService instance, so that setters can be chained.
 
@@ -205,9 +203,10 @@ There are two special cron strings that may be useful for testing:
 
 The CronEvent class has a single getter `getCron()` to get the cron string that caused the event:
 
-[source,groovy]
+```groovy
 log.trace(cronEvent.cron)
-    
+```
+
 (Note that `cronEvent.cron` is a Groovy shortcut for `cronEvent.getCron()`.)
 
 Implemented using the Open Source https://www.quartz-scheduler.org[Quartz] library.
@@ -217,28 +216,27 @@ is used (because each scheduler creates a new thread). Alternatively, the schedu
 can be explicitly set when constructing the `CronService` instance:
 `setScheduler(Scheduler scheduler)`.
 
-==== Quartz Cron Strings
+#### quartz cron strings
 
 Quartz allows to trigger with a resolution of seconds (and optionally allows
 also to define years). This means that Quartz cron strings contain 6 (or 7)
 fields, instead of the usual 5.
 
-Naively, you would configure a cron for every second as "* * * * * *", but
+Naively, you would configure a cron for every second as `* * * * * *`, but
 for some strange reason (which escapes me), Quartz mandates that one of
-day-of month (position 4) or day-of-week (position 6) must be '?' (but not both).
+day-of month (position 4) or day-of-week (position 6) must be `?` (but not both).
 
 Don't worry, Jexler handles this for you, normal short cron strings like
-"* * * * *" are expanded to a valid quartz cron string like "0 * * * * ?"
-and also for long cron strings like "0 * * * * 1-5" a '?' is automatically
-replaced where needed, like to "0 * * ? * 1-5".
+"* * * * *" are expanded to a valid quartz cron string like `0 * * * * ?`
+and also for long cron strings like `0 * * * * 1-5` a `?` is automatically
+replaced where needed, like to `0 * * ? * 1-5`.
 
-=== DirWatchService
+### DirWatchService
 
 This service observes a directory for changes in the file system and sends events
 when a file is created, modified or deleted:
 
-[source,groovy]
-----
+```groovy
 services.add(new DirWatchService(jexler, 'watch-jexler-dir'))
 services.start()
 
@@ -250,7 +248,7 @@ while (true) {
     return
   }
 }
-----
+```
 
 There are the following setters:
 
@@ -280,7 +278,7 @@ The DirWatchEvent class has the following getters:
 
 Implemented using a Java 7 WatchService (and Quartz).
 
-=== More Services
+### more services
 
 Writing your own services is relatively easy, since you can also write services
 in Groovy, even from within the jexler web GUI.
@@ -301,18 +299,19 @@ to manage and test, otherwise I wouldn't touch it ;)
 
 And even then...
 
-== Tools
+## tools
 
-=== ShellTool
+### ShellTool
 
 This tool helps to run shell commands. (Note that there are already at least
 two standard ways of doing this with Groovy APIs, which may or may not be
 more convenient depending on your use case.)
 
-[source,groovy]
+```groovy
 shellTool = new ShellTool()
 result = shellTool.run("echo 'hello world'")
 log.trace(result.toString())
+```
 
 There are the following setters:
 
@@ -332,8 +331,9 @@ There are the following setters:
 
 Note that the setters again return their ShellTool instance,i.e. setters can be chained:
 
-[source,groovy]
+```groovy
 result = new ShellTool().setWorkingDirectory('/tmp').setStderrLineHandler({log.info(it)}).run('ls')
+```
 
 And there are two methods for running a shell command:
 
@@ -365,7 +365,7 @@ for logging. Line breaks in stdout and stderr are replaced by '%n'.
 
 Implemented using `Runtime.getRuntime().exec()`.
 
-=== StringObfuscatorTool
+### StringObfuscatorTool
 
 This tool can help to obfuscate passwords and other sensitive strings.
 By default, it uses 128 bit AES with a hard-coded key, see below plus code/groovydoc for full details.
@@ -375,7 +375,7 @@ By default, it uses 128 bit AES with a hard-coded key, see below plus code/groov
 * `public String deobfuscate(String encHex)`:
   Hex decode, decipher, unpad and UTF-8 decode given string.
 * `StringObfuscatorTool()`: Default constructor.
-   Chooses 128 bit AES (AES/CBC/PKCS5Padding) with a hard-coded default key and iv,
+   Chooses 128-bit AES (AES/CBC/PKCS5Padding) with a hard-coded default key and iv,
    and sets byteBufferPadLen to 64, which limits plain strings to max 47 characters
    (resp. less if some plain string characters need more than one byte UTF-8 encoded).
 * `StringObfuscatorTool setParameters(String hexKey, String hexIv, String algorithm, String transformation)`:
@@ -398,21 +398,23 @@ can also simply copy the obfuscated string and deobfuscate it on a different
 jexler instance. To fend off that attack, e.g. store obfuscated passwords in files
 in the jexlers directory:
 
-[source,groovy]
+```groovy
 new File("password.txt").setText(new StringObfuscatorTool().obfuscate("mysecret"))
 def password = new StringObfuscatorTool().deobfuscate(new File("password.txt").text)
+```
 
 To obfuscate things even a little more, you could set custom cipher parameters
 that you would read from a file, or maybe even consider something like the following.
 Subclass the StringObfuscatorTool class in Groovy (or Java):
 
-[source,groovy]
+```groovy
 class MyObfuscatorTool extends ch.artecat.jexler.tool.StringObfuscatorTool {
   public MyObfuscatorTool() {
     setParameters("00--my-AES-128-secret-key-hex-00", "00--my-AES-128-secret-iv-hex--00",
       "AES", "AES/CBC/PKCS5Padding")
   }
 }
+```
 
 Compile the class and place the resulting class file in the jexlers directory
 or within the WEB-INF/lib directory, i.e. add it to the classpath of the running jexlers.
@@ -420,7 +422,7 @@ This would make it a little harder to deobfuscate strings even to someone with
 read access to the files in the jexlers resp. WEB-INF/lib directory, because the keys
 are somewhat "hidden" in the class file.
 
-=== More Tools
+### more tools
 
 With Java and Groovy plus Grape you have ***thousands*** of tools and libraries
 at your fingertips, just search the internet when you need something specific.
@@ -431,11 +433,11 @@ for solutions in Java and Groovy to find something you can use in jexler scripts
 Besides, essentially the same comments as for services apply also to tools.
 No need to reinvent the wheel.
 
-== Web GUI
+## web gui
 
-=== Basic Usage
+### basic usage
 
-image:jexler-gui-basic.jpg[web gui basic usage]
+![image](guide/jexler-gui-basic.jpg)
 
 Use the red/green/blue icons in the first two columns of the table to start/stop/restart
 jexlers. The top row addresses all jexlers:
@@ -509,9 +511,9 @@ and `events.hasStop()` to tell if there are any stop events in the event queue.
 Zapping should usually only be used as a last resort before restarting the
 containing Java VM.
 
-=== Edit jexler Scripts
+### edit jexler scripts
 
-image:jexler-gui-edit.jpg[web gui edit scripts]
+![image](guide/jexler-gui-edit.jpg)
 
 New files are created simply by typing a new name and clicking save.
 
@@ -532,16 +534,16 @@ for the container. Note that running jexlers are not affected by this.
 You can even stop and restart them and they will see the last known good
 state of the container (which is again a Grengine feature).
 
-=== Issues
+### issues
 
-image:jexler-gui-issues.jpg[web gui view issues]
+![image](guide/jexler-gui-issues.jpg)
 
 Issues are automatically created if a jexler unexpectedly exits by throwing an exception.
 
 Often it is better to catch exceptions within the jexler script to keep the jexler running,
 and instead to track the exception as a issue in the script:
 
-[source,groovy]
+```groovy
 try {
   new SimpleEmail().with {
     addTo to
@@ -553,6 +555,7 @@ try {
   jexler.trackIssue(jexler, "Could not send mail to $to.", e)
   return false
 }
+```
 
 Parameters are:
 
@@ -563,13 +566,13 @@ Parameters are:
 Tracked issues are always additionally logged with level error (as a single line,
 with full stack trace, if available, and with linebreaks translated to '%n').
 
-=== View Log
+### view log
 
-image:jexler-gui-log.jpg[web gui view log file]
+![image](guide/jexler-gui-log.jpg)
 
 Note that newest log entries are on top.
 
-=== Customizing and Safety/Security
+### customizing and safety/security
 
 Default settings are in WEB-INF/settings.groovy and can be overridden
 with custom settings in WEB-INF/settings-custom.groovy.
@@ -578,9 +581,9 @@ Both files are Groovy config files, read with the Groovy `ConfigSlurper`.
 Settings can be indicated separated with dots like in Java properties
 or in a tree structure.
 
-==== Timeouts
+#### timeouts
 
-[source,groovy]
+```groovy
 operation {
     jexler {
         // Timeout in seconds for starting a jexler before reporting an issue.
@@ -589,6 +592,7 @@ operation {
         stopTimeoutSecs = 10
     }
 }
+```
 
 These two parameters control how long the jexler waits before returning
 to the client when starting / stopping a jexler or all jexlers.
@@ -596,21 +600,23 @@ An issue is tracked if the timeout occurs. Default is 10 secs each.
 
 Sample overrides:
 
-[source,groovy]
+```groovy
 operation.jexler.startTimeoutSecs = 30
 operation {
   jexler.stopTimeoutSecs = 20
 }
+```
 
-==== Security
+#### security
 
-[source,groovy]
+```groovy
 security {
     script {
         // Whether to allow editing jexler scripts in web GUI or not.
         allowEdit = true
     }
 }
+```
 
 This parameter can be used to disallow editing of jexler scripts in the GUI
 as a security measure. Default is to allow editing.
@@ -626,9 +632,9 @@ Please protect the web GUI accordingly.
 Without write permission, jexler is relatively harmless, also since it is not possible
 to give a jexler any kind of start parameters in the web GUI without editing the script.
 
-==== Safety
+#### safety
 
-[source,xml]
+```
 safety {
     script {
         // Whether to confirm script save in web GUI or not.
@@ -637,14 +643,15 @@ safety {
         confirmDelete = true
     }
 }
+```
 
 These two parameters indicate whether the web GUI should ask the user
 to confirm before saving or deleting a jexler script file.
 Default is false for saving and true for deleting.
 
-== Handling HTTP Requests
+## handling http requests
 
-=== Basic: Use Case "Web GUI"
+### basic: use case "web gui"
 
 HTTP requests sent to the jexler webapp with request parameters
 `cmd=http&jexler=<jexler-id>` are passed to a method `handleHttp(PageContext p)`
@@ -655,8 +662,7 @@ things like `p.request`, `p.request.getParameter('action')`, `p.out`, `p.session
 
 Simple example:
 
-[source,groovy]
-----
+```groovy
 void handleHttp(def p) {
   p.response.status = 200
   p.out.println("""\
@@ -673,7 +679,7 @@ void handleHttp(def p) {
 </html>
 """)
 }
-----
+```
 
 If an exception occurs in the handler, a simple 500 error page is returned.
 Similarly, if there is no corresponding operational jexler or it contains
@@ -686,9 +692,9 @@ Note that incoming HTTP requests are processed in parallel to the normal jexler
 event queue, possibly in several threads created by the web container.
 Make sure operations are thread-safe in these two respects.
 
-=== Advanced: Use Case "REST Calls"
+### advanced: use case "rest calls"
 
-By default the `JexlerRestDispatcherServlet` is configured for the location
+By default, the `JexlerRestDispatcherServlet` is configured for the location
 `/rest/` and also by default requests with an HTTP header `jexler` are
 redirected to a `service(httpReq, httpResp)` method in the jexler indicated
 by the header value. How to get the jexler ID from the request is freely
@@ -701,7 +707,7 @@ Of course, the generic servlet may also be used to serve a web GUI, with a
 configurable error page and at a location independent of the running jexler
 webapp.
 
-== Source Code
+## source code
 
 The source code is at GitLab: https://github.com/jexler/jexler
 
@@ -743,7 +749,7 @@ jexler in a constructor or similar to those classes.
 You can also use `JexlerContainer.getLogger()` to get the logger of the
 JexlerContainer class.
 
-=== Meta Config
+### meta config
 
 The first line of a jexler script must start with `// Jexler {`
 (with arbitrary whitespace before and in between, case insensitive)
@@ -751,17 +757,15 @@ and may contain a Groovy config (which the Groovy `ConfigSlurper can
 parse) with string keys and values of any type, the so called
 *meta config*, for example
 
-[source,groovy]
-----
+```groovy
 // Jexler { autostart = true; whatever = 'my words' }
-----
+```
 
 or
 
-[source,groovy]
-----
+```groovy
 // jexler {}
-----
+```
 
 The meta config is evaluated before running the jexler script,
 i.e. none of the variables listed above are available for that map.
@@ -774,20 +778,20 @@ Adding more items typically makes no sense as long as the source of
 the jexler webapp or core itself is not modified, and could be useful
 if you use the jexler core library in a different context.
 
-=== Distribution
+### distribution
 
-* The jexler-core JAR is at https://search.maven.org/#search%7Cga%7C1%7Cjexler-core[Maven Central]
-* The jexler webapp is at https://sourceforge.net/projects/jexler/[Sourceforge] (see "Files" tab)
-* The website https://grengine.ch/jexler/[grengine.ch/jexler] hosts
-  https://grengine.ch/jexler/groovydoc/[Groovydoc],
-  https://grengine.ch/jexler/jacoco/[JaCoCo]
-  and this https://grengine.ch/jexler/guide/[guide]
+* The jexler-core JAR is at [Maven Central](https://search.maven.org/#search%7Cga%7C1%7Cjexler-core)
+* The jexler webapp is at [Sourceforge](https://sourceforge.net/projects/jexler/) (see "Files" tab)
+* The website [grengine.ch/jexler](https://grengine.ch/jexler/) hosts
+  [Groovydoc](https://grengine.ch/jexler/groovydoc/),
+  [JaCoCo](https://grengine.ch/jexler/jacoco/)
+  and this [guide](https://grengine.ch/jexler/guide/)
 
-== Use Cases
+## use cases
 
-=== Automatic Builds (jexler itself and httest Binaries)
+## automatic builds (jexler itself and httest binaries)
 
-In 2013, I have used jexler to make nightly builds of jexler on four different
+In 2013, I used jexler to make nightly builds of jexler on four different
 platforms: Mac, Windows and Debian Linux 32 bit and 64 bit. This included roughly
 checking out the source from git, running the build and sending a mail with
 the result if not OK. On each of the four platforms, there was an independent
@@ -814,14 +818,14 @@ a combination of cygwin and Visual Studio was used, so that most parts of the bu
 could be shared as bash scripts across all four platforms, but that's already
 a different story...
 
-=== Checks and Cleanups
+### checks and cleanups
 
-At work I continue to use it since 2013 for various minor maintenance things,
+At work, I continue to use it since 2013 for various minor maintenance things,
 e.g. for checking if certain nightly builds have really run or for warning
 when disk space is getting low resp. cleaning up right away in that case,
 and for a few more things, including a few simple web GUIs.
 
-=== More
+### more
 
 I am curious whether and for what purposes jexler might be used, but would also not be angry
 if practically nobody uses it, it was fun to write jexler and I personally like it, both
@@ -832,7 +836,7 @@ you could also imagine to write a web server with jexlers as handlers or similar
 
 Keep me updated at mailto:jexlerx@artecat.ch[jexler@artecat.ch].
 
-== Roadmap
+## roadmap
 
 Well, there is none, except to keep jexler really small and to keep the quality high. :)
 
@@ -849,21 +853,7 @@ Or to put it a bit more poetically, to me jexler is an island,
 things may flow freely around it, but jexler itself is unlikely
 to change much.
 
-Copyright &copy; 2012-now Jex Jexler (Alain Stalder) +
+Copyright &copy; 2012-now by Alain Stalder (originally as "Jex Jexler").\
 https://grengine.ch/jexler/
 
 Note also that the jexler logo with the bat is my own creation (*2010).
-
-== License
-
-Licensed under the Apache License, Version 2.0 (the "License"); +
-you may not use this file except in compliance with the License. +
-You may obtain a copy of the License at +
-
-https://www.apache.org/licenses/LICENSE-2.0 +
-
-Unless required by applicable law or agreed to in writing, software +
-distributed under the License is distributed on an "AS IS" BASIS, +
-WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. +
-See the License for the specific language governing permissions and +
-limitations under the License.

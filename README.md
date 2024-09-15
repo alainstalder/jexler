@@ -8,7 +8,7 @@ of their choice - great for prototyping and useful for automating.
 
 Comes as a core library (JAR) plus a web GUI (WAR).
 
-* Groovy (Java VM 8 or later), Gradle, Apache License
+* Groovy (Java VM 8 or later), Gradle, Apache 2.0 License
 * Web GUI: Groovy, Servlet 2.5
 * Unit tests written with [Spock](https://code.google.com/p/spock/)
 
@@ -30,7 +30,7 @@ Comes as a core library (JAR) plus a web GUI (WAR).
 * jexler-core (JAR): [Maven Central](https://search.maven.org/#search%7Cga%7C1%7Cjexler-core)
 * jexler (WAR): [Sourceforge](https://sourceforge.net/projects/jexler/)
 * Groovydoc (jexler-core): [grengine.ch/jexler/groovydoc/](https://www.grengine.ch/jexler/groovydoc/)
-* Users' Guide: [grengine.ch/jexler/guide/](https://www.grengine.ch/jexler/guide/)
+* Users' Guide: [guide.md](guide.md)
 
 ## Screenshot
 
