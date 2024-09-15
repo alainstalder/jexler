@@ -14,7 +14,8 @@ Comes as a core library (JAR) plus a web GUI (WAR).
 
 ## Build
 
-* `./gradlew clean build`
+* Build with only fast unit tests: `./gradlew clean build`
+* Build with also slow unit tests: `./gradlew clean slowTests`
 
 ## Try web GUI
 

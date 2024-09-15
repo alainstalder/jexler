@@ -16,11 +16,10 @@
 
 package ch.grengine.jexler.war
 
-import groovy.transform.CompileStatic
 import org.eclipse.jetty.server.Server
 import org.eclipse.jetty.webapp.Configuration
 import org.eclipse.jetty.webapp.WebAppContext
-import org.junit.jupiter.api.Test
+import spock.lang.Specification
 import spock.lang.Tag
 
 /**
@@ -29,14 +28,15 @@ import spock.lang.Tag
  * @author Alain Stalder
  */
 @Tag("demo")
-@CompileStatic
-class JexlerJettyTest {
+//@CompileStatic
+class JexlerJettyTest extends Specification {
 
-    @Test
-    void demo() throws Exception {
+    def 'DEMO Jexler in Jetty'() {
 
         // Embedded Jetty with JSP support
         // See https://examples.javacodegeeks.com/enterprise-java/jetty/jetty-jsp-example/
+
+        given:
 
         System.setProperty('groovy.grape.report.downloads', 'true')
 
@@ -62,6 +62,8 @@ class JexlerJettyTest {
         classList.addBefore("org.eclipse.jetty.webapp.JettyWebXmlConfiguration",
                 "org.eclipse.jetty.annotations.AnnotationConfiguration")
 
+        when:
+
         // Set handler and start server
         server.handler = context
         server.start()
@@ -73,6 +75,10 @@ class JexlerJettyTest {
         println('***************************************************************')
         
         server.join()
+
+        then:
+
+        true
     }
 
 }

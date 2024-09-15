@@ -102,7 +102,7 @@ If you want to try it out and play with jexler immediately:
 
 * Get the jexler source from GitHub: https://github.com/alainstalder/jexler
 * Install the Java 8 JDK (or later) and Gradle
-* `gradle demo`
+* `./gradlew demo`
 * Open http://localhost:9080/ in a web browser
 * See the [README](README.md) at GitHub for alternatives...
 
@@ -713,15 +713,13 @@ The source code is at GitLab: https://github.com/alainstalder/jexler
 
 See there for instructions how to build.
 
-The code is a Gradle project that contains two Java subprojects:
+The code is a Gradle project that builds the jexler web GUI,
+a simple webapp (WAR) with a single JSP.
 
-* *jexler-core*: The core jexler library (JAR) which contains also all services and tools.
-* *jexler*: The jexler web GUI, a simple webapp (WAR) with a single JSP.
+Unit tests are written with [Spock](https://code.google.com/p/spock/),
+the fascinating (pun!) Groovy test framework.
 
-Unit tests are written with https://code.google.com/p/spock/[Spock],
-the fascinating Groovy test framework.
-
-The jexler webapp is very simple and contains a demo unit test that starts it in a Jetty embedded web server.
+The jexler webapp is very simple and there is a demo unit test that starts it in a Jetty embedded web server.
 
 The following packages are automatically imported:
 
