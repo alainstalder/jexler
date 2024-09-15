@@ -34,4 +34,4 @@ Comes as a core library (JAR) plus a web GUI (WAR).
 
 ## Screenshot
 
-[![image](https://grengine.ch/jexler/guide/jexler-gui.jpg)](https://grengine.ch/jexler/guide/jexler-gui.jpg)
+[![image](https://raw.githubusercontent.com/alainstalder/jexler/master/guide/jexler-gui.jpg)](https://raw.githubusercontent.com/alainstalder/jexler/master/guide/jexler-gui.jpg)
