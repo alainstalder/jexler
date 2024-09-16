@@ -6,7 +6,7 @@
 
 * Packages back to `ch.grengine.jexler.*`.
 * No longer a JAR release of the core classes, just the WAR is released\
-  (core API unchanged, Groovydoc and JaCoCo code on website updated).
+  (core API unchanged, Groovydoc+JaCoCo on website updated).
 
 ### 4.0.2 (2023-02-26)
 
