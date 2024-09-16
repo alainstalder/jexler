@@ -2,9 +2,12 @@
 
 # jexler releases
 
-### 4.0.3 (20XX-YY-ZZ)
+### 4.1.0 (20XX-YY-ZZ)
 
-* Changed packages to `ch.grengine.jexler.*`.
+* Packages back to `ch.grengine.jexler.*`.
+* No longer a JAR release of the core classes, just the WAR is released.
+* No plans to change the API of the core classes or unit tests;
+  Groovydoc and JaCoCo code coverage on the website are up-to-date.
 
 ### 4.0.2 (2023-02-26)
 

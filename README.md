@@ -27,8 +27,9 @@ Comes as a core library (JAR) plus a web GUI (WAR).
 ## Resources
 
 * Website: [grengine.ch/jexler](https://grengine.ch/jexler/)
-* jexler (WAR): [Sourceforge](https://sourceforge.net/projects/jexler/)
 * Users' Guide: [guide.md](guide.md)
+* Groovydoc: [grengine.ch/jexler/groovydoc/](https://www.grengine.ch/jexler/groovydoc/)
+* jexler (WAR): [Sourceforge](https://sourceforge.net/projects/jexler/)
 
 ## Screenshot
 

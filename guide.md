@@ -775,10 +775,15 @@ if you use the jexler core library in a different context.
 
 ### distribution
 
-* The jexler-core JAR is at [Maven Central](https://search.maven.org/#search%7Cga%7C1%7Cjexler-core)
-* The jexler webapp is at [Sourceforge](https://sourceforge.net/projects/jexler/) (see "Files" tab)
+* The jexler webapp is at [TODO](https://TODO).
 * The website [grengine.ch/jexler](https://grengine.ch/jexler/) hosts
-  this [guide](https://grengine.ch/jexler/guide/)
+  [Groovydoc](https://grengine.ch/jexler/groovydoc/)
+  of the jexler-core classes and
+  [JaCoCo](https://grengine.ch/jexler/jacoco/)
+  code coverage of the same classes.
+* As of 2024 there is no longer a JAR release of the
+  jexler-core classes to Maven Central,
+  but just tell me if/when there would be any interest…
 
 ## use cases
 
