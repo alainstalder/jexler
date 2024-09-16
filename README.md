@@ -6,7 +6,7 @@ Jexler is a simple relaxed Groovy framework for starting/stopping
 Groovy scripts as services and enabling them to react to events
 of their choice - great for prototyping and useful for automating.
 
-Comes as a core library (JAR) plus a web GUI (WAR).
+Contains a core library plus a web GUI (WAR).
 
 * Groovy (Java VM 8 or later), Gradle, Apache 2.0 License
 * Web GUI: Groovy, Servlet 2.5
@@ -29,7 +29,8 @@ Comes as a core library (JAR) plus a web GUI (WAR).
 * Website: [grengine.ch/jexler](https://grengine.ch/jexler/)
 * Users' Guide: [guide.md](guide.md)
 * Groovydoc: [grengine.ch/jexler/groovydoc/](https://www.grengine.ch/jexler/groovydoc/)
-* jexler (WAR): [Sourceforge](https://sourceforge.net/projects/jexler/)
+* JaCoCo: [grengine.ch/jexler/jacoco/](https://www.grengine.ch/jexler/jacoco/)
+* jexler (WAR): [TODO](https://TODO)
 
 ## Screenshot
 
