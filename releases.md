@@ -5,7 +5,7 @@
 ### 4.1.0 (20XX-YY-ZZ)
 
 * Groovy 4.0.22, Grengine 3.1.0 (works also with Groovy 2 and 3).
-* Packages back to `ch.grengine.jexler.*`.
+* Packages renamed to `ch.grengine.jexler.*`.
 * No longer JAR release of core classes, just WAR is released
   (core API unchanged, Groovydoc+JaCoCo on website updated).
 
