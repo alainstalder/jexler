@@ -30,6 +30,7 @@ Contains a core library plus a web GUI (WAR).
 * Users' Guide: [guide.md](guide.md)
 * Groovydoc: [grengine.ch/jexler/groovydoc/](https://www.grengine.ch/jexler/groovydoc/)
 * JaCoCo: [grengine.ch/jexler/jacoco/](https://www.grengine.ch/jexler/jacoco/)
+* Release Notes: [releases.md](releases.md)
 * jexler (WAR): [TODO](https://TODO)
 
 ## Screenshot
