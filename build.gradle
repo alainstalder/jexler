@@ -8,10 +8,12 @@ plugins {
 java {
   toolchain {
     languageVersion = JavaLanguageVersion.of(8)
+    vendor = JvmVendorSpec.ADOPTIUM // Temurin
+    implementation = JvmImplementation.VENDOR_SPECIFIC
   }
 }
 
-version = '4.0.3-SNAPSHOT' // IMPORTANT: keep in sync with version in JexlerContextListener
+version = '4.1.0-SNAPSHOT' // IMPORTANT: keep in sync with version in JexlerContextListener
 
 //project.group = 'ch.grengine.jexler'
 
@@ -31,6 +33,7 @@ ext {
   groovyVersion=groovy4Version
   spockVersion=spock4Version
 
+  //grengineVersion='3.1.0-SNAPSHOT'
   grengineVersion='3.0.2'
 
   ivyVersion='2.5.2'
@@ -39,6 +42,7 @@ ext {
   quartzVersion='2.3.2'
 
   junitVersion='5.11.0'
+  junitPlatformVersion='1.11.0'
 }
 
 war {
@@ -69,7 +73,7 @@ dependencies {
   // Unit tests
   testImplementation"org.spockframework:spock-core:$spockVersion"
   testImplementation "org.junit.jupiter:junit-jupiter-api:$junitVersion"
-  //testImplementation "junit:junit:$junitVersion"
+  testRuntimeOnly "org.junit.platform:junit-platform-launcher:$junitPlatformVersion"
 
   testRuntimeOnly 'javax.servlet:jstl:1.2'
   testRuntimeOnly files('src/main/resources')
@@ -91,6 +95,9 @@ test {
 }
 
 task slowTests(type: Test, dependsOn: 'test') {
+  testClassesDirs = testing.suites.test.sources.output.classesDirs
+  classpath = testing.suites.test.sources.runtimeClasspath
+
   //testLogging.showStandardStreams = true
   useJUnitPlatform {
     includeTags "slow"
@@ -98,6 +105,9 @@ task slowTests(type: Test, dependsOn: 'test') {
 }
 
 task demo(type: Test) {
+  testClassesDirs = testing.suites.test.sources.output.classesDirs
+  classpath = testing.suites.test.sources.runtimeClasspath
+
   testLogging.showStandardStreams = true
   useJUnitPlatform {
     includeTags "demo"
