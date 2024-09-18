@@ -1,0 +1,13 @@
+<ivysettings>
+  <settings defaultResolver="downloadGrapes"/>
+  <resolvers>
+    <chain name="downloadGrapes" returnFirst="true">
+      <filesystem name="cachedGrapes">
+        <ivy pattern="/jexler/grapes/[organisation]/[module]/ivy-[revision].xml"/>
+        <artifact pattern="/jexler/grapes/[organisation]/[module]/[type]s/[artifact]-[revision](-[classifier]).[ext]"/>
+      </filesystem>
+      <ibiblio name="jcenter" root="https://jcenter.bintray.com/" m2compatible="true"/>
+      <ibiblio name="ibiblio" m2compatible="true"/>
+    </chain>
+  </resolvers>
+</ivysettings>
