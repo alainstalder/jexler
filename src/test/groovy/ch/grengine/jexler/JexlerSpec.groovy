@@ -16,7 +16,7 @@
 
 package ch.grengine.jexler
 
-import ch.artecat.grengine.except.CompileException
+import ch.grengine.except.CompileException
 import ch.grengine.jexler.service.MockEvent
 import ch.grengine.jexler.service.MockService
 import ch.grengine.jexler.service.ServiceBase

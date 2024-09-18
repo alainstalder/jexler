@@ -38,8 +38,8 @@ ext {
   groovyVersion=groovy4Version
   spockVersion=spock4Version
 
-  //grengineVersion='3.1.0-SNAPSHOT'
-  grengineVersion='3.0.2'
+  grengineVersion='3.1.0-SNAPSHOT'
+  //grengineVersion='3.0.2'
 
   ivyVersion='2.5.2'
   slf4jVersion='1.7.36'
@@ -58,7 +58,7 @@ war {
 
 dependencies {
   implementation "org.apache.groovy:groovy:$groovyVersion"
-  implementation("ch.artecat.grengine:grengine:$grengineVersion") {
+  implementation("ch.grengine:grengine:$grengineVersion") {
     exclude group: 'org.apache.groovy', module: 'groovy'
   }
   implementation "org.apache.ivy:ivy:$ivyVersion"

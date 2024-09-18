@@ -17,7 +17,7 @@
 package ch.grengine.jexler
 
 
-import ch.artecat.grengine.Grengine
+import ch.grengine.Grengine
 import ch.grengine.jexler.service.Event
 import ch.grengine.jexler.service.Service
 import ch.grengine.jexler.service.ServiceGroup

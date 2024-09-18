@@ -16,13 +16,13 @@
 
 package ch.grengine.jexler
 
-import ch.artecat.grengine.code.CompilerFactory
-import ch.artecat.grengine.code.groovy.DefaultGroovyCompilerFactory
-import ch.artecat.grengine.source.DefaultSourceFactory
-import ch.artecat.grengine.source.Source
-import ch.artecat.grengine.source.SourceFactory
-import ch.artecat.grengine.sources.BaseSources
-import ch.artecat.grengine.sources.DirBasedSources
+import ch.grengine.code.CompilerFactory
+import ch.grengine.code.groovy.DefaultGroovyCompilerFactory
+import ch.grengine.source.DefaultSourceFactory
+import ch.grengine.source.Source
+import ch.grengine.source.SourceFactory
+import ch.grengine.sources.BaseSources
+import ch.grengine.sources.DirBasedSources
 import groovy.transform.CompileStatic
 
 /**
@@ -103,7 +103,7 @@ class JexlerContainerSources extends BaseSources {
 
         /**
          * sets the compiler factory for compiling sources, default
-         * is a new instance of {@link ch.artecat.grengine.code.groovy.DefaultGroovyCompilerFactory}.
+         * is a new instance of {@link DefaultGroovyCompilerFactory}.
          */
         Builder setCompilerFactory(final CompilerFactory compilerFactory) {
             check()
@@ -113,7 +113,7 @@ class JexlerContainerSources extends BaseSources {
 
         /**
          * sets the source factory for creating sources from files, default
-         * is a new instance of {@link ch.artecat.grengine.source.DefaultSourceFactory}.
+         * is a new instance of {@link DefaultSourceFactory}.
          */
         Builder setSourceFactory(final SourceFactory sourceFactory) {
             check()
