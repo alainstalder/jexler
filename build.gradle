@@ -18,7 +18,7 @@ repositories {
   mavenLocal()
 }
 
-version = '4.1.0-SNAPSHOT' // IMPORTANT: keep in sync with version in JexlerContextListener
+version = '4.1.0'
 
 //project.group = 'ch.grengine.jexler'
 
@@ -38,12 +38,11 @@ ext {
   groovyVersion=groovy4Version
   spockVersion=spock4Version
 
-  grengineVersion='3.1.0-SNAPSHOT'
-  //grengineVersion='3.0.2'
+  grengineVersion='3.1.0'
 
   ivyVersion='2.5.2'
   slf4jVersion='1.7.36'
-  logbackVersion='1.3.5'
+  logbackVersion='1.3.14'
   quartzVersion='2.3.2'
 
   junitVersion='5.11.0'
@@ -68,6 +67,8 @@ dependencies {
   // for javax.activation.MimetypesFileTypeMap in Java 11
   implementation 'com.sun.activation:javax.activation:1.2.0'
 
+  runtimeOnly 'javax.servlet:jstl:1.2'
+
   // Embedded Jetty with JSP support
   // See https://examples.javacodegeeks.com/enterprise-java/jetty/jetty-jsp-example/
   providedCompile 'org.eclipse.jetty:jetty-server:9.4.35.v20201120'
@@ -80,7 +81,6 @@ dependencies {
   testImplementation "org.junit.jupiter:junit-jupiter-api:$junitVersion"
   testRuntimeOnly "org.junit.platform:junit-platform-launcher:$junitPlatformVersion"
 
-  testRuntimeOnly 'javax.servlet:jstl:1.2'
   testRuntimeOnly files('src/main/resources')
 }
 

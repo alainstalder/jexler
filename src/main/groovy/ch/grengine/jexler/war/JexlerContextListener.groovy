@@ -41,8 +41,6 @@ class JexlerContextListener implements ServletContextListener    {
 
     private static final Logger LOG = LoggerFactory.getLogger(JexlerContextListener.class)
 
-    public static final String GUI_VERSION = '4.1.0-SNAPSHOT' // IMPORTANT: keep in sync with version in main build.gradle
-
     // Jexler tooltip with versions
     static String jexlerTooltip
 
@@ -69,20 +67,19 @@ class JexlerContextListener implements ServletContextListener    {
     void contextInitialized(final ServletContextEvent event) {
 
         // Get and log versions (no versions in unit tests or IDE)
-        String coreVersion = Jexler.class.package.implementationVersion
-        coreVersion = (coreVersion == null) ? '0.0.0' : coreVersion
+        String jexlerVersion = Jexler.class.package.implementationVersion
+        jexlerVersion = (jexlerVersion == null) ? '0.0.0' : jexlerVersion
         String grengineVersion = Grengine.class.package.implementationVersion
         grengineVersion = (grengineVersion == null) ? '0.0.0' : grengineVersion
         String groovyVersion = GroovyClassLoader.class.package.implementationVersion
         groovyVersion = (groovyVersion == null) ? '0.0.0' : groovyVersion
         final String javaVersion = System.getProperty("java.version")
         LOG.info("Welcome to jexler.")
-        LOG.info("Jexler $GUI_VERSION | jexler-core: $coreVersion | Grengine: $grengineVersion | Groovy: $groovyVersion")
+        LOG.info("Jexler $jexlerVersion | Grengine: $grengineVersion | Groovy: $groovyVersion")
 
         // Assemble jexler tooltip
         jexlerTooltip = """\
-            Jexler $GUI_VERSION
-            • jexler-core: $coreVersion
+            Jexler $jexlerVersion
             • Grengine: $grengineVersion
             • Groovy: $groovyVersion
             • Java: $javaVersion""".stripIndent()

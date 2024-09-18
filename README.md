@@ -15,7 +15,7 @@ Contains a core library plus a web GUI (WAR).
 ## Build
 
 * Build with only fast unit tests: `./gradlew clean build`
-* Build with also slow unit tests: `./gradlew clean slowTests`
+* Build with also slow unit tests: `./gradlew clean build slowTests`
 
 ## Try web GUI
 
