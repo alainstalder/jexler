@@ -20,7 +20,7 @@ Contains a core library plus a web GUI (WAR).
 ## Try web GUI
 
 * Demo: `./gradlew demo`
-* Go to http://localhost:9080/
+* Go to http://localhost:9090/
 * or deploy jexler/build/libs/jexler-*.war
 * or deploy jexler-*.war from sourceforge (link below)
 

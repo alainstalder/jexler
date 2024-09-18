@@ -41,7 +41,7 @@ class JexlerJettyTest extends Specification {
         System.setProperty('groovy.grape.report.downloads', 'true')
 
         // Create server
-        final int port = 9080
+        final int port = 9090
         final Server server = new Server(port)
 
         // Create context

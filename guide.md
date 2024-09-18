@@ -103,7 +103,7 @@ If you want to try it out and play with jexler immediately:
 * Get the jexler source from GitHub: https://github.com/alainstalder/jexler
 * Install the Java 8 JDK (or later) and Gradle
 * `./gradlew demo`
-* Open http://localhost:9080/ in a web browser
+* Open http://localhost:9090/ in a web browser
 * See the [README](README.md) at GitHub for alternatives...
 
 ### dispatching
