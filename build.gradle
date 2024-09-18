@@ -13,6 +13,11 @@ java {
   }
 }
 
+repositories {
+  mavenCentral()
+  mavenLocal()
+}
+
 version = '4.1.0-SNAPSHOT' // IMPORTANT: keep in sync with version in JexlerContextListener
 
 //project.group = 'ch.grengine.jexler'
