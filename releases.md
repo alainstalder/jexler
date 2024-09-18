@@ -2,7 +2,7 @@
 
 # jexler releases
 
-### 4.1.0 (20XX-YY-ZZ)
+### 4.1.0 (2024-09-18)
 
 * Groovy 4.0.22, Grengine 3.1.0 (works also with Groovy 2 and 3).
 * Packages renamed to `ch.grengine.jexler.*`.
