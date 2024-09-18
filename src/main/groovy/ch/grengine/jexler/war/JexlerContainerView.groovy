@@ -272,7 +272,7 @@ class JexlerContainerView {
     String getWeb() {
         if (jexlerId == '') {
             final String img = "<img src='info.gif' title='Go to User Guide in new tab'>"
-            return "<a href='https://grengine.ch/jexler/guide/' target='_blank'>$img</a>"
+            return "<a href='https://github.com/alainstalder/jexler/blob/master/guide.md' target='_blank'>$img</a>"
         }
         final Script script = jexler.script
         if (script != null && jexler.state.operational) {
