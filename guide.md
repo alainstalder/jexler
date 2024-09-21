@@ -94,7 +94,7 @@ jexler/
   ...
 ```
 
-The first jexlers is busy stopping, the next three are running, the fourth failed
+The first jexler is busy stopping, the next three are running, the fourth failed
 to stop in time, and you could start or stop them in the GUI, or look at the
 log file, edit the scripts, etc.
 
@@ -209,7 +209,7 @@ log.trace(cronEvent.cron)
 
 (Note that `cronEvent.cron` is a Groovy shortcut for `cronEvent.getCron()`.)
 
-Implemented using the Open Source https://www.quartz-scheduler.org[Quartz] library.
+Implemented using the Open Source [Quartz](https://www.quartz-scheduler.org) library.
 
 By default, a Quartz `Scheduler` instance that is shared between all jexlers
 is used (because each scheduler creates a new thread). Alternatively, the scheduler
@@ -226,7 +226,7 @@ Naively, you would configure a cron for every second as `* * * * * *`, but
 for some strange reason (which escapes me), Quartz mandates that one of
 day-of month (position 4) or day-of-week (position 6) must be `?` (but not both).
 
-Don't worry, Jexler handles this for you, normal short cron strings like
+Don't worry, Jexler handles this for you, regular short cron strings like
 "* * * * *" are expanded to a valid quartz cron string like `0 * * * * ?`
 and also for long cron strings like `0 * * * * 1-5` a `?` is automatically
 replaced where needed, like to `0 * * ? * 1-5`.
@@ -276,7 +276,7 @@ The DirWatchEvent class has the following getters:
    can be StandardWatchEventKinds.ENTRY_CREATE,
    .ENTRY_MODIFY or .ENTRY_DELETE.
 
-Implemented using a Java 7 WatchService (and Quartz).
+Implemented using a Java 7 `WatchService` (and Quartz).
 
 ### more services
 
@@ -467,7 +467,7 @@ there are no issues and a red round icon can be clicked to view the issue(s).
 *Issues* are what jexler usually creates when something exceptionally happens that might
 require intervention by an administrator to get things running smoothly again.
 
-Jexler uses https://logback.qos.ch[logback] for logging, by default
+Jexler uses [logback](https://logback.qos.ch) for logging, by default
 (see WEB-INF/classes/logback.xml) the jexler webapp logs to `${catalina.base}/logs/jexler.log`
 (with daily log rotation). If you change that location, the GUI should still automatically
 find the log file, unless you do something more fancy, like splitting up logging into several files.
@@ -531,7 +531,7 @@ After saving a _utility source_, the web GUI tries to update the container
 of all utility sources, i.e. compile to it (actually, this is largely
 handled by Grengine automatically). If this fails. an issue is reported
 for the container. Note that running jexlers are not affected by this.
-You can even stop and restart them and they will see the last known good
+You can even stop and restart them, and they will see the last known good
 state of the container (which is again a Grengine feature).
 
 ### issues
@@ -709,7 +709,7 @@ webapp.
 
 ## source code
 
-The source code is at GitLab: https://github.com/alainstalder/jexler
+The source code is at GitHub: https://github.com/alainstalder/jexler
 
 See there for instructions how to build.
 
@@ -747,9 +747,9 @@ JexlerContainer class.
 ### meta config
 
 The first line of a jexler script must start with `// Jexler {`
-(with arbitrary whitespace before and in between, case insensitive)
+(with arbitrary whitespace before and in between, case-insensitive)
 and may contain a Groovy config (which the Groovy `ConfigSlurper can
-parse) with string keys and values of any type, the so called
+parse) with string keys and values of any type, the so-called
 *meta config*, for example
 
 ```groovy
@@ -854,4 +854,4 @@ to change much.
 Copyright &copy; 2013-now by Alain Stalder (originally as "Jex Jexler").\
 https://grengine.ch/jexler/
 
-Note also that the jexler logo with the bat is my own creation (*2010).
+Finally, note that the jexler logo with the bat is my own creation (*2010).
