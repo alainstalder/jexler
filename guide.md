@@ -23,7 +23,7 @@ services.add(new CronService(jexler, 'every-minute').setCron('* * * * *'))
 services.start()
 
 while (true) {
-  event = events.take();
+  event = events.take()
   if (event instanceof CronEvent) {
     log.info('hello')
   } else if (event instanceof StopEvent) {
@@ -48,7 +48,7 @@ services.add(new CronService(jexler, 'every-15-seconds').setCron('*/15 * * * * *
 services.start()
 
 while (true) {
-  event = events.take();
+  event = events.take()
   if (event instanceof CronEvent) {
     new SimpleEmail().with {
       setFrom 'astalder@span.ch'
@@ -241,7 +241,7 @@ services.add(new DirWatchService(jexler, 'watch-jexler-dir'))
 services.start()
 
 while (true) {
-  event = events.take();
+  event = events.take()
   if (event instanceof DirWatchEvent) {
     log.trace("Got file change: ${event.kind} '${event.file.name}'")
   } else if (event instanceof StopEvent) {
@@ -409,7 +409,7 @@ Subclass the StringObfuscatorTool class in Groovy (or Java):
 
 ```groovy
 class MyObfuscatorTool extends tool.ch.grengine.jexler.StringObfuscatorTool {
-  public MyObfuscatorTool() {
+  MyObfuscatorTool() {
     setParameters("00--my-AES-128-secret-key-hex-00", "00--my-AES-128-secret-iv-hex--00",
       "AES", "AES/CBC/PKCS5Padding")
   }
@@ -716,8 +716,8 @@ See there for instructions how to build.
 The code is a Gradle project that builds the jexler web GUI,
 a simple webapp (WAR) with a single JSP.
 
-Unit tests are written with [Spock](https://code.google.com/p/spock/),
-the fascinating (pun!) Groovy test framework.
+Unit tests are written with Spock,
+the fascinating (pun!) Groovy unit test framework.
 
 The jexler webapp is very simple and there is a demo unit test that starts it in a Jetty embedded web server.
 

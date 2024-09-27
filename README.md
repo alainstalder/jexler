@@ -10,7 +10,7 @@ Contains a core library plus a web GUI (WAR).
 
 * Groovy (Java VM 8 or later), Gradle, Apache 2.0 License
 * Web GUI: Groovy, Servlet 2.5
-* Unit tests written with [Spock](https://code.google.com/p/spock/)
+* Spock unit tests
 
 ## Build
 
