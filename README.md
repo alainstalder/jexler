@@ -12,6 +12,9 @@ Contains a core library plus a web GUI (WAR).
 * Web GUI: Groovy, Servlet 2.5
 * Spock unit tests
 
+(GitHub lists JavaScript first because of the included
+[CodeMirror](https://codemirror.net) code editor.)
+
 ## Build
 
 * Build with only fast unit tests: `./gradlew clean build`
