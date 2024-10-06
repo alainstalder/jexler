@@ -88,6 +88,20 @@ repositories {
   mavenCentral()
 }
 
+// Using CodeMirror from zip file so that GitHub
+// does not label jexler as mainly JavaScript/HTML
+tasks.register('removeCmDir', Delete) {
+  delete layout.projectDirectory.dir('src/main/webapp/cm')
+}
+tasks.register('unzipCmDir', Copy) {
+  dependsOn(removeCmDir)
+  from zipTree(layout.projectDirectory.dir('src/main/cm/cm.zip'))
+  into layout.projectDirectory.dir('src/main/webapp')
+}
+compileGroovy {
+  dependsOn(removeCmDir, unzipCmDir)
+}
+
 test {
   //testLogging.showStandardStreams = true
   useJUnitPlatform {
@@ -99,7 +113,8 @@ test {
   }*/
 }
 
-task slowTests(type: Test, dependsOn: 'test') {
+tasks.register('slowTests', Test) {
+  dependsOn 'test'
   testClassesDirs = testing.suites.test.sources.output.classesDirs
   classpath = testing.suites.test.sources.runtimeClasspath
 
@@ -109,7 +124,7 @@ task slowTests(type: Test, dependsOn: 'test') {
   }
 }
 
-task demo(type: Test) {
+tasks.register('demo', Test) {
   testClassesDirs = testing.suites.test.sources.output.classesDirs
   classpath = testing.suites.test.sources.runtimeClasspath
 

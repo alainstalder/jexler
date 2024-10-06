@@ -9,8 +9,8 @@ of their choice - great for prototyping and useful for automating.
 Contains a core library plus a web GUI (WAR).
 
 * Groovy (Java VM 8 or later), Gradle, Apache 2.0 License
-* Web GUI: Groovy, Servlet 2.5
-* Spock unit tests
+* Web GUI: Groovy, Servlet 2.5, [CodeMirror](https://codemirror.net)
+* [Spock](https://spockframework.org) unit tests
 
 (GitHub lists JavaScript/HTML first because of the included
 [CodeMirror](https://codemirror.net) code editor…)
