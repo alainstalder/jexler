@@ -783,7 +783,7 @@ if you use the jexler core library in a different context.
 
 ## use cases
 
-## automatic builds (jexler itself and httest binaries)
+### automatic builds (jexler itself and httest binaries)
 
 In 2013, I used jexler to make nightly builds of jexler on four different
 platforms: Mac, Windows and Debian Linux 32 bit and 64 bit. This included roughly
