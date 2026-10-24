@@ -1,9 +1,9 @@
-[![image](jexler.jpg)](https://grengine.ch/jexler/)
+[![image](jexler.jpg)](https://github.com/alainstalder/jexler)
 
 # jexler user guide
 
-[Jexler](https://grengine.ch/jexler/) is a simple relaxed
-[Groovy](https://www.groovy-lang.org) framework for starting/stopping
+Jexler is a simple relaxed
+[Groovy](https://groovy-lang.org) framework for starting/stopping
 Groovy scripts as services and enabling them to react to events
 of their choice - great for prototyping and useful for automating.
 
@@ -101,7 +101,7 @@ log file, edit the scripts, etc.
 If you want to try it out and play with jexler immediately:
 
 * Get the jexler source from GitHub: https://github.com/alainstalder/jexler
-* Install the Java 8 JDK (or later) and Gradle
+* Install the Java 8 JDK (or later)
 * `./gradlew demo`
 * Open http://localhost:9090/ in a web browser
 * See the [README](README.md) at GitHub for alternatives...
@@ -775,15 +775,11 @@ if you use the jexler core library in a different context.
 
 ### distribution
 
-* The jexler webapp is at [TODO](https://TODO).
-* The website [grengine.ch/jexler](https://grengine.ch/jexler/) hosts
-  [Groovydoc](https://grengine.ch/jexler/groovydoc/)
-  of the jexler-core classes and
-  [JaCoCo](https://grengine.ch/jexler/jacoco/)
-  code coverage of the same classes.
-* As of 2024 there is no longer a JAR release of the
-  jexler-core classes to Maven Central,
-  but just tell me if/when there would be any interest…
+* [Webapp (Web GUI WAR)](https://github.com/alainstalder/jexler/releases)
+  • [Docker Image](https://hub.docker.com/r/jexler/jexler)
+* Since jexler 4.1.0, the `jexler-core` classes are no longer released
+  as a JAR to Maven Central.
+* Currently, no new releases are planned, but if desired, I could do that… 😀
 
 ## use cases
 
@@ -851,7 +847,6 @@ Or to put it a bit more poetically, to me jexler is an island,
 things may flow freely around it, but jexler itself is unlikely
 to change much.
 
-Copyright &copy; 2013-now by Alain Stalder (originally as "Jex Jexler").\
-https://grengine.ch/jexler/
+Copyright &copy; 2013-now by Alain Stalder (originally as "Jex Jexler").
 
 Finally, note that the jexler logo with the bat is my own creation (*2010).
