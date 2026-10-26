@@ -2,7 +2,7 @@
 
 # jexler releases
 
-Currently, no new releases are planned, but if desired, I could do that… 😀
+Currently, no new releases are planned, never say never… 😀
 
 **4.1.0** (2024-09-18)
 
@@ -288,3 +288,21 @@ Currently, no new releases are planned, but if desired, I could do that… 😀
 
 * Basic framework, unit tests, some handlers, command line and web app.
 * Please ignore - about to be refactored and simplified completely.
+
+**Initial git commit** (2012-12-26)
+
+**"Birth"** (not sure of what exactly - 2012-03-20 at 06:15 AM CET)
+
+**Oldest jexler code found** (2010-03-26 - source file dates)
+
+* Along with this description:
+  _Monitors events using various plugins, determines actions from
+  these events  using JEXL expressions (Apache Commons) - or any
+  other scripting language supported by the Java Scripting API -
+  and executes these actions using again various plugins._
+* As far as I remember, I tried JRuby and Jython in addition to
+  JEXL, and then also Groovy, and discovered how cool, ehm groovy,
+  Groovy is in a Java VM (but likely only tried things in 2012);
+  I kept the name "jexler" for obvious reasons.
+* All preserved source files have the same time (09:39 AM CET),
+  which  suggests that things maybe started even a bit earlier...
