@@ -305,4 +305,10 @@ Currently, no new releases are planned, never say never… 😀
   Groovy is in a Java VM (but likely only tried things in 2012);
   I kept the name "jexler" for obvious reasons.
 * All preserved source files have the same time (09:39 AM CET),
-  which  suggests that things maybe started even a bit earlier...
+  which  suggests that first code emerged even a bit earlier…
+
+**jexler logo (your friendly bat)** (28 Feb 2010 around 08:50 CET)
+
+* With comment "So, 28.2.2010 ca. 8:50 (AM) , cool :)"
+
+[![image](jexler.jpg)](https://github.com/alainstalder/jexler)
