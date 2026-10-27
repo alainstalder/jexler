@@ -847,6 +847,6 @@ Or to put it a bit more poetically, to me jexler is an island,
 things may flow freely around it, but jexler itself is unlikely
 to change much.
 
-Copyright &copy; 2013-now by Alain Stalder (originally as "Jex Jexler").
+Copyright &copy; 2010-now by Alain Stalder (originally as "Jex Jexler", jexler.net).
 
 Finally, note that the jexler logo with the bat is my own creation (*2010).

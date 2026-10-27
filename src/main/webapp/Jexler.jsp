@@ -1,5 +1,5 @@
 <%--
-Copyright 2013-now by Alain Stalder. Made in Switzerland.
+Copyright 2010-now by Alain Stalder ("Jex Jexler").
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
