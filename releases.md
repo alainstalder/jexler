@@ -320,7 +320,7 @@ Currently, no new releases are planned, never say never… 😀
 * All preserved source files have the same time (09:39 AM CET),
   which  suggests that first code emerged even a bit earlier…
 
-**jexler logo (your friendly bat)** (28 Feb 2010 around 08:50 CET)
+**jexler logo** (28 Feb 2010 around 08:50 CET)
 
 * With comment "So, 28.2.2010 ca. 8:50 (AM) , cool :)"
 
