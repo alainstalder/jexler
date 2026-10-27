@@ -293,6 +293,19 @@ Currently, no new releases are planned, never say never… 😀
 
 **"Birth"** (not sure of what exactly - 2012-03-20 at 06:15 AM CET)
 
+* Maybe it was the following sketch (file dated following morning 06:51):\
+  \
+  **design**\
+  \
+  input sensoren => legen sensor objekte in sensor liste ab\
+  script* handler => nehmen sensor objekte aus sensor liste, legen actor objekte in actor liste ab\
+  output actoren => nehmen actor objekte aus actor liste\
+  \
+  \* ruby (und andere)\
+  &nbsp;
+
+* That would have (unknowingly) been something that became generally popular at the time.
+
 **Oldest jexler code found** (2010-03-26 - source file dates)
 
 * Along with this description:
@@ -302,8 +315,8 @@ Currently, no new releases are planned, never say never… 😀
   and executes these actions using again various plugins._
 * As far as I remember, I tried JRuby and Jython in addition to
   JEXL, and then also Groovy, and discovered how cool, ehm groovy,
-  Groovy is in a Java VM (but likely only tried things in 2012);
-  I kept the name "jexler" for obvious reasons.
+  Groovy is in a Java VM (but likely only actually tried out things
+  in 2012); and I kept the name "jexler" for obvious reasons.
 * All preserved source files have the same time (09:39 AM CET),
   which  suggests that first code emerged even a bit earlier…
 
