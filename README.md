@@ -2,9 +2,9 @@
 
 # jexler
 
-    Jexler is a simple relaxed Groovy framework for starting/stopping
-    Groovy scripts as services and enabling them to react to events
-    of their choice - great for prototyping and useful for automating.
+<code>Jexler is a simple relaxed Groovy framework for starting/stopping</code>\
+<code>Groovy scripts as services and enabling them to react to events</code>\
+<code>of their choice - great for prototyping and useful for automating.</code>
 
 * Contains a core library plus a web GUI (WAR).
 * Groovy, JDK 8, [Spock](https://spockframework.org) unit tests,
