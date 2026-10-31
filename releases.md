@@ -2,7 +2,10 @@
 
 # jexler releases
 
-This is vintage software now, no new public releases.
+Jexler is vintage software now, no new public releases.
+
+(Should you ever want to upgrade jexler, note that since
+JDK 20 you would need to handle "zap" differently.)
 
 **4.1.0** (2024-09-18)
 
