@@ -2,7 +2,7 @@
 
 # jexler releases
 
-Currently, no new releases are planned, never say never… 😀
+This is vintage software now, no new public releases.
 
 **4.1.0** (2024-09-18)
 
