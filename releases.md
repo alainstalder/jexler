@@ -2,10 +2,18 @@
 
 # jexler releases
 
-Jexler is vintage software now, no new public releases.
+**Jexler is vintage software now** (2026-10-31)
 
-(Should you ever want to upgrade jexler, note that since
-JDK 20 you would need to handle "zap" differently.)
+* I am not aware of anyone currently using jexler,
+  except me  (and there it is most likely phasing out).
+* **No new public releases are planned.**
+  (Except never say never. 😄)
+* If you ever wanted to create a jexler with newer
+  Groovy/Grengine/JDK/Tomcat/etc. versions, that seems generally
+  **straightforward**, with little to no code changes.
+* The only thing I can see that would have to be handled differently
+  is **"zap"** starting with JDK 20, since `Thread.stop()` is then no
+  longer available and there seems to be no replacement.
 
 **4.1.0** (2024-09-18)
 

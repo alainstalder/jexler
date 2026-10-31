@@ -779,7 +779,8 @@ if you use the jexler core library in a different context.
   • [Docker Image](https://hub.docker.com/r/jexler/jexler)
 * Since jexler 4.1.0, the `jexler-core` classes are no longer released
   as a JAR to Maven Central.
-* Jexler is vintage software now, no new public releases.
+* Jexler is vintage software now,
+  see [release notes](releases.md) for details.
 
 ## use cases
 
