@@ -16,6 +16,7 @@
   • [Docker Image](https://hub.docker.com/r/jexler/jexler)
 * Build: `./gradlew clean build slowTests`
 * Demo: `./gradlew demo` → http://localhost:9090/
-* Jexler is vintage software now.
+* I have no plans to make new jexler releases;
+  this makes jexler vintage software (except "never say never" )
 
 [![image](guide/jexler-gui.jpg)](guide/jexler-gui.jpg)
