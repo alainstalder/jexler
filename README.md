@@ -7,8 +7,9 @@
 <code>of their choice - great for prototyping and useful for automating.</code>
 
 * Contains a core library plus a web GUI (WAR).
-* Groovy/[Grengine](https://grengine.ch/), JDK 8, [Spock](https://spockframework.org) unit tests,
-  Gradle, Apache 2.0 License
+* [Groovy](https://groovy-lang.org)/[Grengine](https://grengine.ch/),
+  JDK 8, [Spock](https://spockframework.org) unit tests,
+  [Gradle](https://gradle.org), [Apache 2.0 License](LICENSE)
 * Web GUI: Groovy, Servlet 2.5, [CodeMirror](https://codemirror.net)
 * [User Guide](guide.md)
   • [Release Notes](releases.md)
@@ -16,7 +17,5 @@
   • [Docker Image](https://hub.docker.com/r/jexler/jexler)
 * Build: `./gradlew clean build slowTests`
 * Demo: `./gradlew demo` → http://localhost:9090/
-* I have no plans to make new jexler releases;
-  this makes jexler vintage software (except "never say never" )
 
 [![image](guide/jexler-gui.jpg)](guide/jexler-gui.jpg)

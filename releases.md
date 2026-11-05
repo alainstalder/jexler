@@ -2,18 +2,18 @@
 
 # jexler releases
 
-I have no plans to make new jexler releases;
-this makes jexler vintage software
-(except "never say never" )...
+Currently I have no plans to make new jexler releases:
+The current docker image is still fine for practically
+all purposes, but I might still do that at a later time
+and/or if somebody would request it…
 
-* I am not aware of anyone currently using jexler,
-  except ~me (and there it is most likely phasing out).
-* If you ever wanted to create a jexler with newer
-  Groovy/Grengine/JDK/Tomcat/etc. versions, that seems generally
-  straightforward, with little to no code changes.
-* The only thing I can see that would have to be handled differently
-  is **"zap"** starting with JDK 20, since `Thread.stop()` is then no
-  longer available and there seems to be no direct replacement.
+The only thing I can see that would have to be handled differently
+when upgrading components is ***"zap"*** with JDK 20+, since
+`Thread.stop()` is then no longer available and there seems to be
+no direct replacement.
+
+Everything else seems straightforward, little more than updating
+dependencies and using a newer docker base image.
 
 **4.1.0** (2024-09-18)
 
