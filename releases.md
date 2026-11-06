@@ -9,11 +9,17 @@ and/or if somebody would request it…
 
 The only thing I can see that would have to be handled differently
 when upgrading components is ***"zap"*** with JDK 20+, since
-`Thread.stop()` is then no longer available and there seems to be
-no direct replacement.
+`Thread.stop()` is then no longer available and using
+`Thread.interrupt()` instead would cover fewer situations.
 
 Everything else seems straightforward, little more than updating
 dependencies and using a newer docker base image.
+
+(At the back of my mind, I am sometimes playing with the idea
+of something a bit similar to jexler (and maybe still called
+so) with Lua plus Lua rocks configured within Lua scripts,
+and maybe just a Docker container without a web UI and instead
+other ways to interface for edit/start/stop/etc.)
 
 **4.1.0** (2024-09-18)
 
