@@ -29,6 +29,7 @@ Well, let me declare jexler vintage software for now.
 * I have not upgraded to JDK 25 because since JDK 20
   `Jexler#zap()` could no longer be fully implemented,
   see the comment in the source code for more details.
+* CodeMirror 5.65.21 (upgraded from 5.39.2).
 
 **4.1.0** (2024-09-18)
 
