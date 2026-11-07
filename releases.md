@@ -6,7 +6,7 @@
 
 I am not sure if more releases would still make sense.
 Besides the fringe issue with `Jexler#zap()`: I am not aware
-of anyone using jexler except me at work (but no longer at
+of anyone using jexler except me someplace (but no longer at
 home), while there it also seems to be naturally phasing out,
 will most likely be replaced with more specialized
 frameworks/services for what it is currently used there.
