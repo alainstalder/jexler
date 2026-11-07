@@ -16,9 +16,10 @@
 
 package ch.grengine.jexler.war
 
+import org.eclipse.jetty.ee11.annotations.AnnotationConfiguration
+import org.eclipse.jetty.ee11.webapp.JspConfiguration
+import org.eclipse.jetty.ee11.webapp.WebAppContext
 import org.eclipse.jetty.server.Server
-import org.eclipse.jetty.webapp.Configuration
-import org.eclipse.jetty.webapp.WebAppContext
 import spock.lang.Specification
 import spock.lang.Tag
 
@@ -33,9 +34,6 @@ class JexlerJettyTest extends Specification {
 
     def 'DEMO Jexler in Jetty'() {
 
-        // Embedded Jetty with JSP support
-        // See https://examples.javacodegeeks.com/enterprise-java/jetty/jetty-jsp-example/
-
         given:
 
         System.setProperty('groovy.grape.report.downloads', 'true')
@@ -46,21 +44,15 @@ class JexlerJettyTest extends Specification {
 
         // Create context
         final WebAppContext context = new WebAppContext()
-        context.resourceBase = './src/main/webapp'
-        context.descriptor = 'WEB-INF/web.xml'
+        context.baseResourceAsString = './src/main/webapp'
         context.contextPath = '/'
         context.parentLoaderPriority = true
 
-        // "3. Including the JSTL jars for the webapp." in context
+        // Scan JSTL jar on the classpath for TLDs
         context.setAttribute('org.eclipse.jetty.server.webapp.ContainerIncludeJarPattern','.*/[^/]*jstl.*\\.jar$')
 
-        // "4. Enabling the Annotation based configuration" in context
-        final Configuration.ClassList classList = Configuration.ClassList.setServerDefault(server)
-        classList.addAfter("org.eclipse.jetty.webapp.FragmentConfiguration",
-                "org.eclipse.jetty.plus.webapp.EnvConfiguration",
-                "org.eclipse.jetty.plus.webapp.PlusConfiguration")
-        classList.addBefore("org.eclipse.jetty.webapp.JettyWebXmlConfiguration",
-                "org.eclipse.jetty.annotations.AnnotationConfiguration")
+        // Enable annotations (needed for JSP initializer) and JSP
+        context.addConfiguration(new AnnotationConfiguration(), new JspConfiguration())
 
         when:
 

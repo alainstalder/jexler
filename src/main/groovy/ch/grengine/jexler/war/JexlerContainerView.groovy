@@ -27,10 +27,9 @@ import groovy.transform.CompileStatic
 import org.slf4j.Logger
 import org.slf4j.LoggerFactory
 
-import javax.activation.MimetypesFileTypeMap
-import javax.servlet.http.HttpServletRequest
-import javax.servlet.http.HttpServletResponse
-import javax.servlet.jsp.PageContext
+import jakarta.servlet.http.HttpServletRequest
+import jakarta.servlet.http.HttpServletResponse
+import jakarta.servlet.jsp.PageContext
 import java.text.SimpleDateFormat
 
 import static ch.grengine.jexler.JexlerUtil.SHUTDOWN_TIMEOUT_MSG
@@ -406,10 +405,12 @@ class JexlerContainerView {
         if (jexler == null) {
             return 'text/plain'
         }
-        final MimetypesFileTypeMap map = new MimetypesFileTypeMap()
-        map.addMimeTypes('text/x-groovy groovy')
-        final String mimeType = map.getContentType(jexler.file)
-        return mimeType
+        final String name = jexler.file.name
+        if (name.endsWith('.groovy')) {
+            return 'text/x-groovy'
+        }
+        final String mimeType = JexlerContextListener.servletContext.getMimeType(name)
+        return mimeType ?: 'application/octet-stream'
     }
 
     // Whether editing scripts is allowed by config or not

@@ -173,7 +173,7 @@ class JexlerContainerSpec extends Specification {
         container.state.off
 
         when:
-        new File(dir, 'Jexler5.groovy').text = "// Jexler { autostart = true }\nwhile(true){}"
+        new File(dir, 'Jexler5.groovy').text = "// Jexler { autostart = true }\nint i = 0\nwhile(true){ i++ }"
         container = new JexlerContainer(dir)
         container.start()
         JexlerUtil.waitForStartup(container, MS_10_SEC)

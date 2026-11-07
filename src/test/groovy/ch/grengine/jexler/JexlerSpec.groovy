@@ -250,7 +250,8 @@ class JexlerSpec extends Specification {
             while (true) {
               event = events.take()
               if (event instanceof MockEvent) {
-                while(true) {}
+                int i = 0
+                while(true) { i++ }
               } else if (event instanceof StopEvent) {
                 return
               }
