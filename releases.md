@@ -3,13 +3,14 @@
 # jexler releases
 
 
-**Future**
+**Future** (2026-11-07)
 
 I am not sure if more releases would still make sense.
 Besides the fringe issue with `Jexler#zap()`: I am not aware
-of anyone using jexler except me at work, while there it seems
-to be phasing out, will most likely be replaced with more
-specialized frameworks/services for what it is used there.
+of anyone using jexler except me at work (but no longer at
+home), while there it also seems to be naturally phasing out,
+will most  likely be replaced with more specialized
+frameworks/services for what it is currently used there.
 
 At the back of my mind, I am sometimes playing with the idea
 of something a bit similar to jexler (and maybe still called so)
