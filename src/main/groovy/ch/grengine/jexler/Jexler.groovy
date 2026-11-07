@@ -279,6 +279,11 @@ class Jexler implements Service, IssueTracker {
                 }
                 if (scriptThread != null) {
                     try {
+                        // starting with JDK 20, this would always throws UnsupportedOperationException,
+                        // and the only resort with more limited functionality would be Thread#interrupt();
+                        // to me it is stupid to completely remove functionality that is useful in many
+                        // cases just because it is not 100% robust in all cases, but read for yourselves...
+                       // https://docs.oracle.com/en/java/javase/25/docs/api/java.base/java/lang/doc-files/threadPrimitiveDeprecation.html
                         scriptThread.stop()
                     } catch (final Throwable tZap) {
                         trackIssue(jexler, 'Failed to stop jexler thread.', tZap)

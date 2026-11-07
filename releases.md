@@ -2,24 +2,21 @@
 
 # jexler releases
 
-Currently I have no plans to make new jexler releases:
-The current docker image is still fine for practically
-all purposes, but I might still do that at a later time
-and/or if somebody would request it…
 
-The only thing I can see that would have to be handled differently
-when upgrading components is ***"zap"*** with JDK 20+, since
-`Thread.stop()` is then no longer available and using
-`Thread.interrupt()` instead would cover fewer situations.
+**Future** (2026-11-07)
 
-Everything else seems straightforward, little more than updating
-dependencies and using a newer docker base image.
+Currently I have no plans to make new jexler releases; the
+current docker image is still fine for practically all purposes.
+The only thing I see that would have to be handled differently
+when upgrading components is `Jexler#zap()` with JDK 20+, see my
+comment in the source, everything else would be straightforward.
+At the back of my mind, I am sometimes playing with the idea
+of something a bit similar to jexler (and maybe still called so)
+with Lua with LuaRocks configured within Lua scripts, and maybe
+something else than a web UI, but so far just a magpie in the sky…
+Well, let me declare jexler vintage software for now.
 
-(At the back of my mind, I am sometimes playing with the idea
-of something a bit similar to jexler (and maybe still called
-so) with Lua plus Lua rocks configured within Lua scripts,
-and maybe just a Docker container without a web UI and instead
-other ways to interface for edit/start/stop/etc.)
+![Powered by Grengine](powered-by-grengine.gif)
 
 **4.1.0** (2024-09-18)
 
