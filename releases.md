@@ -24,7 +24,8 @@ Well, let me declare jexler vintage software for now.
 **5.0.0** (2026-11-07)
 
 * JDK 17.
-* Groovy 6.0.0, Grengine 4.1.1, Jakarta Tomcat (tested with 11).
+* Groovy 6.0.0, Grengine 4.1.1, Jakarta webapp
+  (tested with Tomcat 11).
 * I have not upgraded to JDK 25 because since JDK 20
   `Jexler#zap()` could no longer be fully implemented,
   see the comment on the source code for more details.
