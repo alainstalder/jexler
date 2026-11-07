@@ -8,9 +8,9 @@
 
 * Contains a core library plus a web GUI (WAR).
 * [Groovy](https://groovy-lang.org)/[Grengine](https://grengine.ch/),
-  JDK 8, [Spock](https://spockframework.org) unit tests,
+  JDK 17, [Spock](https://spockframework.org) unit tests,
   [Gradle](https://gradle.org), [Apache 2.0 License](LICENSE)
-* Web GUI: Groovy, Servlet 2.5, [CodeMirror](https://codemirror.net)
+* Web GUI: Groovy, Servlet, [CodeMirror](https://codemirror.net)
 * [User Guide](guide.md)
   • [Release Notes](releases.md)
   • [Webapp](https://github.com/alainstalder/jexler/releases)

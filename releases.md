@@ -3,20 +3,30 @@
 # jexler releases
 
 
-**Future** (2026-11-07)
+**Future**
 
-Currently I have no plans to make new jexler releases; the
-current docker image is still fine for practically all purposes.
-The only thing I see that would have to be handled differently
-when upgrading components is `Jexler#zap()` with JDK 20+, see my
-comment in the source, everything else would be straightforward.
+I am not sure if more releases would still make sense.
+Besides the fringe issue with `Jexler#zap()`: I am not aware
+of anyone using jexler except me at work, while there it seems
+to be phasing out, will most likely be replaced with more
+specialized frameworks/services for what it is used there.
+
 At the back of my mind, I am sometimes playing with the idea
 of something a bit similar to jexler (and maybe still called so)
 with Lua with LuaRocks configured within Lua scripts, and maybe
 something else than a web UI, but so far just a magpie in the sky…
+
 Well, let me declare jexler vintage software for now.
 
 ![Powered by Grengine](powered-by-grengine.gif)
+
+**5.0.0** (2026-11-07)
+
+* JDK 17.
+* Groovy 6.0.0, Grengine 4.1.1, Jakarta Tomcat (tested with 11).
+* I have not upgraded to JDK 25 because since JDK 20
+  `Jexler#zap()` could no longer be fully implemented,
+  see the comment on the source code for more details.
 
 **4.1.0** (2024-09-18)
 
