@@ -101,7 +101,7 @@ log file, edit the scripts, etc.
 If you want to try it out and play with jexler immediately:
 
 * Get the jexler source from GitHub: https://github.com/alainstalder/jexler
-* Install the Java 8 JDK (or later)
+* Install the Java 11 JDK (or later)
 * `./gradlew demo`
 * Open http://localhost:9090/ in a web browser
 * See the [README](README.md) at GitHub for alternatives...
@@ -656,7 +656,7 @@ Default is false for saving and true for deleting.
 HTTP requests sent to the jexler webapp with request parameters
 `cmd=http&jexler=<jexler-id>` are passed to a method `handleHttp(PageContext p)`
 of the corresponding jexler, if found and the jexler is operational.
-The method parameter is a `javax.servlet.jsp.PageContext`, i.e. you can use
+The method parameter is a `jakarta.servlet.jsp.PageContext`, i.e. you can use
 things like `p.request`, `p.request.getParameter('action')`, `p.out`, `p.session`,
 `p.servletContext`, etc. in the handler.
 
