@@ -11,4 +11,4 @@ for DIR in $JEXLER_9090_DIRS; do
   find $DIR -user 9090 -exec chown -h jexler {} \;
 done
 
-su-exec jexler $CATALINA_HOME/bin/catalina.sh run
+exec gosu jexler $CATALINA_HOME/bin/catalina.sh run
