@@ -14,7 +14,8 @@ frameworks/services for what it is currently used there.
 At the back of my mind, I am sometimes playing with the idea
 of something a bit similar to jexler (and maybe still called so)
 with Lua with LuaRocks configured within Lua scripts, and maybe
-something else than a web UI, but so far just a magpie in the sky…
+something else than a web UI, but so far just a
+*magpie in the sky*…
 
 Well, let me declare jexler vintage software for now.
 
