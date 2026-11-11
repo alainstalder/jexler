@@ -28,6 +28,10 @@ November 2026
 
 > _What makes a man a man? A friend of mine once wondered. Is it his origins? The way he comes to life? I don’t think so. It's the choices he makes. Not how he starts things, but how he decides to end them._
 
+PS: I guess “zap” fits the theme :)
+And, of course, since jexler is Apache 2.0 licensed,
+feel free to carry it wherever you fancy!
+
 ![Powered by Grengine](powered-by-grengine.gif)
 
 **5.0.0** (2026-11-07)
