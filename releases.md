@@ -2,13 +2,11 @@
 
 # jexler releases
 
-**Future** (2026-11-07)
-
 I am not sure if more releases would still make sense.
 Besides the fringe issue with `Jexler#zap()`: I am not aware
 of anyone using jexler except me someplace (but no longer at
 home), while there it also seems to be naturally phasing out,
-will most likely be replaced with more specialized
+will most likely be replaced with more specialized open source
 frameworks/services for what it is currently used there.
 
 At the back of my mind, I am sometimes playing with the idea
@@ -17,19 +15,32 @@ with Lua with LuaRocks configured within Lua scripts, and maybe
 something else than a web UI, but so far just a
 *magpie in the sky*…
 
-Well, let me declare jexler vintage software for now.
+Well, let me declare jexler vintage software.*
+
+November 2026
+
+\* I first wrote “… vintage software expect ‘never say never’.“;
+   that “Freudian slip” (‘expect’ instead of ‘except’)
+   made me drop that last part, likely for good.
+   Reminds me also a bit of the following that FBI agent
+   John Myers said in the movie “Hellboy” (which I guess
+   was largely filmed in Prague):
+
+> _What makes a man a man? A friend of mine once wondered. Is it his origins? The way he comes to life? I don’t think so. It's the choices he makes. Not how he starts things, but how he decides to end them._
 
 ![Powered by Grengine](powered-by-grengine.gif)
 
 **5.0.0** (2026-11-07)
 
-* JDK 17.
-* Groovy 6.0.0, Grengine 4.1.1, Jakarta webapp
+* JDK 17, Groovy 6.0.0, Grengine 4.1.1, Jakarta webapp
   (tested with Tomcat 11).
-* I have not upgraded to JDK 25 because since JDK 20
-  `Jexler#zap()` could no longer be fully implemented,
-  see the comment in the source code for more details.
-* CodeMirror 5.65.21 (upgraded from 5.39.2).
+* If you run jexler on JDK 20+ `Jexler#zap()` will fail
+  to stop jexler threads because `Thread#stop()` is then
+  [no longer supported by the JVM](https://docs.oracle.com/en/java/javase/25/docs/api/java.base/java/lang/doc-files/threadPrimitiveDeprecation.html).
+  Luckily jexler scripts are in Groovy and Groovy 6 runs on JDK 17+.
+* The [Docker image](https://hub.docker.com/r/jexler/jexler)
+  5.0.0-1 runs the 5.0.0 WAR with the above Groovy/Grengine versions
+  on Tomcat 11 on JDK 17.
 
 **4.1.0** (2024-09-18)
 
