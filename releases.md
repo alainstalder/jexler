@@ -6,12 +6,18 @@
 
 **5.0.0** (2026-11-07)
 
-* JDK 17, Groovy 6.0.0, Grengine 4.1.1, Jakarta webapp.
-* Docker container 5.0.0-1: JDK 17, Tomcat 11.
+* Webapp: Groovy 6.0.0, Grengine 4.1.1, JDK 17 bytecode,
+  Jakarta webapp.
+* [Docker container 5.0.0-1](https://hub.docker.com/r/jexler/jexler):
+  JDK 17, Tomcat 11.
 * Note that on JVM 20+ `Thread#stop()` is no longer supported
   by the JVM (always throws `UnsupportedOperationException`),
-  hence `Jexler#zap()` no longer has the effect of killing the
+  hence `Jexler#zap()` no longer has the effect of stopping the
   jexler thread.
+  [Oracle's reasoning](https://docs.oracle.com/en/java/javase/25/docs/api/java.base/java/lang/doc-files/threadPrimitiveDeprecation.html)
+  does not fully convince me: Removing functionality that is
+  useful and unproblematic in some situations because it cannot
+  be made to work without problems in all situations seems not ideal.
 
 **4.1.0** (2024-09-18)
 
