@@ -13,11 +13,12 @@
 * Note that on JVM 20+ `Thread#stop()` is no longer supported
   by the JVM (always throws `UnsupportedOperationException`),
   hence `Jexler#zap()` no longer has the effect of stopping the
-  jexler thread.
+  jexler thread, effectively just detaches the thread and adds
+  an issue.
   [Oracle's reasoning](https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/doc-files/threadPrimitiveDeprecation.html)
   does not fully convince me: Removing functionality that is
   useful and unproblematic in some situations because it cannot
-  be made to work without problems in all situations seems not ideal.
+  be used without problems in all situations seems not ideal.
 
 **4.1.0** (2024-09-18)
 
