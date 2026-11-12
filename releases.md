@@ -14,7 +14,7 @@
   by the JVM (always throws `UnsupportedOperationException`),
   hence `Jexler#zap()` no longer has the effect of stopping the
   jexler thread.
-  [Oracle's reasoning](https://docs.oracle.com/en/java/javase/25/docs/api/java.base/java/lang/doc-files/threadPrimitiveDeprecation.html)
+  [Oracle's reasoning](https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/doc-files/threadPrimitiveDeprecation.html)
   does not fully convince me: Removing functionality that is
   useful and unproblematic in some situations because it cannot
   be made to work without problems in all situations seems not ideal.
