@@ -2,6 +2,23 @@
 
 # jexler releases
 
+I am not sure if more releases would still make sense.
+I am not aware of anyone using jexler except me someplace
+(but no longer at home), while there it also seems to be
+naturally phasing out, will most likely be replaced with
+more specialized open source frameworks/services for
+what it is currently used there.
+
+At the back of my mind, I am sometimes playing with the idea
+of something similar with Lua with LuaRocks configured within
+Lua scripts, and maybe something else than a web UI,
+but so far that is just a *magpie in the sky*…
+
+Maybe more beautiful if it stays that way…?
+
+Anyways, since jexler is Apache 2.0 licensed, there would be
+almost nothing stopping you from carrying on the legend…
+
 ![Powered by Grengine](powered-by-grengine.gif)
 
 **5.0.0** (2026-11-07)
