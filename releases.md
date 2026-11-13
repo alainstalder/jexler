@@ -14,10 +14,7 @@ of something similar with Lua with LuaRocks configured within
 Lua scripts, and maybe something else than a web UI,
 but so far that is just a *magpie in the sky*…
 
-Maybe more beautiful if it stays that way…?
-
-Anyways, since jexler is Apache 2.0 licensed, there would be
-almost nothing stopping you from carrying on the legend…
+Will see, maybe beautiful as a hobby from time to time…
 
 ![Powered by Grengine](powered-by-grengine.gif)
 

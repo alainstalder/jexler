@@ -777,8 +777,10 @@ if you use the jexler core library in a different context.
 
 * [Webapp (Web GUI WAR)](https://github.com/alainstalder/jexler/releases)
   • [Docker Image](https://hub.docker.com/r/jexler/jexler)
+  • [Release Notes](releases.md)
 * Since jexler 4.1.0, the `jexler-core` classes are no longer released
-  as a JAR to Maven Central.
+  as a JAR to Maven Central; since 2.0.0 written in Groovy
+  instead of in Java.
 
 ![Powered by Grengine](powered-by-grengine.gif)
 
