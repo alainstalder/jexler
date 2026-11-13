@@ -17,6 +17,7 @@
   • [Docker Image](https://hub.docker.com/r/jexler/jexler)
 * Build: `./gradlew clean build slowTests`
 * Demo: `./gradlew demo` → http://localhost:9090/
+* Jexler is vintage software now.
 
 ![Powered by Grengine](powered-by-grengine.gif)
 

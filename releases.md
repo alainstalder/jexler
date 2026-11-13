@@ -16,6 +16,12 @@ but so far that is just a *magpie in the sky*…
 
 Will see, maybe beautiful as a hobby from time to time…
 
+But “officially” jexler is vintage software now, do not
+expect new releases, while such a thing is not categorically
+excluded, however seems quite unlikely except for tiny things…
+
+Friday 13 November 2026
+
 ![Powered by Grengine](powered-by-grengine.gif)
 
 **5.0.0** (2026-11-07)

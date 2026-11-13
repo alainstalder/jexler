@@ -781,6 +781,7 @@ if you use the jexler core library in a different context.
 * Since jexler 4.1.0, the `jexler-core` classes are no longer released
   as a JAR to Maven Central; since 2.0.0 written in Groovy
   instead of in Java.
+* Jexler is vintage software now.
 
 ![Powered by Grengine](powered-by-grengine.gif)
 
