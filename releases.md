@@ -2,28 +2,21 @@
 
 # jexler releases
 
-I am not sure if more releases would still make sense.
-I am not aware of anyone using jexler except me someplace
-(but no longer at home), while there it also seems to be
-naturally phasing out, will most likely be replaced with
-more specialized open source frameworks/services for
-what it is currently used there.
+I am not aware of anyone using jexler anymore except me
+someplace (but no longer at home), while there it also
+seems to be naturally phasing out, will most likely be
+replaced with more specialized open source frameworks
+for what it is currently used there.
 
 At the back of my mind, I am sometimes playing with the idea
 of something similar with Lua with LuaRocks configured within
 Lua scripts, and maybe something else than a web UI,
-but so far that is just a *magpie in the sky*…
+but so far that is just a *magpie in the sky*… ![Powered by Grengine](powered-by-grengine.gif)
 
-Will see, maybe beautiful as a hobby from time to time…
+Will see, maybe beautiful as a hobby from time to time,
+but no new releases are planned, “officially” jexler is
+vintage software now…
 
-But “officially” jexler is vintage software now, do not
-expect new releases from me, while such a thing is not
-categorically excluded, however seems quite unlikely
-except for tiny changes…
-
-Friday 13 November 2026
-
-![Powered by Grengine](powered-by-grengine.gif)
 
 **5.0.0** (2026-11-07)
 
